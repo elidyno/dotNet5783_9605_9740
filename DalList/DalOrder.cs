@@ -1,9 +1,11 @@
-﻿namespace Dal;
+﻿using DalApi;
+namespace Dal;
 
 using DO;
+using System.Collections.Generic;
 
 //A class that links between the order class (DO file) and the Data class (which is linked to collections in Data) through methods
-public class DalOrder
+internal class DalOrder : IOrder
 {
     /// <summary>
     /// due to deficult to initilize the data surce
@@ -14,7 +16,7 @@ public class DalOrder
     public DalOrder()
     {
         //only for initilize the DataSurce
-        int initilizeDataSurce = DataSource._orderList.Length;
+        int initilizeDataSurce = DataSource._orderList.Count;
     }
 
     /// <summary>
@@ -23,13 +25,13 @@ public class DalOrder
     /// <param name="o"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public int AddOrder(Order o)
+    public int Add(Order o)
     {
-        if (DataSource._orderList.Length == DataSource.Config._orderIndexer)
-            throw new Exception("no place in list to add");
+        //if (DataSource._orderList.Count == DataSource.Config._orderIndexer)     Unnecessary ??
+        //    throw new Exception("no place in list to add");
         o.Id = DataSource.Config.OrderRunningId;
-        DataSource._orderList[DataSource.Config._orderIndexer++] = new Order();
-        DataSource._orderList[DataSource.Config._orderIndexer] = o;
+        DataSource._orderList.Add(new Order());
+        DataSource._orderList[DataSource._orderList.Count - 1] = o;
         return o.Id;
     }
     /// <summary>
@@ -38,16 +40,16 @@ public class DalOrder
     /// <param name="OrderId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public Order GetOrder(int OrderId)
+    public Order Get(int OrderId)
     {
         bool found = false;
         int i;
-        for (i = 0; i < DataSource.Config._orderIndexer; i++)
+        for (i = 0; i < DataSource._orderList.Count; i++)
         {
             if (OrderId == DataSource._orderList[i].Id)
                 break;
         }
-        if (i == DataSource.Config._orderIndexer && !found)
+        if (i == DataSource._orderList.Count && !found)
             throw new Exception("the Order id not exist in list");
         return DataSource._orderList[i];
     }
@@ -55,10 +57,11 @@ public class DalOrder
     /// Returns all orders
     /// </summary>
     /// <returns></returns>
-    public Order[] GetOrdersList()
+    public IEnumerable<Order> GetList()
     {
-        Order[] Orders = new Order[DataSource.Config._orderIndexer];
-        for (int i = 0; i < DataSource.Config._orderIndexer; i++)
+
+        Order[] Orders = new Order[DataSource._orderList.Count];
+        for (int i = 0; i < DataSource._orderList.Count; i++)
         {
             Orders[i] = DataSource._orderList[i];
         }
@@ -70,10 +73,10 @@ public class DalOrder
     /// </summary>
     /// <param name="orderId"></param>
     /// <exception cref="Exception"></exception>
-    public void DelateOrder(int orderId)
+    public void Delete(int orderId)
     {
         int delIndex = int.MinValue;
-        for (int i = 0; i < DataSource.Config._orderIndexer; i++)
+        for (int i = 0; i < DataSource._orderList.Count; i++)
         {
             if (orderId == DataSource._orderList[i].Id)
             {
@@ -83,21 +86,16 @@ public class DalOrder
         if (delIndex == int.MinValue)
             throw new Exception("The Order not exist in list");
 
-        //move back all items that was after the deleted item
-        --DataSource.Config._orderIndexer;
-        for (int i = delIndex; i < DataSource.Config._orderIndexer; i++)
-        {
-            DataSource._orderList[i] = DataSource._orderList[i + 1];
-        }
+        DataSource._orderList.RemoveAt(delIndex);
     }
     /// <summary>
     /// Receives updated order details and updates them
     /// </summary>
     /// <param name="p"></param>
     /// <exception cref="Exception"></exception>
-    public void UpdateOrder(Order p)
+    public void Update(Order p)
     {
-        for (int i = 0; i < DataSource.Config._orderIndexer; i++)
+        for (int i = 0; i < DataSource._orderList.Count; i++)
         {
             if (p.Id == DataSource._orderList[i].Id)
             {

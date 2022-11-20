@@ -12,9 +12,9 @@ namespace Dal
     {
         internal static readonly Random rand = new Random(DateTime.Now.Millisecond);
         #region Data surce arrays
-        internal static Product[] _productList = new Product[50];
-        internal static Order[] _orderList = new Order[100];
-        internal static OrderItem[] _orderItemList = new OrderItem[200];
+        internal static List<Product> _productList = new List<Product>();
+        internal static List<Order> _orderList = new List<Order>();
+        internal static List<OrderItem> _orderItemList = new List<OrderItem>();
         #endregion
         #region constractor
         /// <summary>
@@ -41,9 +41,7 @@ namespace Dal
         /// </summary>
         internal static class Config
         {
-            internal static int _productIndexer = 0;
-            internal static int _orderIndexer = 0;
-            internal static int _orderItemIndexer = 0;
+          
             /// <summary>
             /// Running id number for order and order item
             /// </summary>
@@ -80,7 +78,7 @@ namespace Dal
                 {
                     tmpOmunt = rand.Next(1, 15);
                 }
-                _productList[i] = new Product
+                Product newProduct = new Product
                 {
                     Id = tmpId,
                     Name = tmpName,
@@ -88,8 +86,9 @@ namespace Dal
                     Price = tmpPrice,
                     InStock = tmpOmunt
                 };
+
+                _productList.Add(newProduct);
             }
-            Config._productIndexer = _rand;
 
         }
         /// <summary>
@@ -130,7 +129,7 @@ namespace Dal
                 else
                     tmpOrderDate = DateTime.Now.AddDays(-((rand.NextDouble() + 0.1) * 5));
 
-                _orderList[i] = new Order()
+                Order newOrder = new Order()
                 {
                     Id = tmpId,
                     CustomerName = tmpName,
@@ -140,8 +139,9 @@ namespace Dal
                     ShipDate = tmpShipDate,
                     DeliveryDate = tmpDelivertDate
                 };
+                _orderList.Add(newOrder);
             }
-            Config._orderIndexer = _rand;
+            
         }
         /// <summary>
         /// Initializes the object of the created itemorder class
@@ -150,7 +150,7 @@ namespace Dal
         {
             //all items belonging to a specific order 
             // to be sure that we have at lest 40 item ordered
-            int[] itemsForOneOrder = new int[Config._orderIndexer];
+            int[] itemsForOneOrder = new int[_orderList.Count];
 
             int _rand;              // will be commented soon
             int _randProduct;
@@ -159,20 +159,20 @@ namespace Dal
             int tmpProductId;
             double tmpPrice;
             int tmpOmunt;
-            for (int i = 0; i < Config._orderIndexer; i++)
+            for (int i = 0; i < _orderList.Count; i++)
             {
                 _rand = rand.Next(1, 4);
                 if (_rand == 4)
                     itemsForOneOrder[i] = int.MaxValue; // flag that this order has alredy four items
                 for (int j = 0; j < _rand; j++)
                 {
-                    _randProduct = rand.Next(1, Config._productIndexer) - 1;
+                    _randProduct = rand.Next(1, _productList.Count) - 1;
                     tmpId = Config.OrderItemRunningId;
                     tmpOrderId = _orderList[i].Id;
                     tmpProductId = _productList[_randProduct].Id;
                     tmpPrice = _productList[_randProduct].Price;
                     tmpOmunt = rand.Next(1, 3); // piople not buying mor of 3 same Shosse per 
-                    _orderItemList[Config._orderItemIndexer++] = new OrderItem()
+                    OrderItem newOrderItem = new OrderItem()
                     {
                         Id = tmpId,
                         OrderId = tmpOrderId,
@@ -180,23 +180,25 @@ namespace Dal
                         Price = tmpPrice,
                         Amount = tmpOmunt
                     };
+                    _orderItemList.Add(newOrderItem);
+
                 }
             }
 
             //if sum of item order lass from 40, we add items to order that have only one order
-            if (Config._orderItemIndexer < 40)
+            if (_orderItemList.Count < 40)
             {
-                for (int i = 0; i < Config._orderIndexer && Config._orderItemIndexer < 40; i++)
+                for (int i = 0; i <_orderList.Count && _orderItemList.Count < 40; i++)
                 {
                     if (itemsForOneOrder[i] < int.MaxValue)
                     {
-                        _randProduct = rand.Next(1, Config._productIndexer) - 1;
+                        _randProduct = rand.Next(1, _productList.Count) - 1;
                         tmpId = Config.OrderItemRunningId;
                         tmpOrderId = _orderList[i].Id;
                         tmpProductId = _productList[_randProduct].Id;
                         tmpPrice = _productList[_randProduct].Price;
                         tmpOmunt = rand.Next(1, 3); // piople not buying mor of 3 same Shosse per 
-                        _orderItemList[Config._orderItemIndexer++] = new OrderItem()
+                        OrderItem newOrderItem = new OrderItem()
                         {
                             Id = tmpId,
                             OrderId = tmpOrderId,
@@ -204,12 +206,13 @@ namespace Dal
                             Price = tmpPrice,
                             Amount = tmpOmunt
                         };
+                        _orderItemList.Add(newOrderItem);
+
                     }
 
                 }
             }
         }
-
         #endregion
         #region Additional data
 

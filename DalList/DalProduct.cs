@@ -1,11 +1,12 @@
 ﻿
+using DalApi;
 using DO;
 using System.Diagnostics;
 using System.Xml.Linq;
 
 namespace Dal;
 //A class that links between the product class (DO file) and the Data class (which is linked to collections in Data) through methods
-public class DalProduct
+internal class DalProduct : IProduct
 {
     /// <summary>
     /// due to deficult to initilize the data surce
@@ -16,7 +17,7 @@ public class DalProduct
     public DalProduct()
     {
         //only for initilize the DataSurce
-        int initilizeDataSurce = DataSource._productList.Length;
+        int initilizeDataSurce = DataSource._productList.Count;
     }
     /// <summary>
     /// Receives a new product and returns its ID number
@@ -24,16 +25,16 @@ public class DalProduct
     /// <param name="p"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public int AddProduct(Product p)
+    public int Add(Product p)
     {
-        if (DataSource._productList.Length == DataSource.Config._productIndexer)
-            throw new Exception("no place in list to add");
-        for (int i = 0; i < DataSource.Config._productIndexer; i++)
+        //if (DataSource._productList.Length == DataSource.Config._productIndexer)      Unnecessary ??
+        //    throw new Exception("no place in list to add");
+        for (int i = 0; i < DataSource._productList.Count; i++)
         {
             if (p.Id == DataSource._productList[i].Id)
                 throw new Exception("The Product Id alredy exist");
         }
-        DataSource._productList[DataSource.Config._productIndexer++] = p;
+        DataSource._productList.Add(p);
 
         return p.Id;
     }
@@ -43,12 +44,11 @@ public class DalProduct
     /// <param name="productId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public Product GetProduct(int productId)
+    public Product Get(int productId)
     {
         bool found = false;
         int i;
-        int index = DataSource.Config._productIndexer;
-        for (i = 0; i < index; i++)
+        for (i = 0; i < DataSource._productList.Count; i++)
         {
             if (productId == DataSource._productList[i].Id)
             {
@@ -57,7 +57,7 @@ public class DalProduct
             }
 
         }
-        if (i == index && !found)
+        if (i == DataSource._productList.Count && !found)
             throw new Exception("the product id not exist in list");
         Product returnProduct = DataSource._productList[i];
         return returnProduct;
@@ -67,9 +67,9 @@ public class DalProduct
     /// Returns all products in the store
     /// </summary>
     /// <returns></returns>
-    public Product[] GetProductsList()
+    public IEnumerable<Product> GetList()
     {
-        int index = DataSource.Config._productIndexer;
+        int index = DataSource._productList.Count;
         Product[] products = new Product[index];
         for (int i = 0; i < index; i++)
         {
@@ -83,10 +83,10 @@ public class DalProduct
     /// </summary>
     /// <param name="productId"></param>
     /// <exception cref="Exception"></exception>
-    public void DelateProduct(int productId)
+    public void Delete(int productId)
     {
         int delIndex = int.MinValue;
-        for (int i = 0; i < DataSource.Config._productIndexer; i++)
+        for (int i = 0; i < DataSource._productList.Count; i++)
         {
             if (productId == DataSource._productList[i].Id)
             {
@@ -96,23 +96,19 @@ public class DalProduct
         }
         if (delIndex == int.MinValue)
             throw new Exception("The product not exist in list");
+       
+        DataSource._productList.RemoveAt(delIndex);
 
-        //move back all items that was after the deleted item
-        --DataSource.Config._productIndexer;
-        for (int i = delIndex; i < DataSource.Config._productIndexer; i++)
-        {
-            DataSource._productList[i] = DataSource._productList[i + 1];
-        }
     }
     /// <summary>
     /// Receives a product with preferred details and updates it
     /// </summary>
     /// <param name="p"></param>
     /// <exception cref="Exception"></exception>
-    public void UpdateProduct(Product p)
+    public void Update(Product p)
     {
         int i;
-        for (i = 0; i < DataSource.Config._productIndexer; i++)
+        for (i = 0; i < DataSource._productList.Count; i++)
         {
             if (p.Id == DataSource._productList[i].Id)
             {

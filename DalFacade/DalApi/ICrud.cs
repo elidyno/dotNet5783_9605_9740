@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
-    internal interface ICrud <T>
+    public interface ICrud <T>
     {
-        public T Add(T item);
-        public void Delete(T item);
-
+        public int Add(T item);
+        public void Delete(int item);
         public void Update (T item);
-
-        public T Get (T item);
-
-        public IEnumerable<T> GetList (T item);  
+        public T Get (int item);
+        public IEnumerable<T> GetList ();  
 
 
     }

@@ -1,8 +1,9 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
 
 namespace Dal;
 //A class that links between the order-item class (DO file) and the Data class (which is linked to collections in Data) through methods
-public class DalOrderItem
+internal class DalOrderItem :IOrderItem
 {
     /// <summary>
     /// due to deficult to initilize the data surce
@@ -13,7 +14,7 @@ public class DalOrderItem
     public DalOrderItem()
     {
         //only for initilize the DataSurce
-        int initilizeDataSurce = DataSource._orderItemList.Length;
+        int initilizeDataSurce = DataSource._orderItemList.Count;
     }
     /// <summary>
     /// Receives a new order item and returns its ID number
@@ -21,12 +22,12 @@ public class DalOrderItem
     /// <param name="item"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public int AddOrderItem(OrderItem item)
+    public int Add(OrderItem item)
     {
-        if (DataSource._orderItemList.Length == DataSource.Config._orderItemIndexer)
-            throw new Exception("no place in list to add");
+        //if (DataSource._orderItemList.Length == DataSource.Config._orderItemIndexer)    Unnecessary ??
+        //    throw new Exception("no place in list to add");
         item.Id = DataSource.Config.OrderItemRunningId;
-        DataSource._orderItemList[DataSource.Config._orderItemIndexer++] = item;
+        DataSource._orderItemList.Add(item);
         return item.Id;
     }
     /// <summary>
@@ -35,15 +36,15 @@ public class DalOrderItem
     /// <param name="OrderItemId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public OrderItem GetOrderItem(int OrderItemId)
+    public OrderItem Get(int OrderItemId)
     {
         int i;
-        for (i = 0; i < DataSource.Config._orderItemIndexer; i++)
+        for (i = 0; i < DataSource._orderItemList.Count; i++)
         {
             if (OrderItemId == DataSource._orderItemList[i].Id)
                 break;
         }
-        if (i == DataSource.Config._orderItemIndexer)
+        if (i == DataSource._orderItemList.Count)
             throw new Exception("the OrderItem id not exist in list");
         OrderItem item = DataSource._orderItemList[i];
 
@@ -53,10 +54,10 @@ public class DalOrderItem
     /// Returns all items in the order
     /// </summary>
     /// <returns></returns>
-    public OrderItem[] GetOrderItemsList()
+    public IEnumerable<OrderItem> GetList()
     {
-        OrderItem[] OrderItems = new OrderItem[DataSource.Config._orderItemIndexer];
-        for (int i = 0; i < DataSource.Config._orderItemIndexer; i++)
+        OrderItem[] OrderItems = new OrderItem[DataSource._orderItemList.Count];
+        for (int i = 0; i < DataSource._orderItemList.Count; i++)
         {
             OrderItems[i] = DataSource._orderItemList[i];
         }
@@ -68,10 +69,10 @@ public class DalOrderItem
     /// </summary>
     /// <param name="orderId"></param>
     /// <exception cref="Exception"></exception>
-    public void DelateOrderItem(int orderId)
+    public void Delete(int orderId)
     {
         int delIndex = int.MinValue;
-        for (int i = 0; i < DataSource.Config._orderItemIndexer; i++)
+        for (int i = 0; i < DataSource._orderItemList.Count; i++)
         {
             if (orderId == DataSource._orderItemList[i].Id)
             {
@@ -81,22 +82,18 @@ public class DalOrderItem
         if (delIndex == int.MinValue)
             throw new Exception("The OrderItem not exist in list");
 
-        //move back all items that was after the deleted item
-        --DataSource.Config._orderItemIndexer;
-        for (int i = delIndex; i < DataSource.Config._orderItemIndexer; i++)
-        {
-            DataSource._orderItemList[i] = DataSource._orderItemList[i + 1];
-        }
+        DataSource._orderItemList.RemoveAt(delIndex);
+        
     }
     /// <summary>
     /// Receives an item in the order with updated details and updates it
     /// </summary>
     /// <param name="item"></param>
     /// <exception cref="Exception"></exception>
-    public void UpdateOrderItem(OrderItem item)
+    public void Update(OrderItem item)
     {
         int i;
-        for (i = 0; i < DataSource.Config._orderItemIndexer; i++)
+        for (i = 0; i < DataSource._orderItemList.Count; i++)
         {
             if (item.Id == DataSource._orderItemList[i].Id)
             {
@@ -118,12 +115,12 @@ public class DalOrderItem
     public OrderItem GetItemByOrderAndProduct(int OrderId, int ProductId)
     {
         int i;
-        for (i = 0; i < DataSource.Config._orderItemIndexer; i++)
+        for (i = 0; i < DataSource._orderItemList.Count; i++)
         {
             if (OrderId == DataSource._orderItemList[i].OrderId && ProductId == DataSource._orderItemList[i].ProductId)
                 break;
         }
-        if (i == DataSource.Config._orderItemIndexer)
+        if (i == DataSource._orderItemList.Count)
             throw new Exception("the OrderItem id not exist in list");
 
         OrderItem item = DataSource._orderItemList[i];
@@ -138,7 +135,7 @@ public class DalOrderItem
     {
         OrderItem[] orderItems = null;
 
-        for (int i = 0; i < DataSource.Config._orderItemIndexer; i++)
+        for (int i = 0; i < DataSource._orderItemList.Count; i++)
         {
             if (DataSource._orderItemList[i].OrderId == orderId)
             {
@@ -147,5 +144,6 @@ public class DalOrderItem
         }
         return orderItems;
     }
+
 
 }
