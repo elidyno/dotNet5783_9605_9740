@@ -1,6 +1,6 @@
 ﻿namespace DO;
 
-public enum Categories
+public enum Category
 {
     MEN,
     WOMANS,
