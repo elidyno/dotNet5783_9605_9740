@@ -18,6 +18,6 @@ namespace BO
         //public DateTime PaymentDate { get; set; }
         public double TotalPrice { get; set; }
         public OrderItem Items { get; set; }
-        public int MyProperty { get; set; }
+        public Status status { get; set; }   
     }
 }

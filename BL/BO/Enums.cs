@@ -7,3 +7,8 @@ public enum Categories
     BOYS,
     GIRLS,
 };
+
+public enum Status
+{
+    Approved, shipped, delivered 
+}
