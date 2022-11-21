@@ -60,13 +60,16 @@ internal class DalOrder : IOrder
     public IEnumerable<Order> GetList()
     {
 
-        Order[] Orders = new Order[DataSource._orderList.Count];
-        for (int i = 0; i < DataSource._orderList.Count; i++)
-        {
-            Orders[i] = DataSource._orderList[i];
-        }
+        List<Order> orders = new List<Order>();
+        orders = DataSource._orderList.ToList<Order>();
 
-        return Orders;
+        //Order[] Orders = new Order[DataSource._orderList.Count];
+        //for (int i = 0; i < DataSource._orderList.Count; i++)
+        //{
+        //    Orders[i] = DataSource._orderList[i];
+        //}
+
+        return orders;
     }
     /// <summary>
     /// Receives an order number and cancels it
