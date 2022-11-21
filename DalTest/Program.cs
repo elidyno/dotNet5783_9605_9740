@@ -94,8 +94,8 @@ class Program
                     name = Console.ReadLine();
                     Console.WriteLine(@"
         Enter a product category that you want to add");
-                    ShoesCategories catgory;
-                    ShoesCategories.TryParse(Console.ReadLine(), out catgory);
+                    Categories catgory;
+                    Categories.TryParse(Console.ReadLine(), out catgory);
 
                     Console.WriteLine(@"
         Enter a product price that you want to add");
@@ -175,7 +175,7 @@ class Program
                     {
                         Id = id,
                         Name = name, // if name is null kipe the old value
-                        Category = (ShoesCategories)tmpCategory,
+                        Category = (Categories)tmpCategory,
                         Price = tmpPrice2,
                         InStock = tmpAmount2
                     };
