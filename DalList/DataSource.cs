@@ -71,7 +71,7 @@ namespace Dal
                 int tmpIndexinDataList = rand.Next(0, 3);
                 string tmpName = _productNamesList[tmpValCategory][tmpIndexinDataList];
                 double tmpPrice = _productPriceList[tmpValCategory][tmpIndexinDataList];
-                Categories tmpCategory = (Categories)tmpValCategory;
+                Category tmpCategory = (Category)tmpValCategory;
                 int tmpOmunt = 0;
 
                 if (i < 0.95 * _rand - 1)

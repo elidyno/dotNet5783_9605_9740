@@ -1,6 +1,6 @@
 ﻿namespace BO;
 
-public enum Categories
+public enum Category
 {
     MEN,
     WOMANS,
