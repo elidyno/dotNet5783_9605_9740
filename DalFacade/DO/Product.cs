@@ -1,5 +1,5 @@
 ﻿namespace DO;
-// <A class that represents fields of product details in the store>
+// <A struct that represents fields of product details in the store>
 
 public struct Product
 {

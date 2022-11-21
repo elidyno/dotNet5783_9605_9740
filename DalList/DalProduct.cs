@@ -1,8 +1,7 @@
 ﻿
 using DalApi;
 using DO;
-using System.Diagnostics;
-using System.Xml.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Dal;
 //A class that links between the product class (DO file) and the Data class (which is linked to collections in Data) through methods
@@ -31,7 +30,7 @@ internal class DalProduct : IProduct
         //    throw new Exception("no place in list to add");
         for (int i = 0; i < DataSource._productList.Count; i++)
         {
-            if (p.Id == DataSource._productList[i].Id)
+            if (p.Id == DataSource._productList[i].Id)// לבדוק האם צריך לעשות את הבדיקה הזו בשכבת הנתונים
                 throw new Exception("The Product Id alredy exist");
         }
         DataSource._productList.Add(p);
@@ -48,7 +47,7 @@ internal class DalProduct : IProduct
     {
         bool found = false;
         int i;
-        for (i = 0; i < DataSource._productList.Count; i++)
+        for (i = 0; i < DataSource._productList.Count; i++)// לכאורה יש דרך מותאמת ללליסטים
         {
             if (productId == DataSource._productList[i].Id)
             {
@@ -57,7 +56,7 @@ internal class DalProduct : IProduct
             }
 
         }
-        if (i == DataSource._productList.Count && !found)
+        if (i == DataSource._productList.Count && !found)// לכאורה יש דרך מותאמת ללליסטים
             throw new Exception("the product id not exist in list");
         Product returnProduct = DataSource._productList[i];
         return returnProduct;
@@ -69,12 +68,17 @@ internal class DalProduct : IProduct
     /// <returns></returns>
     public IEnumerable<Product> GetList()
     {
-        int index = DataSource._productList.Count;
-        Product[] products = new Product[index];
-        for (int i = 0; i < index; i++)
-        {
-            products[i] = DataSource._productList[i];
-        }
+
+        List<Product> products = new List<Product>();
+        products = DataSource._productList.ToList<Product>();
+
+
+        //int size = DataSource._productList.Count;
+        //List<Product> products = new List<Product>();// לבדוק דרך מתאימה יותר לליסט
+        //for (int i = 0; i < size; i++)
+        //{
+        //    products.Add(DataSource._productList[i]);
+        //}
 
         return products;
     }
@@ -85,19 +89,24 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception"></exception>
     public void Delete(int productId)
     {
-        int delIndex = int.MinValue;
-        for (int i = 0; i < DataSource._productList.Count; i++)
-        {
-            if (productId == DataSource._productList[i].Id)
-            {
-                delIndex = i;
-                break;
-            }
-        }
-        if (delIndex == int.MinValue)
+        Product toRemove = new Product(); 
+        toRemove = DataSource._productList.Find(x => x.Id == productId);
+        if(toRemove.Id != productId)
             throw new Exception("The product not exist in list");
+        DataSource._productList.Remove(toRemove);
+
+        //for (int i = 0; i < DataSource._productList.Count; i++)
+        //{
+        //    if (productId == DataSource._productList[i].Id)
+        //    {
+        //        delIndex = i;
+        //        break;
+        //    }
+        //}
+        //if (delIndex == int.MinValue)
+        //    throw new Exception("The product not exist in list");
        
-        DataSource._productList.RemoveAt(delIndex);
+        //DataSource._productList.RemoveAt(delIndex);
 
     }
     /// <summary>
@@ -108,7 +117,7 @@ internal class DalProduct : IProduct
     public void Update(Product p)
     {
         int i;
-        for (i = 0; i < DataSource._productList.Count; i++)
+        for (i = 0; i < DataSource._productList.Count; i++)// לבדוק אם יש דרך מותאמת לליסט
         {
             if (p.Id == DataSource._productList[i].Id)
             {

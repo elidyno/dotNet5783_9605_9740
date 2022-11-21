@@ -56,13 +56,16 @@ internal class DalOrderItem :IOrderItem
     /// <returns></returns>
     public IEnumerable<OrderItem> GetList()
     {
-        OrderItem[] OrderItems = new OrderItem[DataSource._orderItemList.Count];
-        for (int i = 0; i < DataSource._orderItemList.Count; i++)
-        {
-            OrderItems[i] = DataSource._orderItemList[i];
-        }
+        List<OrderItem> orderItems = new List<OrderItem>();
+        orderItems = DataSource._orderItemList.ToList<OrderItem>();
 
-        return OrderItems;
+        //OrderItem[] OrderItems = new OrderItem[DataSource._orderItemList.Count];
+        //for (int i = 0; i < DataSource._orderItemList.Count; i++)
+        //{
+        //    OrderItems[i] = DataSource._orderItemList[i];
+        //}
+
+        return orderItems;
     }
     /// <summary>
     /// Receives an ID number of the item in the order and cancels it
@@ -112,6 +115,7 @@ internal class DalOrderItem :IOrderItem
     /// <param name="ProductId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    // לכאורה להוסיף הצהרה בממשק + טיפול במימוש לפי ליסט
     public OrderItem GetItemByOrderAndProduct(int OrderId, int ProductId)
     {
         int i;
@@ -131,6 +135,7 @@ internal class DalOrderItem :IOrderItem
     /// </summary>
     /// <param name="orderId"></param>
     /// <returns></returns>
+   // לכאורה להוסיף הצהרה בממשק + טיפול במימוש לפי ליסט
     public OrderItem[] GetItemsListByOrderId(int orderId)
     {
         OrderItem[] orderItems = null;
