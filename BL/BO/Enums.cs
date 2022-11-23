@@ -10,5 +10,5 @@ public enum Category
 
 public enum Status
 {
-    Approved, shipped, delivered 
+   APPROVED, SHIPPED, DELIVERED
 }

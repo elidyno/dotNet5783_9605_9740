@@ -13,5 +13,11 @@ namespace BO
         public string CustomerAdress { get; set; }
         public OrderItem Items { get; set; }
         public double TotalPrice { get; set; }
+        public override string ToString() => $@"
+        Name: {CustomerName},
+        Email: {CustomerEmail},
+        Adress: {CustomerAdress},
+        items: {Items},
+        Total price: {TotalPrice}";
     }
 }
