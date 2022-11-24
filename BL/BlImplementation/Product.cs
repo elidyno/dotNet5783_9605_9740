@@ -30,20 +30,18 @@ namespace BlImplementation
             {
                 int i = Dal.Product.Add(DoProduct);
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                throw e;
             }
-         
-
-
-
-            throw new NotImplementedException();
+        
         }
 
         public void Delete(BO.Product product)
         {
+            
+            
             throw new NotImplementedException();
         }
 
