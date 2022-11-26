@@ -75,7 +75,7 @@ namespace BlImplementation
             return result;
         }
 
-        public BO.ProductItem Get(int productId, Cart cart)
+        public BO.ProductItem Get(int productId, BO.Cart cart)
         {
             if (productId <= 0)
                 throw new ArgumentException("id <= 0");
@@ -90,6 +90,12 @@ namespace BlImplementation
                 throw;
             }
             bool inStock_ = dalProduct.InStock > 0;
+            int amount_ = 0;
+            foreach (BO.OrderItem item in cart.Items)
+            {
+                if(item.Id == productId)
+                    amount_++;
+            }
             BO.ProductItem productItem = new BO.ProductItem()
             {
                 Id = dalProduct.Id,
@@ -97,7 +103,7 @@ namespace BlImplementation
                 Price = dalProduct.Price,
                 Category = (BO.Category)dalProduct.Category,
                 InStock = inStock_,
-                Amount = dalProduct.InStock
+                Amount = amount_
             };
             return productItem;
         }

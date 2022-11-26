@@ -11,13 +11,21 @@ namespace BO
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
         public string CustomerAdress { get; set; }
-        public OrderItem Items { get; set; }
+        public List<OrderItem> Items { get; set; }
         public double TotalPrice { get; set; }
-        public override string ToString() => $@"
+        public override string ToString()
+        {
+            string tmp = "";
+            foreach (var item in Items)
+                tmp += item.ToString();
+            string toString;
+            toString = ($@"
         Name: {CustomerName},
         Email: {CustomerEmail},
-        Adress: {CustomerAdress},
-        items: {Items},
-        Total price: {TotalPrice}";
+        Adress: {CustomerAdress}");
+            toString += tmp + ($@"
+        TotalPrice: {TotalPrice}");
+            return toString;
+        }
     }
 }
