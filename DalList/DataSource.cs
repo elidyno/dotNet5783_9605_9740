@@ -61,16 +61,16 @@ namespace Dal
         /// </summary>
         private static void addFirstProducts()
         {
-            int _rand = rand.Next(10, 16);
+            int _rand = rand.Next(10, 20);
             for (int i = 0; i < _rand; i++)
             {
                 // thake a difren tick of second to each item and make sure that had 6 dgits
                 int tmpId = ((byte)DateTime.Now.Ticks) + 100000;
-                int tmpValCategory = rand.Next(0, 3);
+                int tmpValCategory = rand.Next(0, 4);
 
-                int tmpIndexinDataList = rand.Next(0, 3);
-                string tmpName = _productNamesList[tmpValCategory][tmpIndexinDataList];
-                double tmpPrice = _productPriceList[tmpValCategory][tmpIndexinDataList];
+                int tmpIndexInDataList = rand.Next(0, 3);
+                string tmpName = _productNamesList[tmpValCategory][tmpIndexInDataList];
+                double tmpPrice = _productPriceList[tmpValCategory][tmpIndexInDataList];
                 Category tmpCategory = (Category)tmpValCategory;
                 int tmpOmunt = 0;
 
@@ -216,19 +216,21 @@ namespace Dal
         #endregion
         #region Additional data
 
-        public static string[][] _productNamesList = new string[4][]
+        public static string[][] _productNamesList = new string[5][]
         {
-        new string[4] {"Elegant shoes (black, men)", "Elegant shoes (brown, men)", "Sport shoes (blue, men)","Work shoes (gray, men)"},
-        new string[4] {"High heels shoes (red, women)", "Women's boots (black, women)", "Flip flops (white, men)", "Sport shoes (pink, women)" },
-        new string[4] {"Elegant shoes (black, boys)", "Moccasins (brown, boys)", "Sport shoes (blue, boys)","futball shoes (blue, boys)" },
-        new string[4] {"Girl's event shoes (red, girls)", "Girl's boots (pink, girl)", "Flip flops (white, girl)","Sport shoes (pink, girl)"}
+        new string[4] {"Elegant shoes (black, size:45, men)", "Elegant shoes (brown, size:42, men)", "Sport shoes (blue, size:43, men)", "Work shoes (gray, size:41, men)"},
+        new string[4] {"High heels shoes (red, size:37, women)", "Women's boots (black, size:39, women)", "Flip flops (white, size:38 men)", "Sport shoes (pink, size:37, women)" },
+        new string[4] {"Elegant shoes (black, size:27, boys)", "Moccasins (brown, size:28, boys)", "Sport shoes (blue, size:30, boys)", "futball shoes (blue, size:22, boys)" },
+        new string[4] {"Girl's event shoes (red, size:20, girls)", "Girl's boots (pink, size:25, girl)", "Flip flops (white, size:24, girl)", "Sport shoes (pink, size:29, girl)"},
+        new string[4] { "Shoe polish (black, mat)", "shoe pad (size:40, ortoped)", "Shoe polish (brown, mat)", "sport socks (white, size:43)"}
         };
-        public static double[][] _productPriceList = new double[4][]
+        public static double[][] _productPriceList = new double[5][]
         {
         new double[4] {399, 399, 299,499},
         new double[4] {399, 499, 299,299},
         new double[4] {199, 199, 149,99},
-        new double[4] {199, 199, 149,99}
+        new double[4] {199, 199, 149,99},
+        new double[4] {40, 120, 40, 30 }
         };
 
         public static class CustomersData

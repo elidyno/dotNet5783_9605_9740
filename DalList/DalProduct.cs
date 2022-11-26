@@ -69,6 +69,8 @@ internal class DalProduct : IProduct
     public IEnumerable<Product> GetList()
     {
 
+        if (DataSource._productList.Count == 0)
+            throw new Exception("No product items exist in list");
         List<Product> products = new List<Product>();
         products = DataSource._productList.ToList<Product>();
 
