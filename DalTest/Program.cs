@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
 
 namespace Dal;
 #region Emums
@@ -16,6 +17,7 @@ class Program
     private static int exit_ = int.MinValue;
     #endregion
 
+    private static IDal dal = new DalList();
     static void Main(string[] args)
     {
         Console.WriteLine(@"
@@ -68,8 +70,6 @@ class Program
     // <Gives a submenu for the product entity>
     static void ProductMenue()
     {
-        DalProduct dalProduct = new DalProduct();
-
         do
         {
             Console.WriteLine(@"
@@ -90,7 +90,7 @@ class Program
                     int.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine(@"
         Enter a product name that you want to add");
-                    string name;
+                    string? name;
                     name = Console.ReadLine();
                     Console.WriteLine(@"
         Enter a product category that you want to add");
@@ -115,7 +115,7 @@ class Program
                         InStock = tmpAmount
                     };
                     //<Receives a new product and returns his ID>
-                    int addedProductId = dalProduct.AddProduct(addedProduct);
+                    int addedProductId = dal.Product.Add(addedProduct);
                     Console.WriteLine("\tThe Product id: " + addedProductId);
                     break;
                 case SubMenu_CRAUD.View:
@@ -124,12 +124,12 @@ class Program
                     int.TryParse(Console.ReadLine(), out id);
                     Product productToShow = new Product();
                     //<Receives a product ID and returns all product details>
-                    productToShow = dalProduct.GetProduct(id);
+                    productToShow = dal.Product.Get(id);
                     Console.WriteLine("\n\t" + productToShow);
                     break;
                 case SubMenu_CRAUD.ViewAll:
                     //<Returns all products in the store>
-                    Product[] productsList = dalProduct.GetProductsList();
+                    IEnumerable<Product> productsList = dal.Product.GetList();
                     foreach (Product item in productsList)
                     {
                         Console.WriteLine(item);
@@ -139,7 +139,7 @@ class Program
                     Console.WriteLine(@"
         Enter the product ID number that you want to update his details");
                     int.TryParse(Console.ReadLine(), out id);
-                    Product oldProduct = dalProduct.GetProduct(id);
+                    Product oldProduct = dal.Product.Get(id);
                     Console.WriteLine(oldProduct);
 
                     name = null; //to check after if the user put a value for update
@@ -180,14 +180,14 @@ class Program
                         InStock = tmpAmount2
                     };
                     //<Receives preferred product details and updates it>
-                    dalProduct.UpdateProduct(updateProduct);
+                    dal.Product.Update(updateProduct);
                     break;
                 case SubMenu_CRAUD.Delete:
                     Console.WriteLine(@"
         Enter the product ID number that you want to remove");
                     int.TryParse(Console.ReadLine(), out id);
                     //<Receives a product tag and deletes it from the menu>
-                    dalProduct.DelateProduct(id);
+                    dal.Product.Delete(id);
                     break;
                 default:
                     break;
@@ -215,8 +215,6 @@ class Program
     /// </summary>
     static void OrderMenue()
     {
-        DalOrder dalOrder = new DalOrder();
-
         do
         {
             Console.WriteLine(@"
@@ -228,9 +226,9 @@ class Program
         5) To delete an order");
 
             int id = int.MinValue;
-            string customeName = null;
-            string email = null;
-            string adress = null;
+            string? customeName = null;
+            string? email = null;
+            string? adress = null;
             DateTime orderCreate = DateTime.MinValue;
             DateTime orderShip = DateTime.MinValue;
             DateTime delivery = DateTime.MinValue;
@@ -268,7 +266,7 @@ class Program
                         DeliveryDate = delivery
                     };
                     //<Receives a new product order and returns the order number>
-                    int addedOrderId = dalOrder.AddOrder(addedOrder);
+                    int addedOrderId = dal.Order.Add(addedOrder);
                     Console.WriteLine("\tThe Order id: " + addedOrderId);
                     break;
                 case SubMenu_CRAUD.View:
@@ -277,12 +275,12 @@ class Program
                     int.TryParse(Console.ReadLine(), out id);
                     Order orderToShow = new Order();
                     //<Gets the order number and returns the order details>
-                    orderToShow = dalOrder.GetOrder(id);
+                    orderToShow = dal.Order.Get(id);
                     Console.WriteLine("\n\t" + orderToShow);
                     break;
                 case SubMenu_CRAUD.ViewAll:
                     //<Returns all order details>
-                    Order[] OrdersList = dalOrder.GetOrdersList();
+                    IEnumerable<Order> OrdersList = dal.Order.GetList();
                     foreach (Order Order in OrdersList)
                         Console.WriteLine("\t" + Order);
                     break;
@@ -290,7 +288,7 @@ class Program
 
                     Console.WriteLine(@"Enter the Order ID number that you want to update his details");
                     int.TryParse(Console.ReadLine(), out id);
-                    Order oldOrder = dalOrder.GetOrder(id);
+                    Order oldOrder = dal.Order.Get(id);
                     Console.WriteLine(oldOrder);
 
                     Console.WriteLine(@"
@@ -344,14 +342,14 @@ class Program
                         DeliveryDate = delivery
                     };
                     //<Receives preferred order details and updates them>
-                    dalOrder.UpdateOrder(updateOrder);
+                    dal.Order.Update(updateOrder);
                     break;
                 case SubMenu_CRAUD.Delete:
                     Console.WriteLine(@"
         Enter the Order ID number that you want to remove");
                     int.TryParse(Console.ReadLine(), out id);
                     //<Receives an order number and cancels it>
-                    dalOrder.DelateOrder(id);
+                    dal.Order.Delete(id);
                     break;
                 default:
                     break;
@@ -379,7 +377,7 @@ class Program
     // <Gives a submenu for the itemorder entity>
     static void OrderItemMenue()
     {
-        DalOrderItem dalorderitem = new DalOrderItem();
+        
         do
         {
             Console.WriteLine(@"
@@ -423,7 +421,7 @@ class Program
                         Price = price
                     };
                     //<Receives a new order item and returns its ID numbe>
-                    int addedOrderId = dalorderitem.AddOrderItem(addedOrderItem);
+                    int addedOrderId = dal.OrderItem.Add(addedOrderItem);
                     Console.WriteLine("\tThe Orde item id: " + addedOrderId);
                     break;
                 case SubMenu_ItemOrder.View:
@@ -432,12 +430,12 @@ class Program
                     while (!int.TryParse(Console.ReadLine(), out orderId)) ;
                     OrderItem OrderItemToShow = new OrderItem();
                     //<Receives an ID number of the item in the order and returns its details>
-                    OrderItemToShow = dalorderitem.GetOrderItem(orderId);
+                    OrderItemToShow = dal.OrderItem.Get(orderId);
                     Console.WriteLine("\n\t" + OrderItemToShow);
                     break;
                 case SubMenu_ItemOrder.ViewAll:
                     //<Returns all items in the order>
-                    OrderItem[] OrdersItemList = dalorderitem.GetOrderItemsList();
+                    IEnumerable<OrderItem> OrdersItemList = dal.OrderItem.GetList();
                     foreach (OrderItem orderItem in OrdersItemList)
                         Console.WriteLine("\t" + orderItem);
                     break;
@@ -445,7 +443,7 @@ class Program
                     Console.WriteLine(@"
         Enter the Order item ID number that you want to update his details");
                     int.TryParse(Console.ReadLine(), out orderId);
-                    OrderItem oldItemOrder = dalorderitem.GetOrderItem(orderId);
+                    OrderItem oldItemOrder = dal.OrderItem.Get(orderId);
                     Console.WriteLine("\t" + oldItemOrder);
 
                     Console.WriteLine(@"
@@ -481,14 +479,14 @@ class Program
                         Price = price
                     };
                     //<Receives an updated order item and updates it>
-                    dalorderitem.UpdateOrderItem(updateItemOrder);
+                    dal.OrderItem.Update(updateItemOrder);
                     break;
                 case SubMenu_ItemOrder.Delete:
                     Console.WriteLine(@"
         Enter the Order item ID number to remove");
                     int.TryParse(Console.ReadLine(), out orderId);
                     //<Receives an ID number of an item in the order and cancels it>
-                    dalorderitem.DelateOrderItem(orderId);
+                    dal.OrderItem.Delete(orderId);
                     break;
                 case SubMenu_ItemOrder.itemByOrderAndProduct:
                     Console.WriteLine(@"
@@ -498,7 +496,7 @@ class Program
         Enter the product ID:");
                     int.TryParse(Console.ReadLine(), out productId);
                     //<Receives the ID number of the order and the product and returns the item details in the order>
-                    OrderItem itemToShowByProductAndOrder = dalorderitem.GetItemByOrderAndProduct(orderId, productId);
+                    OrderItem itemToShowByProductAndOrder = dal.OrderItem.GetItemByOrderAndProduct(orderId, productId);
                     Console.WriteLine(itemToShowByProductAndOrder);
                     break;
                 case SubMenu_ItemOrder.itemListByOrder:
@@ -506,7 +504,7 @@ class Program
         Enter the Order ID number that you want to see Item Order that belogs to him");
                     int.TryParse(Console.ReadLine(), out orderId);
                     //<Receives an ID number of the order and returns all the details of the products in this order>
-                    OrderItem[] ordersItemsList = dalorderitem.GetItemsListByOrderId(orderId);
+                    IEnumerable<OrderItem> ordersItemsList = dal.OrderItem.GetItemsListByOrderId(orderId);
                     foreach (OrderItem item in ordersItemsList)
                         Console.WriteLine(item);
                     break;

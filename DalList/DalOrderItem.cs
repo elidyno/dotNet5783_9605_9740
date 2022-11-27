@@ -136,7 +136,7 @@ internal class DalOrderItem :IOrderItem
     /// <param name="orderId"></param>
     /// <returns></returns>
    // לכאורה להוסיף הצהרה בממשק + טיפול במימוש לפי ליסט
-    public OrderItem[] GetItemsListByOrderId(int orderId)
+    public IEnumerable<OrderItem> GetItemsListByOrderId(int orderId)
     {
         OrderItem[] orderItems = null;
 
