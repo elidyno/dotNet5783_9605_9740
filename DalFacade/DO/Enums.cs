@@ -6,4 +6,5 @@ public enum Category
     WOMANS,
     BOYS,
     GIRLS,
+    ACCESSORIES
 };
