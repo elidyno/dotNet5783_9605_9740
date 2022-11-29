@@ -38,17 +38,11 @@ internal class DalOrderItem :IOrderItem
     /// <exception cref="Exception"></exception>
     public OrderItem Get(int OrderItemId)
     {
-        int i;
-        for (i = 0; i < DataSource._orderItemList.Count; i++)
-        {
-            if (OrderItemId == DataSource._orderItemList[i].Id)
-                break;
-        }
-        if (i == DataSource._orderItemList.Count)
-            throw new Exception("the OrderItem id not exist in list");
-        OrderItem item = DataSource._orderItemList[i];
-
-        return item;
+        if (DataSource._orderItemList.Exists(x => x.Id == OrderItemId))    //אולי אפשר לקצר
+            return DataSource._orderItemList.Find(x => x.Id == OrderItemId);
+        else
+            throw new NotFoundException();  //? 
+        
     }
     /// <summary>
     /// Returns all items in the order
@@ -58,13 +52,6 @@ internal class DalOrderItem :IOrderItem
     {
         List<OrderItem> orderItems = new List<OrderItem>();
         orderItems = DataSource._orderItemList.ToList<OrderItem>();
-
-        //OrderItem[] OrderItems = new OrderItem[DataSource._orderItemList.Count];
-        //for (int i = 0; i < DataSource._orderItemList.Count; i++)
-        //{
-        //    OrderItems[i] = DataSource._orderItemList[i];
-        //}
-
         return orderItems;
     }
     /// <summary>
@@ -72,21 +59,13 @@ internal class DalOrderItem :IOrderItem
     /// </summary>
     /// <param name="orderId"></param>
     /// <exception cref="Exception"></exception>
-    public void Delete(int orderId)
+    public void Delete(int orderItemId)
     {
-        int delIndex = int.MinValue;
-        for (int i = 0; i < DataSource._orderItemList.Count; i++)
-        {
-            if (orderId == DataSource._orderItemList[i].Id)
-            {
-                delIndex = i;
-            }
-        }
-        if (delIndex == int.MinValue)
-            throw new Exception("The OrderItem not exist in list");
-
-        DataSource._orderItemList.RemoveAt(delIndex);
-        
+        int delIndex = DataSource._orderItemList.FindIndex(x => x.Id == orderItemId);
+        if (delIndex == -1)
+            throw new NotFoundException();
+        else
+            DataSource._orderItemList.RemoveAt(delIndex);
     }
     /// <summary>
     /// Receives an item in the order with updated details and updates it
@@ -95,17 +74,11 @@ internal class DalOrderItem :IOrderItem
     /// <exception cref="Exception"></exception>
     public void Update(OrderItem item)
     {
-        int i;
-        for (i = 0; i < DataSource._orderItemList.Count; i++)
-        {
-            if (item.Id == DataSource._orderItemList[i].Id)
-            {
-                DataSource._orderItemList[i] = item;
-                return;
-            }
-        }
-
-        throw new Exception("The OrderItem not exist in list");
+        int updateIndex = DataSource._orderItemList.FindIndex(x => x.Id == item.Id);
+        if (updateIndex != -1)
+            DataSource._orderItemList[updateIndex] = item;
+        else
+            throw new NotFoundException();
     }
 
     /// <summary>
@@ -125,7 +98,7 @@ internal class DalOrderItem :IOrderItem
                 break;
         }
         if (i == DataSource._orderItemList.Count)
-            throw new Exception("the OrderItem id not exist in list");
+            throw new NotFoundException();
 
         OrderItem item = DataSource._orderItemList[i];
         return item;
@@ -138,17 +111,13 @@ internal class DalOrderItem :IOrderItem
    // לכאורה להוסיף הצהרה בממשק + טיפול במימוש לפי ליסט
     public IEnumerable<OrderItem> GetItemsListByOrderId(int orderId)
     {
-        OrderItem[] orderItems = null;
-
-        for (int i = 0; i < DataSource._orderItemList.Count; i++)
-        {
-            if (DataSource._orderItemList[i].OrderId == orderId)
-            {
-                orderItems[i] = DataSource._orderItemList[i];
-            }
-        }
+        if(!DataSource._orderItemList.Exists(x => x.OrderId == orderId))
+            throw new NotFoundException();
+        //else
+        List<OrderItem> orderItems = new List<OrderItem>();
+        foreach (OrderItem item in DataSource._orderItemList)
+            if (item.OrderId == orderId)
+                orderItems.Add(item);
         return orderItems;
     }
-
-
 }

@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 //using BO;
 using System.Collections.Generic;
 
@@ -16,19 +17,18 @@ internal class Order : IOrder
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public BO.Order Get(int orderId)
     {
-        if (orderId <= 0)
-            throw new ArgumentOutOfRangeException("exception");
-
-        //else  
         DO.Order dataOrder = new DO.Order();
-        //Try requesting an order from a data layer
-        try
+        if (orderId > 0)
         {
-            dataOrder = Dal.Order.Get(orderId);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
+            //Try requesting an order from a data layer
+            try
+            {
+                dataOrder = Dal.Order.Get(orderId);
+            }
+            catch (Exception e)
+            {
+                throw new DataRequestFailedException("Data request failed", e);// only e?
+            }
         }
 
         IEnumerable<DO.OrderItem> items = new List<DO.OrderItem>();
