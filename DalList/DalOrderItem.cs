@@ -24,8 +24,6 @@ internal class DalOrderItem :IOrderItem
     /// <exception cref="Exception"></exception>
     public int Add(OrderItem item)
     {
-        //if (DataSource._orderItemList.Length == DataSource.Config._orderItemIndexer)    Unnecessary ??
-        //    throw new Exception("no place in list to add");
         item.Id = DataSource.Config.OrderItemRunningId;
         DataSource._orderItemList.Add(item);
         return item.Id;
@@ -38,10 +36,10 @@ internal class DalOrderItem :IOrderItem
     /// <exception cref="Exception"></exception>
     public OrderItem Get(int OrderItemId)
     {
-        if (DataSource._orderItemList.Exists(x => x.Id == OrderItemId))    //אולי אפשר לקצר
+        if (DataSource._orderItemList.Exists(x => x.Id == OrderItemId))
             return DataSource._orderItemList.Find(x => x.Id == OrderItemId);
         else
-            throw new NotFoundException();  //? 
+            throw new NotFoundException("Id not exist");
         
     }
     /// <summary>
@@ -63,7 +61,7 @@ internal class DalOrderItem :IOrderItem
     {
         int delIndex = DataSource._orderItemList.FindIndex(x => x.Id == orderItemId);
         if (delIndex == -1)
-            throw new NotFoundException();
+            throw new NotFoundException("Id not exist");
         else
             DataSource._orderItemList.RemoveAt(delIndex);
     }
@@ -78,7 +76,7 @@ internal class DalOrderItem :IOrderItem
         if (updateIndex != -1)
             DataSource._orderItemList[updateIndex] = item;
         else
-            throw new NotFoundException();
+            throw new NotFoundException("Id not exist");
     }
 
     /// <summary>
@@ -88,7 +86,6 @@ internal class DalOrderItem :IOrderItem
     /// <param name="ProductId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    // לכאורה להוסיף הצהרה בממשק + טיפול במימוש לפי ליסט
     public OrderItem GetItemByOrderAndProduct(int OrderId, int ProductId)
     {
         int i;
@@ -98,7 +95,7 @@ internal class DalOrderItem :IOrderItem
                 break;
         }
         if (i == DataSource._orderItemList.Count)
-            throw new NotFoundException();
+            throw new NotFoundException("Id not exist");
 
         OrderItem item = DataSource._orderItemList[i];
         return item;
@@ -108,11 +105,10 @@ internal class DalOrderItem :IOrderItem
     /// </summary>
     /// <param name="orderId"></param>
     /// <returns></returns>
-   // לכאורה להוסיף הצהרה בממשק + טיפול במימוש לפי ליסט
     public IEnumerable<OrderItem> GetItemsListByOrderId(int orderId)
     {
         if(!DataSource._orderItemList.Exists(x => x.OrderId == orderId))
-            throw new NotFoundException();
+            throw new NotFoundException("Id not exist");
         //else
         List<OrderItem> orderItems = new List<OrderItem>();
         foreach (OrderItem item in DataSource._orderItemList)

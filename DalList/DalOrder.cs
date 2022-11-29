@@ -2,6 +2,7 @@
 namespace Dal;
 
 using DO;
+using System.Collections;
 using System.Collections.Generic;
 
 //A class that links between the order class (DO file) and the Data class (which is linked to collections in Data) through methods
@@ -27,8 +28,6 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public int Add(Order o)
     {
-        //if (DataSource._orderList.Count == DataSource.Config._orderIndexer)     Unnecessary ??
-        //    throw new Exception("no place in list to add");
         o.Id = DataSource.Config.OrderRunningId;
         DataSource._orderList.Add(o);
         return o.Id;
@@ -41,11 +40,13 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public Order Get(int OrderId)
     {
-        if (DataSource._orderList.Exists(x => x.Id == OrderId))    //אולי אפשר לקצר
+        if (DataSource._orderList.Exists(x => x.Id == OrderId))
             return DataSource._orderList.Find(x => x.Id == OrderId);
         else
-            throw new NotFoundException();  
+            throw new NotFoundException("Id not exist");
     }
+
+
     /// <summary>
     /// Returns all orders
     /// </summary>
@@ -65,7 +66,7 @@ internal class DalOrder : IOrder
     {
         int delIndex = DataSource._orderList.FindIndex(x => x.Id == orderId);
         if (delIndex == -1)
-            throw new NotFoundException();
+            throw new NotFoundException("Id not exist");
         else
         DataSource._orderList.RemoveAt(delIndex);
     }
@@ -80,7 +81,7 @@ internal class DalOrder : IOrder
         if (updateIndex != -1)
             DataSource._orderList[updateIndex] = p;
         else
-            throw new NotFoundException();
+            throw new NotFoundException("Id not exist");
     }
 
 }

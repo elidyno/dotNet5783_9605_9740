@@ -107,23 +107,23 @@ namespace Dal
                 string tmpEmail = CustomersData.firstNames[firstNameIndex] + CustomersData.lastNames[lastNameIndex] + "@gmail.com";
                 string tmpAdress = CustomersData.Adress[lastNameIndex];
 
-                DateTime tmpOrderDate = DateTime.MinValue;
-                DateTime tmpShipDate = DateTime.MinValue;
-                DateTime tmpDelivertDate = DateTime.MinValue;
+                DateTime? tmpOrderDate = null;
+                DateTime? tmpShipDate = null;
+                DateTime? tmpDelivertDate = null;
 
                 if (i <= 0.8 * _rand - 1)
                 {
                     if (i <= 0.6 * _rand - 1)
                     {
                         tmpDelivertDate = DateTime.Now.AddDays(-((rand.NextDouble() + 0.1) * 5));
-                        tmpShipDate = tmpDelivertDate.AddDays(-((rand.NextDouble() + 0.01) * 5));
-                        tmpOrderDate = tmpShipDate.AddDays(-((rand.NextDouble() + 0.01) * 2));
+                        tmpShipDate = tmpDelivertDate.Value.AddDays(-((rand.NextDouble() + 0.01) * 5));
+                        tmpOrderDate = tmpShipDate.Value.AddDays(-((rand.NextDouble() + 0.01) * 2));
 
                     }
                     else
                     {
                         tmpShipDate = DateTime.Now.AddDays(-((rand.NextDouble() + 0.1) * 5));
-                        tmpOrderDate = tmpShipDate.AddDays(-((rand.NextDouble() + 0.01) * 2));
+                        tmpOrderDate = tmpShipDate.Value.AddDays(-((rand.NextDouble() + 0.01) * 2));
                     }
                 }
                 else

@@ -9,10 +9,9 @@ namespace DO
     [Serializable]
     public class NotFoundException: Exception
     {
-        public NotFoundException(): base(){}
-       // public NotFoundException(string message):base(message){}
+        public NotFoundException(string message): base(message){}
         public override string ToString()
-        => $@"The object was not found";
+        => $@"Dal Exception, Data not found: " + Message;
 
     }
 

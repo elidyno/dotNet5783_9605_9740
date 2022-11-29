@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DO;
 //using BO;
 using System.Collections.Generic;
 
@@ -18,17 +19,18 @@ internal class Order : IOrder
     public BO.Order Get(int orderId)
     {
         DO.Order dataOrder = new DO.Order();
-        if (orderId > 0)
+        if (orderId <= 0)
         {
-            //Try requesting an order from a data layer
-            try
-            {
-                dataOrder = Dal.Order.Get(orderId);
-            }
-            catch (Exception e)
-            {
-                throw new DataRequestFailedException("Data request failed", e);// only e?
-            }
+            throw new InvalidValueException("Id must be greater than zero");
+        }
+        //Try requesting an order from data layer
+        try
+        {
+            dataOrder = Dal.Order.Get(orderId);
+        }
+        catch (Exception e)
+        {
+            throw new DataRequestFailedException(e.Message);
         }
 
         IEnumerable<DO.OrderItem> items = new List<DO.OrderItem>();
@@ -39,9 +41,8 @@ internal class Order : IOrder
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            throw new DataRequestFailedException(e.Message);
         }
-
 
         //Creating a list of orderItems - logical entities
         List<BO.OrderItem> orderItems = new List<BO.OrderItem>();
@@ -63,6 +64,9 @@ internal class Order : IOrder
         foreach (BO.OrderItem item in orderItems)
             totalOrderPrice += item.TotalPrice;
 
+        //Calculates the status according to the order data in relation to the current time.
+        BO.Status status_ = GetStatus(dataOrder);
+
         //Create Order - logical entity
         BO.Order boOrder = new BO.Order()
         {
@@ -74,16 +78,9 @@ internal class Order : IOrder
             ShipDate = dataOrder.ShipDate,
             DeliveryDate = dataOrder.DeliveryDate,
             Items = orderItems,
-            TotalPrice = totalOrderPrice
+            TotalPrice = totalOrderPrice,
+            status = status_
         };
-
-        //Calculates the status according to the order data in relation to the current time.
-        if (boOrder.DeliveryDate < DateTime.Now)
-            boOrder.status = BO.Status.DELIVERED;
-        else if (boOrder.ShipDate < DateTime.Now)
-            boOrder.status = BO.Status.SHIPPED;
-        else if (boOrder.OrderDate < DateTime.Now)
-            boOrder.status = BO.Status.APPROVED;
 
         return boOrder;
     }
@@ -94,20 +91,12 @@ internal class Order : IOrder
     /// <returns></returns>
     public IEnumerable<BO.OrderForList> GetList()
     {
-
         IEnumerable<DO.Order> orders = new List<DO.Order>();
         //Try requesting order list from a data layer
-        try
-        {
-            orders = Dal.Order.GetList();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
-        
+        orders = Dal.Order.GetList();
+
         //Creating a list of OrderForList -logical entities
-        List<BO.OrderForList> orderForList = new List<BO.OrderForList>();
+        List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
         
         //Populates the list by creating "OrderForList" type objects based on order data and OrderItem data and additional calculations.
         foreach (DO.Order order in orders)
@@ -124,27 +113,20 @@ internal class Order : IOrder
                 totalPrice += item.Price * item.Amount;
 
             //Calculates the status according to the order data in relation to the current time.
-            BO.Status status = BO.Status.APPROVED;     //?
-            if (order.DeliveryDate < DateTime.Now)
-                status = BO.Status.DELIVERED;
-            else if (order.ShipDate < DateTime.Now)
-                status = BO.Status.SHIPPED;
-            else if (order.OrderDate < DateTime.Now)
-                status = BO.Status.APPROVED;
+            BO.Status status_ = GetStatus(order);
 
-
-            orderForList.Add(new BO.OrderForList()
+            ordersForList.Add(new BO.OrderForList()
             {
                 Id = order.Id,
                 CustomerName = order.CustomerName,
                 AmountOfItems = amountOfItems,
                 TotalPrice = totalPrice,
-                status = status
+                status = status_
             });
 
         }
         
-        return orderForList;
+        return ordersForList;
     }
 
     public BO.OrderTracking GetTracking(int orderId)
@@ -158,38 +140,39 @@ internal class Order : IOrder
         {
             Console.WriteLine(e);
         }
+        BO.Status status_ = GetStatus(dataOrder);
+        BO.OrderTracking orderTracking = new BO.OrderTracking()
+        { ID = orderId,
+          status = status_ 
+        };
         
-        BO.OrderTracking orderTracking = new BO.OrderTracking() { ID = orderId };
-       
-        //Calculates the status according to the order data in relation to the current time.
-        if (dataOrder.DeliveryDate < DateTime.Now)
-            orderTracking.status = BO.Status.DELIVERED;
-        else if (dataOrder.ShipDate < DateTime.Now)
-            orderTracking.status = BO.Status.SHIPPED;
-        else if (dataOrder.OrderDate < DateTime.Now)
-            orderTracking.status = BO.Status.APPROVED;
-
-        orderTracking.TrackingList.Add(new Tuple <DateTime, BO.Status>(dataOrder.OrderDate, BO.Status.APPROVED));
-        orderTracking.TrackingList.Add(new Tuple<DateTime, BO.Status>(dataOrder.ShipDate, BO.Status.SHIPPED));
-        orderTracking.TrackingList.Add(new Tuple<DateTime, BO.Status>(dataOrder.DeliveryDate, BO.Status.DELIVERED));
+        orderTracking.TrackingList.Add(new Tuple <DateTime?, string>(dataOrder.OrderDate, "The order created"));
+        if(dataOrder.ShipDate != null)
+            orderTracking.TrackingList.Add(new Tuple<DateTime?, string>(dataOrder.ShipDate, "The order shipped"));
+        if(dataOrder.DeliveryDate != null)
+            orderTracking.TrackingList.Add(new Tuple<DateTime?, string>(dataOrder.DeliveryDate, "The order delivered"));
 
         return orderTracking;
     }
 
     public BO.Order UpdateOrderDelivery(int orderId)
     {
+        BO.Order boOrder = new BO.Order();
         DO.Order dataOrder = new DO.Order();
         try                                         // (כבר מתבצע ביצירת ישות לוגית הזמנה)
         {
             dataOrder = Dal.Order.Get(orderId);
+            boOrder = Get(orderId);
         }
-        catch (Exception e)
+        catch (DO.NotFoundException e)
         {
-            Console.WriteLine(e);
+            throw new DataRequestFailedException(e.Message);
+        }
+        catch (BO.InvalidValueException e)
+        {
+            throw new InvalidValueException(e.Message);
         }
 
-        BO.Order boOrder = Get(orderId); //Try?
-       
         //If the order has been shipped (but not yet delivered) then update the delivery date
         if (boOrder.status == BO.Status.SHIPPED) 
         {   
@@ -203,9 +186,9 @@ internal class Order : IOrder
         {
             Dal.Order.Update(dataOrder);
         }
-        catch (Exception e)
+        catch (DO.NotFoundException e)
         {
-            Console.WriteLine(e);
+            throw new DataRequestFailedException(e.Message);
         }
 
         return boOrder;
@@ -213,18 +196,23 @@ internal class Order : IOrder
 
     public BO.Order UpdateOrderSheep(int orderId)
     {
-
+        BO.Order boOrder = new BO.Order();  
         DO.Order dataOrder = new DO.Order();
         try                                         // (כבר מתבצע ביצירת ישות לוגית הזמנה)
         {
             dataOrder = Dal.Order.Get(orderId);
+            boOrder = Get(orderId);
         }
-        catch (Exception e)
+        catch (DO.NotFoundException e)
         {
-            Console.WriteLine(e);
+            throw new DataRequestFailedException(e.Message);
+        }
+        catch (BO.InvalidValueException e)
+        {
+            throw new InvalidValueException(e.Message);
         }
 
-        BO.Order boOrder = Get(orderId);
+        
         //If the given status is that the order has been approved (but not yet shipped),
         //then update the delivery date to now.
         if (boOrder.status == BO.Status.APPROVED)
@@ -234,9 +222,33 @@ internal class Order : IOrder
             boOrder.status = BO.Status.SHIPPED;
         }
 
-        //Update the data layer
-        Dal.Order.Update(dataOrder);
+        //Attempting to update the data layer
+        try
+        {
+            Dal.Order.Update(dataOrder);
+        }
+        catch (DO.NotFoundException e)
+        {
+            throw new DataRequestFailedException(e.Message);
+        }
 
         return boOrder;
     }
+
+    public BO.Status GetStatus(DO.Order order)
+    {
+        BO.Status status;
+        if (order.DeliveryDate != null)
+            status = BO.Status.DELIVERED;
+        else
+        {
+            if (order.ShipDate != null)
+                status = BO.Status.SHIPPED;
+            //else if (boOrder.OrderDate < DateTime.Now)
+            //    boOrder.status = BO.Status.APPROVED;
+            else status = BO.Status.APPROVED;
+        }
+        return status;
+    }
 }
+
