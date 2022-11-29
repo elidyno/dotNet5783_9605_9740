@@ -30,8 +30,7 @@ internal class DalOrder : IOrder
         //if (DataSource._orderList.Count == DataSource.Config._orderIndexer)     Unnecessary ??
         //    throw new Exception("no place in list to add");
         o.Id = DataSource.Config.OrderRunningId;
-        DataSource._orderList.Add(new Order());
-        DataSource._orderList[DataSource._orderList.Count - 1] = o;
+        DataSource._orderList.Add(o);
         return o.Id;
     }
     /// <summary>
@@ -42,16 +41,10 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public Order Get(int OrderId)
     {
-        bool found = false;
-        int i;
-        for (i = 0; i < DataSource._orderList.Count; i++)
-        {
-            if (OrderId == DataSource._orderList[i].Id)
-                break;
-        }
-        if (i == DataSource._orderList.Count && !found)
-            throw new Exception("the Order id not exist in list");
-        return DataSource._orderList[i];
+        if (DataSource._orderList.Exists(x => x.Id == OrderId))    //אולי אפשר לקצר
+            return DataSource._orderList.Find(x => x.Id == OrderId);
+        else
+            throw new NotFoundException();  
     }
     /// <summary>
     /// Returns all orders
@@ -59,17 +52,9 @@ internal class DalOrder : IOrder
     /// <returns></returns>
     public IEnumerable<Order> GetList()
     {
-
         List<Order> orders = new List<Order>();
         orders = DataSource._orderList.ToList<Order>();
-
-        //Order[] Orders = new Order[DataSource._orderList.Count];
-        //for (int i = 0; i < DataSource._orderList.Count; i++)
-        //{
-        //    Orders[i] = DataSource._orderList[i];
-        //}
-
-        return orders;
+        return orders;  
     }
     /// <summary>
     /// Receives an order number and cancels it
@@ -78,17 +63,10 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public void Delete(int orderId)
     {
-        int delIndex = int.MinValue;
-        for (int i = 0; i < DataSource._orderList.Count; i++)
-        {
-            if (orderId == DataSource._orderList[i].Id)
-            {
-                delIndex = i;
-            }
-        }
-        if (delIndex == int.MinValue)
-            throw new Exception("The Order not exist in list");
-
+        int delIndex = DataSource._orderList.FindIndex(x => x.Id == orderId);
+        if (delIndex == -1)
+            throw new NotFoundException();
+        else
         DataSource._orderList.RemoveAt(delIndex);
     }
     /// <summary>
@@ -98,16 +76,11 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public void Update(Order p)
     {
-        for (int i = 0; i < DataSource._orderList.Count; i++)
-        {
-            if (p.Id == DataSource._orderList[i].Id)
-            {
-                DataSource._orderList[i] = p;
-                return;
-            }
-        }
-
-        throw new Exception("The Order not exist in list");
+        int updateIndex = DataSource._orderList.FindIndex(x => x.Id == p.Id);
+        if (updateIndex != -1)
+            DataSource._orderList[updateIndex] = p;
+        else
+            throw new NotFoundException();
     }
 
 }

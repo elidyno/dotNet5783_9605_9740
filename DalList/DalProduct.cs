@@ -45,23 +45,12 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception"></exception>
     public Product Get(int productId)
     {
-        bool found = false;
-        int i;
-        for (i = 0; i < DataSource._productList.Count; i++)// לכאורה יש דרך מותאמת ללליסטים
-        {
-            if (productId == DataSource._productList[i].Id)
-            {
-                found = true;
-                break;
-            }
-
-        }
-        if (i == DataSource._productList.Count && !found)// לכאורה יש דרך מותאמת ללליסטים
-            throw new Exception("the product id not exist in list");
-        Product returnProduct = DataSource._productList[i];
-        return returnProduct;
+        if (DataSource._productList.Exists(x => x.Id == productId))    //אולי אפשר לקצר
+            return DataSource._productList.Find(x => x.Id == productId);
+        else
+            throw new NotFoundException();  //?  
     }
-
+    
     /// <summary>
     /// Returns all products in the store
     /// </summary>
@@ -70,18 +59,9 @@ internal class DalProduct : IProduct
     {
 
         if (DataSource._productList.Count == 0)
-            throw new Exception("No product items exist in list");
+            throw new NotFoundException();
         List<Product> products = new List<Product>();
         products = DataSource._productList.ToList<Product>();
-
-
-        //int size = DataSource._productList.Count;
-        //List<Product> products = new List<Product>();// לבדוק דרך מתאימה יותר לליסט
-        //for (int i = 0; i < size; i++)
-        //{
-        //    products.Add(DataSource._productList[i]);
-        //}
-
         return products;
     }
     /// <summary>
@@ -91,25 +71,11 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception"></exception>
     public void Delete(int productId)
     {
-        Product toRemove = new Product(); 
-        toRemove = DataSource._productList.Find(x => x.Id == productId);
-        if(toRemove.Id != productId)
-            throw new Exception("The product not exist in list");
-        DataSource._productList.Remove(toRemove);
-
-        //for (int i = 0; i < DataSource._productList.Count; i++)
-        //{
-        //    if (productId == DataSource._productList[i].Id)
-        //    {
-        //        delIndex = i;
-        //        break;
-        //    }
-        //}
-        //if (delIndex == int.MinValue)
-        //    throw new Exception("The product not exist in list");
-       
-        //DataSource._productList.RemoveAt(delIndex);
-
+        int delIndex = DataSource._productList.FindIndex(x => x.Id == productId);
+        if (delIndex == -1)
+            throw new NotFoundException();
+        else
+            DataSource._productList.RemoveAt(delIndex);
     }
     /// <summary>
     /// Receives a product with preferred details and updates it
@@ -118,17 +84,11 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception"></exception>
     public void Update(Product p)
     {
-        int i;
-        for (i = 0; i < DataSource._productList.Count; i++)// לבדוק אם יש דרך מותאמת לליסט
-        {
-            if (p.Id == DataSource._productList[i].Id)
-            {
-                DataSource._productList[i] = p;
-                return;
-            }
-        }
-
-        throw new Exception("The product not exist in list");
+        int updateIndex = DataSource._productList.FindIndex(x => x.Id == p.Id);
+        if (updateIndex != -1)
+            DataSource._productList[updateIndex] = p;
+        else
+            throw new NotFoundException();
     }
 
 }
