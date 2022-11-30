@@ -24,4 +24,16 @@ namespace BO
             return "invalid input value: " + Message;
         }
     }
+
+    [Serializable]
+    public class InvalidEmailFormatException : Exception
+    {
+        public InvalidEmailFormatException() : base("invalid Email format:") { }
+        public override string ToString()
+        {
+            return @"
+invalid Email forma:
+The format must be: Example@domain.suffix";
+        }
+    }
 }
