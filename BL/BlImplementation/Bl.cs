@@ -7,8 +7,8 @@ namespace BlImplementation
     {
         public IProduct Product => new Product();
 
-        public IOrder Order => throw new NotImplementedException();
+        public IOrder Order =>  new Order();
 
-        public ICart Cart => throw new NotImplementedException();
+        public ICart Cart => new Cart();
     }
 }
