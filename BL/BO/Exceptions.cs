@@ -40,4 +40,15 @@ invalid Email forma:
 The format must be: Example@domain.suffix";
         }
     }
+
+    [Serializable]
+    public class AmountAndPriceException : Exception
+    {
+        public AmountAndPriceException() : base() { }
+        public AmountAndPriceException(string message) : base(message) { }
+        public override string ToString()
+        {
+            return "Error - Amount or Price: " + Message;
+        }
+    }
 }
