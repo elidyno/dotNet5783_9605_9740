@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace BlImplementation
 {
     /// <summary>
-    /// Icraud method of product an some other method. implementaion of IProduct
+    /// Icraud method of product and some other method. implementaion of IProduct
     /// </summary>
     internal class Product : BlApi.IProduct
     {
