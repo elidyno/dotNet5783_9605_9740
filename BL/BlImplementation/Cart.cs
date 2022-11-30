@@ -83,8 +83,7 @@ namespace BlImplementation
                 
 
                 bool exsist = productList.Exists(x => x.Id == item.ProductId);
-                if(!exsist)
-                    th
+                
 
                 if(item.ProductId != )
                 
