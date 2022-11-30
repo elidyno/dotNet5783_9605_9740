@@ -22,16 +22,17 @@ namespace BO
                 str += item.ToString();
             
             return  $@"
-           Order Id: {Id}
-           Name: {CustomerName}
-           Email: {CustomerEmail}
-           Adress: {CustomerAdress}
-           Order date: {OrderDate}
-           Ship Date: {ShipDate}
-           Delivery Date: {DeliveryDate}
-           Status: {status}
-           Items: {str}
-           Total Price: {TotalPrice}";
+            Order Id: {Id}
+            Name: {CustomerName}
+            Email: {CustomerEmail}
+            Adress: {CustomerAdress}
+            Order date: {OrderDate}
+            Ship Date: {ShipDate}
+            Delivery Date: {DeliveryDate}
+            Status: {status}
+            Items: {str}
+            Total Price: {TotalPrice}";
+
         }
         
 

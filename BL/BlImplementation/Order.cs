@@ -77,26 +77,14 @@ internal class Order : IOrder
             OrderDate = dataOrder.OrderDate,
             ShipDate = dataOrder.ShipDate,
             DeliveryDate = dataOrder.DeliveryDate,
-            Items = orderItems,
+            //Items = orderItems,
             TotalPrice = totalOrderPrice,
             status = status_
         };
 
-        //foreach (DO.OrderItem item in items)
-        //{
-        //    boOrder.Items.Add(new BO.OrderItem
-        //    {
-        //        Id = item.Id,
-        //        Amount = item.Amount,
-        //        Price = item.Price,
-        //        ProductId = item.ProductId,
-        //        TotalPrice = item.Price * item.Amount,
-        //        ProductName = Dal.Product.Get(item.ProductId).Name
-        //    });
-        //}
-
-        //foreach (BO.OrderItem item in orderItems)
-        //    boOrder.Items.Add(item);
+        boOrder.Items = new List<BO.OrderItem>();
+        foreach (BO.OrderItem item in orderItems)
+            boOrder.Items.Add(item);
         return boOrder;
     }
 
@@ -157,16 +145,17 @@ internal class Order : IOrder
         }
         BO.Status status_ = GetStatus(dataOrder);
         BO.OrderTracking orderTracking = new BO.OrderTracking()
-        { ID = orderId,
+        { 
+          ID = orderId,
           status = status_ 
         };
 
-        //orderTracking.TrackingList = new List<Tuple<DateTime?, string>>();
-        orderTracking.TrackingList.Add(new Tuple <DateTime?, string>(dataOrder.OrderDate, "The order created"));
+        orderTracking.TrackingList = new List<(DateTime?, string)>();
+        orderTracking.TrackingList.Add((dataOrder.OrderDate, "The order created"));
         if(dataOrder.ShipDate != null)
-            orderTracking.TrackingList.Add(new Tuple<DateTime?, string>(dataOrder.ShipDate, "The order shipped"));
+            orderTracking.TrackingList.Add((dataOrder.ShipDate, "The order shipped"));
         if(dataOrder.DeliveryDate != null)
-            orderTracking.TrackingList.Add(new Tuple<DateTime?, string>(dataOrder.DeliveryDate, "The order delivered"));
+            orderTracking.TrackingList.Add((dataOrder.DeliveryDate, "The order delivered"));
 
         return orderTracking;
     }
