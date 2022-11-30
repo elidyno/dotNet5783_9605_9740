@@ -40,4 +40,25 @@ invalid Email forma:
 The format must be: Example@domain.suffix";
         }
     }
+
+    [Serializable]
+    public class AmountAndPriceException : Exception
+    {
+        public AmountAndPriceException() : base() { }
+        public AmountAndPriceException(string message) : base(message) { }
+        public override string ToString()
+        {
+            return "Error - Amount or Price: " + Message;
+        }
+    }
+    [Serializable]
+    public class CantBeDeletedException : Exception
+    {
+        public CantBeDeletedException() : base() { }
+        public CantBeDeletedException(string message) : base(message) { }
+        public override string ToString()
+        {
+            return "The Item can't be deleted: " + Message;
+        }
+    }
 }

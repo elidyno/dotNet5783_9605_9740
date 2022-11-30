@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DO;
 using System.ComponentModel.DataAnnotations;
 
 namespace BlImplementation
@@ -70,6 +71,8 @@ namespace BlImplementation
                 throw new InvalidValueException("Customer name in cart not equal to Customer name parameter");
             double totalPrice_ = 0;
             DO.Product product_ = new();
+
+            //chack validation of each ItemOrder in cart
             foreach (var item in cart.Items)
             {
                 try
@@ -80,18 +83,54 @@ namespace BlImplementation
                 { 
                     throw new DataRequestFailedException($"ERROR in {item.ProductName}:", e);
                 }
-                
-
-                bool exsist = productList.Exists(x => x.Id == item.ProductId);
-                if(!exsist)
-                    th
-
-                if(item.ProductId != )
-                
-                totalPrice_+= item.Price;
+                if (item.Amount <= 0)
+                    throw new InvalidValueException(item.ProductName + " must be greater than zero");
+                if (product_.InStock < item.Amount)
+                    throw new AmountAndPriceException($"The product {item.ProductName} (ID:) {item.ProductId} is out of stock");
+                if (item.Price != product_.Price)
+                    throw new AmountAndPriceException($"price in cart of {item.ProductName} not match to price in Data Surce");
+                if (item.TotalPrice != (item.Amount * product_.Price))
+                    throw new AmountAndPriceException($"Total price of {item.ProductId} not match to Price and Amount in Cart");
+                totalPrice_ += item.TotalPrice;
             }
+            if (totalPrice_ != cart.TotalPrice)
+                throw new AmountAndPriceException("Total price in cart not match to prices and Amont of all item in cart");
+            
+            //creat a new  dal order
+            DO.Order order = new()
+            {
+                CustomerName = customerName,
+                CustomerAdress = customerAdress,
+                CustomerEmail = customerEmail,
+                OrderDate = DateTime.Now,
+                ShipDate = null,
+                DeliveryDate = null
+            };
+            try
+            {
+                //try to add order to data sirce in Dal
+                int orderId = Dal.Order.Add(order);
+                //create orderItem in Dal and update amount of product
+                DO.OrderItem orderItem = new();
+                foreach (var item in cart.Items)
+                {
+                    //create an orderItem for dall and add it
+                    orderItem.OrderId = orderId;
+                    orderItem.ProductId = item.ProductId;
+                    orderItem.Amount = item.Amount;
+                    orderItem.Price = item.Price;
+                    int orderItemId = Dal.OrderItem.Add(orderItem);
+                    //update amount of product in Dak
+                    product_ = Dal.Product.Get(item.ProductId);
+                    product_.InStock -= item.Amount;
+                    Dal.Product.Update(product_);
+                }
+            }
+            catch (Exception e)
+            {
 
-
+                throw new DataRequestFailedException(e.Message);
+            }
         }
 
 
