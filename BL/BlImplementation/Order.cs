@@ -175,7 +175,7 @@ internal class Order : IOrder
     {
         BO.Order boOrder = new BO.Order();
         DO.Order dataOrder = new DO.Order();
-        try                                         // (כבר מתבצע ביצירת ישות לוגית הזמנה)
+        try                                        
         {
             dataOrder = Dal.Order.Get(orderId);
             boOrder = Get(orderId);
@@ -214,7 +214,7 @@ internal class Order : IOrder
     {
         BO.Order boOrder = new BO.Order();  
         DO.Order dataOrder = new DO.Order();
-        try                                         // (כבר מתבצע ביצירת ישות לוגית הזמנה)
+        try                                         
         {
             dataOrder = Dal.Order.Get(orderId);
             boOrder = Get(orderId);

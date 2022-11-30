@@ -51,4 +51,14 @@ The format must be: Example@domain.suffix";
             return "Error - Amount or Price: " + Message;
         }
     }
+    [Serializable]
+    public class CantBeDeletedException : Exception
+    {
+        public CantBeDeletedException() : base() { }
+        public CantBeDeletedException(string message) : base(message) { }
+        public override string ToString()
+        {
+            return "The Item can't be deleted: " + Message;
+        }
+    }
 }
