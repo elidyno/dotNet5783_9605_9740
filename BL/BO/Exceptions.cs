@@ -5,12 +5,16 @@ namespace BO
     [Serializable]
     public class DataRequestFailedException: Exception
     {
+        bool message_ = false;
         public DataRequestFailedException(): base(){}
-        public DataRequestFailedException(string message) : base(message) { }
+        public DataRequestFailedException(string message) : base(message) { message_ = true; }
         public DataRequestFailedException(string message, Exception inner): base(message, inner) { }
         public override string ToString()
         {
-            return "Data Request Failed Exception:" + InnerException;
+            string generalMess = "Data Request Failed Exception:";
+            string toString = message_ ? (Message + " " + generalMess + " " + InnerException)
+                : (generalMess +" " + InnerException);
+            return toString;
         }
     }
 

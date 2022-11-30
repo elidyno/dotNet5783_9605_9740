@@ -69,9 +69,19 @@ namespace BlImplementation
             if (cart.CustomerName != customerName)
                 throw new InvalidValueException("Customer name in cart not equal to Customer name parameter");
             double totalPrice_ = 0;
-
+            DO.Product product_ = new();
             foreach (var item in cart.Items)
             {
+                try
+                {
+                    product_ = Dal.Product.Get(item.ProductId);
+                }
+                catch (Exception e)
+                { 
+                    throw new DataRequestFailedException($"ERROR in {item.ProductName}:", e);
+                }
+                
+
                 bool exsist = productList.Exists(x => x.Id == item.ProductId);
                 if(!exsist)
                     th
