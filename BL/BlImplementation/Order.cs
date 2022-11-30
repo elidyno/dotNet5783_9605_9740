@@ -1,6 +1,6 @@
 ﻿using BlApi;
-using BO;
-using DO;
+//using BO;
+//using DO;
 //using BO;
 using System.Collections.Generic;
 
@@ -21,7 +21,7 @@ internal class Order : IOrder
         DO.Order dataOrder = new DO.Order();
         if (orderId <= 0)
         {
-            throw new InvalidValueException("Id must be greater than zero");
+            throw new BO.InvalidValueException("Id must be greater than zero");
         }
         //Try requesting an order from data layer
         try
@@ -30,7 +30,7 @@ internal class Order : IOrder
         }
         catch (Exception e)
         {
-            throw new DataRequestFailedException(e.Message);
+            throw new BO.DataRequestFailedException(e.Message);
         }
 
         IEnumerable<DO.OrderItem> items = new List<DO.OrderItem>();
@@ -41,7 +41,7 @@ internal class Order : IOrder
         }
         catch (Exception e)
         {
-            throw new DataRequestFailedException(e.Message);
+            throw new BO.DataRequestFailedException(e.Message);
         }
 
         //Creating a list of orderItems - logical entities
@@ -166,11 +166,11 @@ internal class Order : IOrder
         }
         catch (DO.NotFoundException e)
         {
-            throw new DataRequestFailedException(e.Message);
+            throw new BO.DataRequestFailedException(e.Message);
         }
         catch (BO.InvalidValueException e)
         {
-            throw new InvalidValueException(e.Message);
+            throw new BO.InvalidValueException(e.Message);
         }
 
         //If the order has been shipped (but not yet delivered) then update the delivery date
@@ -188,7 +188,7 @@ internal class Order : IOrder
         }
         catch (DO.NotFoundException e)
         {
-            throw new DataRequestFailedException(e.Message);
+            throw new BO.DataRequestFailedException(e.Message);
         }
 
         return boOrder;
@@ -205,11 +205,11 @@ internal class Order : IOrder
         }
         catch (DO.NotFoundException e)
         {
-            throw new DataRequestFailedException(e.Message);
+            throw new BO.DataRequestFailedException(e.Message);
         }
         catch (BO.InvalidValueException e)
         {
-            throw new InvalidValueException(e.Message);
+            throw new BO.InvalidValueException(e.Message);
         }
 
         
@@ -229,7 +229,7 @@ internal class Order : IOrder
         }
         catch (DO.NotFoundException e)
         {
-            throw new DataRequestFailedException(e.Message);
+            throw new BO.DataRequestFailedException(e.Message);
         }
 
         return boOrder;
