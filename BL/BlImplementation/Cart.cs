@@ -7,7 +7,7 @@ namespace BlImplementation
     internal class Cart : ICart
     {
         private DalApi.IDal Dal = new Dal.DalList(); //Using it we can access the data access classes
-        DalApi.IDal Dal = new Dal.DalList();
+
         public BO.Cart Add(BO.Cart cart, int productId)
         {
             DO.Product dataProduct = new DO.Product();
@@ -15,14 +15,14 @@ namespace BlImplementation
             {
                 dataProduct = Dal.Product.Get(productId);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new BO.DataRequestFailedException(e.Message);
             }
             //If the product does not exist in the cart, then add a new product
             if (!cart.Items.Exists(x => x.ProductId == productId))
             {
-                if(dataProduct.InStock > 0)
+                if (dataProduct.InStock > 0)
                 {
                     BO.OrderItem orderItem = new BO.OrderItem()
                     {
@@ -37,7 +37,7 @@ namespace BlImplementation
                     cart.TotalPrice += dataProduct.Price;
 
                 }
-                    
+
             }
             //If the product is in the cart, update the amount and price
             else if (dataProduct.InStock > 0)
@@ -49,6 +49,7 @@ namespace BlImplementation
             }
 
             return cart;
+        }
         public void Approve(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
         {
             //check validation of Customer data parameters
