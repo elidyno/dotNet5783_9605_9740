@@ -82,6 +82,21 @@ internal class Order : IOrder
             status = status_
         };
 
+        //foreach (DO.OrderItem item in items)
+        //{
+        //    boOrder.Items.Add(new BO.OrderItem
+        //    {
+        //        Id = item.Id,
+        //        Amount = item.Amount,
+        //        Price = item.Price,
+        //        ProductId = item.ProductId,
+        //        TotalPrice = item.Price * item.Amount,
+        //        ProductName = Dal.Product.Get(item.ProductId).Name
+        //    });
+        //}
+
+        //foreach (BO.OrderItem item in orderItems)
+        //    boOrder.Items.Add(item);
         return boOrder;
     }
 
@@ -145,7 +160,8 @@ internal class Order : IOrder
         { ID = orderId,
           status = status_ 
         };
-        
+
+        //orderTracking.TrackingList = new List<Tuple<DateTime?, string>>();
         orderTracking.TrackingList.Add(new Tuple <DateTime?, string>(dataOrder.OrderDate, "The order created"));
         if(dataOrder.ShipDate != null)
             orderTracking.TrackingList.Add(new Tuple<DateTime?, string>(dataOrder.ShipDate, "The order shipped"));
@@ -244,8 +260,6 @@ internal class Order : IOrder
         {
             if (order.ShipDate != null)
                 status = BO.Status.SHIPPED;
-            //else if (boOrder.OrderDate < DateTime.Now)
-            //    boOrder.status = BO.Status.APPROVED;
             else status = BO.Status.APPROVED;
         }
         return status;

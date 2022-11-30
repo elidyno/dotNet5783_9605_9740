@@ -13,19 +13,27 @@ namespace BO
         public DateTime? DeliveryDate { get; set; }
         //public DateTime PaymentDate { get; set; }
         public double TotalPrice { get; set; }
-        public List<OrderItem> Items { get; set; }
+        public List<OrderItem> Items  { get; set; }
         public Status status { get; set; }
-        public override string ToString() => $@"
-        Order Id: {Id},
-        Name: {CustomerName},
-        Email: {CustomerEmail},
-        Adress: {CustomerAdress},
-        Order date: {OrderDate},
-        Ship Date: {ShipDate},
-        Delivery Date: {DeliveryDate},
-        Status: {status},
-        Items: {Items},
-        Total Price: {TotalPrice}";
+        public override string ToString()
+        {
+            string str = "";
+            foreach (var item in Items) 
+                str += item.ToString();
+            
+            return  $@"
+           Order Id: {Id}
+           Name: {CustomerName}
+           Email: {CustomerEmail}
+           Adress: {CustomerAdress}
+           Order date: {OrderDate}
+           Ship Date: {ShipDate}
+           Delivery Date: {DeliveryDate}
+           Status: {status}
+           Items: {str}
+           Total Price: {TotalPrice}";
+        }
+        
 
     }
 }
