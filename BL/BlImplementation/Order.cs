@@ -141,7 +141,7 @@ internal class Order : IOrder
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            throw new BO.DataRequestFailedException(e.Message);
         }
         BO.Status status_ = GetStatus(dataOrder);
         BO.OrderTracking orderTracking = new BO.OrderTracking()
@@ -152,9 +152,9 @@ internal class Order : IOrder
 
         orderTracking.TrackingList = new List<(DateTime?, string)>();
         orderTracking.TrackingList.Add((dataOrder.OrderDate, "The order created"));
-        if(dataOrder.ShipDate != null)
+        if (dataOrder.ShipDate != null)
             orderTracking.TrackingList.Add((dataOrder.ShipDate, "The order shipped"));
-        if(dataOrder.DeliveryDate != null)
+        if (dataOrder.DeliveryDate != null)
             orderTracking.TrackingList.Add((dataOrder.DeliveryDate, "The order delivered"));
 
         return orderTracking;
