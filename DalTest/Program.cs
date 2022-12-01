@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.ComponentModel.DataAnnotations;
 
 namespace Dal;
 #region Emums
@@ -528,6 +529,10 @@ class Program
     }
     #endregion
 }
+
+
+//BL test//
+
 //using BlApi;
 //using Dal;
 //using DalApi;
@@ -716,5 +721,1044 @@ class Program
 
 //            } while (!exit);
 //        }
+//    }
+//}
+
+
+//BO//
+
+
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+
+//namespace BO
+//{
+//    public class Cart
+//    {
+//        public string CustomerName { get; set; }
+//        public string CustomerEmail { get; set; }
+//        public string CustomerAdress { get; set; }
+//        public List<OrderItem> Items { get; set; }
+//        public double TotalPrice { get; set; }
+//        public override string ToString()
+//        {
+//            string tmp = "";
+//            foreach (var item in Items)
+//                tmp += item.ToString();
+//            string toString;
+//            toString = ($@"
+//        Name: {CustomerName},
+//        Email: {CustomerEmail},
+//        Adress: {CustomerAdress}");
+//            toString += tmp + ($@"
+//        TotalPrice: {TotalPrice}");
+//            return toString;
+//        }
+//    }
+//}
+
+
+//namespace BO;
+
+//public enum Category
+//{
+//    MEN,
+//    WOMANS,
+//    BOYS,
+//    GIRLS,
+//    ACCESSORIES
+//};
+
+//public enum Status
+//{
+//    APPROVED, SHIPPED, DELIVERED
+//}
+
+
+
+
+
+//namespace BO
+//{
+//    [Serializable]
+//    public class DataRequestFailedException : Exception
+//    {
+//        [NonSerialized] bool message_ = false;
+//        public DataRequestFailedException() : base() { }
+//        public DataRequestFailedException(string message) : base(message) { message_ = true; }
+//        public DataRequestFailedException(string message, Exception inner) : base(message, inner) { }
+//        public override string ToString()
+//        {
+//            string generalMess = "Data Request Failed Exception:";
+//            string toString = message_ ? (Message + " " + generalMess + " " + InnerException)
+//                : (generalMess + " " + InnerException);
+//            return toString;
+//        }
+//    }
+
+//    [Serializable]
+//    public class InvalidValueException : Exception
+//    {
+//        public InvalidValueException() : base() { }
+//        public InvalidValueException(string message) : base(message) { }
+//        public override string ToString()
+//        {
+//            return "invalid input value: " + Message;
+//        }
+//    }
+
+//    [Serializable]
+//    public class InvalidEmailFormatException : Exception
+//    {
+//        public InvalidEmailFormatException() : base("invalid Email format:") { }
+//        public override string ToString()
+//        {
+//            return @"
+//invalid Email forma:
+//The format must be: Example@domain.suffix";
+//        }
+//    }
+
+//    [Serializable]
+//    public class AmountAndPriceException : Exception
+//    {
+//        public AmountAndPriceException() : base() { }
+//        public AmountAndPriceException(string message) : base(message) { }
+//        public override string ToString()
+//        {
+//            return "Error - Amount or Price: " + Message;
+//        }
+//    }
+//    [Serializable]
+//    public class CantBeDeletedException : Exception
+//    {
+//        public CantBeDeletedException() : base() { }
+//        public CantBeDeletedException(string message) : base(message) { }
+//        public override string ToString()
+//        {
+//            return "The Item can't be deleted: " + Message;
+//        }
+//    }
+//}
+
+
+
+
+
+//namespace BO
+//{
+//    public class Order
+//    {
+//        public int Id { get; set; }
+//        public string CustomerName { get; set; }
+//        public string CustomerEmail { get; set; }
+//        public string CustomerAdress { get; set; }
+//        public DateTime? OrderDate { get; set; }
+//        public DateTime? ShipDate { get; set; }
+//        public DateTime? DeliveryDate { get; set; }
+//        //public DateTime PaymentDate { get; set; }
+//        public double TotalPrice { get; set; }
+//        public List<OrderItem> Items { get; set; }
+//        public Status status { get; set; }
+//        public override string ToString()
+//        {
+//            string str = "";
+//            foreach (var item in Items)
+//                str += item.ToString();
+
+//            return $@"
+//            Order Id: {Id}
+//            Name: {CustomerName}
+//            Email: {CustomerEmail}
+//            Adress: {CustomerAdress}
+//            Order date: {OrderDate}
+//            Ship Date: {ShipDate}
+//            Delivery Date: {DeliveryDate}
+//            Status: {status}
+//            Items: {str}
+//            Total Price: {TotalPrice}";
+
+//        }
+
+
+//    }
+//}
+
+
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+
+//namespace BO
+//{
+//    public class OrderForList
+//    {
+//        public int Id { get; set; }
+//        public string CustomerName { get; set; }
+//        public int AmountOfItems { get; set; }
+//        public double TotalPrice { get; set; }
+//        public Status status { get; set; }
+//        public override string ToString() => $@"
+//        Order Id: {Id},
+//        Name: {CustomerName},
+//        Amount of items: {AmountOfItems},
+//        Total Price: {TotalPrice},
+//        Status: {status}";
+
+//    }
+//}
+
+
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+
+//namespace BO
+//{
+//    public class OrderItem
+//    {
+//        public int Id { get; set; }
+//        public string ProductName { get; set; }
+//        public int Amount { get; set; }
+//        public int ProductId { get; set; }
+//        public double Price { get; set; }
+//        public double TotalPrice { get; set; }
+//        public override string ToString() => $@"
+//        Order item Id: {Id},
+//        Product Name: {ProductName},
+//        Product Id: {ProductId},
+//        Price: {Price},
+//        Amount: {Amount},
+//        Total Price: {TotalPrice}";
+//    }
+//}
+
+
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+
+//namespace BO
+//{
+//    public class OrderTracking
+//    {
+//        public int ID { get; set; }
+//        public Status status { get; set; }
+//        public List<(DateTime?, string)>? TrackingList { get; set; }
+//        public override string ToString() => $@"
+//        Order ID: {ID}, 
+//        Status: {status}";
+//    }
+//}
+
+
+
+//namespace BO;
+
+//public class Product
+//{
+//    public int Id { get; set; }
+//    public string Name { get; set; }
+//    public double Price { get; set; }
+
+//    public Category Category { get; set; }
+//    public int InStock { get; set; }
+
+//    public override string ToString() => $@"
+//    Product Id : {Id},
+//    Name :       {Name},
+//    Category:    {Category},
+//    Price:       {Price},
+//    Amount in stock: {InStock}
+//";
+//}
+
+
+// bl implation//
+
+//using BlApi;
+
+
+//namespace BlImplementation
+//{
+//    sealed public class Bl : IBl
+//    {
+//        public IProduct Product => new Product();
+
+//        public IOrder Order => new Order();
+
+//        public ICart Cart => new Cart();
+//    }
+//}
+
+
+//using BlApi;
+//using BO;
+//using DO;
+//using System.ComponentModel.DataAnnotations;
+
+//namespace BlImplementation
+//{
+//    internal class Cart : ICart
+//    {
+//        private DalApi.IDal Dal = new Dal.DalList(); //Using it we can access the data access classes
+//        /// <summary>
+//        /// add a product to the Cart of Customer
+//        /// </summary>
+//        /// <param name="cart"></param>
+//        /// <param name="productId"></param>
+//        /// <returns>the cart withr the product adeed</returns>
+//        /// <exception cref="BO.DataRequestFailedException"></exception>
+//        public BO.Cart Add(BO.Cart cart, int productId)
+//        {
+//            DO.Product dataProduct = new DO.Product();
+//            try
+//            {
+//                dataProduct = Dal.Product.Get(productId);
+//            }
+//            catch (Exception e)
+//            {
+//                throw new BO.DataRequestFailedException(e.Message);
+//            }
+//            //If the product does not exist in the cart, then add a new product
+//            if (!cart.Items.Exists(x => x.ProductId == productId))
+//            {
+//                if (dataProduct.InStock > 0)
+//                {
+//                    BO.OrderItem orderItem = new BO.OrderItem()
+//                    {
+//                        ProductId = productId,
+//                        ProductName = dataProduct.Name,
+//                        Amount = 1,
+//                        Id = 0,
+//                        Price = dataProduct.Price,
+//                        TotalPrice = dataProduct.Price
+//                    };
+//                    cart.Items.Add(orderItem);
+//                    cart.TotalPrice += dataProduct.Price;
+
+//                }
+
+//            }
+//            //If the product is in the cart, update the amount and price
+//            else if (dataProduct.InStock > 0)
+//            {
+//                int i = cart.Items.FindIndex(x => x.ProductId == productId);
+//                cart.Items[i].Amount += 1;
+//                cart.Items[i].TotalPrice += cart.Items[i].Price;
+//                cart.TotalPrice += cart.Items[i].Price;
+//            }
+
+//            return cart;
+//        }
+
+//        /// <summary>
+//        /// Approve the cart of customer:
+//        /// chack validation of data in cart
+//        /// Checks that there is sufficient quantity in stock for the order
+//        /// update the Amount of product in Dal
+//        /// </summary>
+//        /// <param name="cart"></param>
+//        /// <param name="customerName"></param>
+//        /// <param name="customerEmail"></param>
+//        /// <param name="customerAdress"></param>
+//        /// <exception cref="InvalidValueException"></exception>
+//        /// <exception cref="InvalidEmailFormatException"></exception>
+//        /// <exception cref="DataRequestFailedException"></exception>
+//        /// <exception cref="AmountAndPriceException"></exception>
+//        public void Approve(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
+//        {
+//            //check validation of Customer data parameters
+//            if (customerName == null)
+//                throw new InvalidValueException("Name of customer can't be empthy");
+//            if (customerAdress == null)
+//                throw new InvalidValueException("adress of customer can't be empthy");
+//            if (customerEmail == null)
+//                throw new InvalidValueException("Email of customer can't be empthy");
+//            if (!new EmailAddressAttribute().IsValid(customerEmail))
+//                throw new InvalidEmailFormatException();
+//            //check validation of cart parameter
+//            if (cart.CustomerEmail != customerEmail)
+//                throw new InvalidValueException("Email adress in cart not equal to EmailAdresss parameter");
+//            if (cart.CustomerAdress != customerAdress)
+//                throw new InvalidValueException("Adress in cart not equal to Adresss parameter");
+//            if (cart.CustomerName != customerName)
+//                throw new InvalidValueException("Customer name in cart not equal to Customer name parameter");
+//            double totalPrice_ = 0;
+//            DO.Product product_ = new();
+
+//            //chack validation of each ItemOrder in cart
+//            foreach (var item in cart.Items)
+//            {
+//                try
+//                {
+//                    product_ = Dal.Product.Get(item.ProductId);
+//                }
+//                catch (Exception e)
+//                {
+//                    throw new DataRequestFailedException($"ERROR in {item.ProductName}:", e);
+//                }
+//                if (item.Amount <= 0)
+//                    throw new InvalidValueException(item.ProductName + " must be greater than zero");
+//                if (product_.InStock < item.Amount)
+//                    throw new AmountAndPriceException($"The product {item.ProductName} (ID:) {item.ProductId} is out of stock");
+//                if (item.Price != product_.Price)
+//                    throw new AmountAndPriceException($"price in cart of {item.ProductName} not match to price in Data Surce");
+//                if (item.TotalPrice != (item.Amount * product_.Price))
+//                    throw new AmountAndPriceException($"Total price of {item.ProductId} not match to Price and Amount in Cart");
+//                totalPrice_ += item.TotalPrice;
+//            }
+//            if (totalPrice_ != cart.TotalPrice)
+//                throw new AmountAndPriceException("Total price in cart not match to prices and Amont of all item in cart");
+
+//            //creat a new  dal order
+//            DO.Order order = new()
+//            {
+//                CustomerName = customerName,
+//                CustomerAdress = customerAdress,
+//                CustomerEmail = customerEmail,
+//                OrderDate = DateTime.Now,
+//                ShipDate = null,
+//                DeliveryDate = null
+//            };
+//            try
+//            {
+//                //try to add order to data sirce in Dal
+//                int orderId = Dal.Order.Add(order);
+//                //create orderItem in Dal and update amount of product
+//                DO.OrderItem orderItem = new();
+//                foreach (var item in cart.Items)
+//                {
+//                    //create an orderItem for dall and add it
+//                    orderItem.OrderId = orderId;
+//                    orderItem.ProductId = item.ProductId;
+//                    orderItem.Amount = item.Amount;
+//                    orderItem.Price = item.Price;
+//                    int orderItemId = Dal.OrderItem.Add(orderItem);
+//                    //update amount of product in Dak
+//                    product_ = Dal.Product.Get(item.ProductId);
+//                    product_.InStock -= item.Amount;
+//                    Dal.Product.Update(product_);
+//                }
+//            }
+//            catch (Exception e)
+//            {
+
+//                throw new DataRequestFailedException(e.Message);
+//            }
+//        }
+
+//        /// <summary>
+//        /// update amount of a product in cart: chack if it's possible
+//        /// </summary>
+//        /// <param name="cart"></param>
+//        /// <param name="productId"></param>
+//        /// <param name="newAmount"></param>
+//        /// <returns></returns>
+//        /// <exception cref="BO.DataRequestFailedException"></exception>
+//        public BO.Cart Update(BO.Cart cart, int productId, int newAmount)
+//        {
+//            int i = cart.Items.FindIndex(x => x.ProductId == productId);
+//            if (i < 0)
+//            {
+//                throw new BO.DataRequestFailedException("knkn"); //?
+//            }
+//            //Adding items from an existing product
+//            else if (cart.Items[i].Amount < newAmount)
+//            {
+//                int additionalItems = newAmount - cart.Items[i].Amount;
+//                cart.Items[i].Amount = newAmount;
+//                cart.Items[i].TotalPrice += cart.Items[i].Price * additionalItems;
+//                cart.TotalPrice += cart.Items[i].Price * additionalItems;
+//            }
+//            //Deleting a product from the cart
+//            else if (newAmount == 0)
+//            {
+//                cart.TotalPrice -= cart.Items[i].TotalPrice;
+//                cart.Items.RemoveAt(i);
+//            }
+//            //Reducing items from an existing product
+//            else
+//            {
+//                int reducingItems = cart.Items[i].Amount - newAmount;
+//                cart.Items[i].Amount = newAmount;
+//                cart.Items[i].TotalPrice -= cart.Items[i].Price * reducingItems;
+//                cart.TotalPrice -= cart.Items[i].Price * reducingItems;
+//            }
+//            return cart;
+//        }
+//    }
+//}
+
+
+//using BlApi;
+////using BO;
+////using DO;
+////using BO;
+//using System.Collections.Generic;
+
+//namespace BlImplementation;
+
+//internal class Order : IOrder
+//{
+//    private DalApi.IDal Dal = new Dal.DalList(); //Using it we can access the data access classes
+
+//    /// <summary>
+//    /// Returns an order (logical entity) by order id
+//    /// </summary>
+//    /// <param name="orderId"></param>
+//    /// <returns></returns>
+//    /// <exception cref="ArgumentOutOfRangeException"></exception>
+//    public BO.Order Get(int orderId)
+//    {
+//        DO.Order dataOrder = new DO.Order();
+//        if (orderId <= 0)
+//        {
+//            throw new BO.InvalidValueException("Id must be greater than zero");
+//        }
+//        //Try requesting an order from data layer
+//        try
+//        {
+//            dataOrder = Dal.Order.Get(orderId);
+//        }
+//        catch (Exception e)
+//        {
+//            throw new BO.DataRequestFailedException(e.Message);
+//        }
+
+//        IEnumerable<DO.OrderItem> items = new List<DO.OrderItem>();
+//        //Try requesting a List of orderItems from a data layer
+//        try
+//        {
+//            items = Dal.OrderItem.GetItemsListByOrderId(orderId);
+//        }
+//        catch (Exception e)
+//        {
+//            throw new BO.DataRequestFailedException(e.Message);
+//        }
+
+//        //Creating a list of orderItems - logical entities
+//        List<BO.OrderItem> orderItems = new List<BO.OrderItem>();
+//        foreach (DO.OrderItem item in items)
+//        {
+//            orderItems.Add(new BO.OrderItem
+//            {
+//                Id = item.Id,
+//                Amount = item.Amount,
+//                Price = item.Price,
+//                ProductId = item.ProductId,
+//                TotalPrice = item.Price * item.Amount,
+//                ProductName = Dal.Product.Get(item.ProductId).Name
+//            });
+//        }
+
+//        //Calculates the total order price
+//        double totalOrderPrice = 0;
+//        foreach (BO.OrderItem item in orderItems)
+//            totalOrderPrice += item.TotalPrice;
+
+//        //Calculates the status according to the order data in relation to the current time.
+//        BO.Status status_ = GetStatus(dataOrder);
+
+//        //Create Order - logical entity
+//        BO.Order boOrder = new BO.Order()
+//        {
+//            Id = dataOrder.Id,
+//            CustomerName = dataOrder.CustomerName,
+//            CustomerEmail = dataOrder.CustomerEmail,
+//            CustomerAdress = dataOrder.CustomerAdress,
+//            OrderDate = dataOrder.OrderDate,
+//            ShipDate = dataOrder.ShipDate,
+//            DeliveryDate = dataOrder.DeliveryDate,
+//            //Items = orderItems,
+//            TotalPrice = totalOrderPrice,
+//            status = status_
+//        };
+
+//        boOrder.Items = new List<BO.OrderItem>();
+//        foreach (BO.OrderItem item in orderItems)
+//            boOrder.Items.Add(item);
+//        return boOrder;
+//    }
+
+//    /// <summary>
+//    /// Returns a list of orders
+//    /// </summary>
+//    /// <returns></returns>
+//    public IEnumerable<BO.OrderForList> GetList()
+//    {
+//        IEnumerable<DO.Order> orders = new List<DO.Order>();
+//        //Try requesting order list from a data layer
+//        orders = Dal.Order.GetList();
+
+//        //Creating a list of OrderForList -logical entities
+//        List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
+
+//        //Populates the list by creating "OrderForList" type objects based on order data and OrderItem data and additional calculations.
+//        foreach (DO.Order order in orders)
+//        {
+//            //For each order, request the list of orderItems
+//            IEnumerable<DO.OrderItem> items = new List<DO.OrderItem>();
+//            items = Dal.OrderItem.GetItemsListByOrderId(order.Id);
+
+//            int amountOfItems = items.Count();
+
+//            //Calculates the Total Price
+//            double totalPrice = 0;
+//            foreach (DO.OrderItem item in items)
+//                totalPrice += item.Price * item.Amount;
+
+//            //Calculates the status according to the order data in relation to the current time.
+//            BO.Status status_ = GetStatus(order);
+
+//            ordersForList.Add(new BO.OrderForList()
+//            {
+//                Id = order.Id,
+//                CustomerName = order.CustomerName,
+//                AmountOfItems = amountOfItems,
+//                TotalPrice = totalPrice,
+//                status = status_
+//            });
+
+//        }
+
+//        return ordersForList;
+//    }
+
+//    public BO.OrderTracking GetTracking(int orderId)
+//    {
+//        DO.Order dataOrder = new DO.Order();
+//        try
+//        {
+//            dataOrder = Dal.Order.Get(orderId);
+//        }
+//        catch (Exception e)
+//        {
+//            throw new BO.DataRequestFailedException(e.Message);
+//        }
+//        BO.Status status_ = GetStatus(dataOrder);
+//        BO.OrderTracking orderTracking = new BO.OrderTracking()
+//        {
+//            ID = orderId,
+//            status = status_
+//        };
+
+//        orderTracking.TrackingList = new List<(DateTime?, string)>();
+//        orderTracking.TrackingList.Add((dataOrder.OrderDate, "The order created"));
+//        if (dataOrder.ShipDate != null)
+//            orderTracking.TrackingList.Add((dataOrder.ShipDate, "The order shipped"));
+//        if (dataOrder.DeliveryDate != null)
+//            orderTracking.TrackingList.Add((dataOrder.DeliveryDate, "The order delivered"));
+
+//        return orderTracking;
+//    }
+
+//    public BO.Order UpdateOrderDelivery(int orderId)
+//    {
+//        BO.Order boOrder = new BO.Order();
+//        DO.Order dataOrder = new DO.Order();
+//        try
+//        {
+//            dataOrder = Dal.Order.Get(orderId);
+//            boOrder = Get(orderId);
+//        }
+//        catch (DO.NotFoundException e)
+//        {
+//            throw new BO.DataRequestFailedException(e.Message);
+//        }
+//        catch (BO.InvalidValueException e)
+//        {
+//            throw new BO.InvalidValueException(e.Message);
+//        }
+
+//        //If the order has been shipped (but not yet delivered) then update the delivery date
+//        if (boOrder.status == BO.Status.SHIPPED)
+//        {
+//            dataOrder.DeliveryDate = DateTime.Now;
+//            boOrder.DeliveryDate = DateTime.Now;
+//            boOrder.status = BO.Status.DELIVERED;
+//        }
+
+//        //Attempting to update the data layer
+//        try
+//        {
+//            Dal.Order.Update(dataOrder);
+//        }
+//        catch (DO.NotFoundException e)
+//        {
+//            throw new BO.DataRequestFailedException(e.Message);
+//        }
+
+//        return boOrder;
+//    }
+
+//    public BO.Order UpdateOrderSheep(int orderId)
+//    {
+//        BO.Order boOrder = new BO.Order();
+//        DO.Order dataOrder = new DO.Order();
+//        try
+//        {
+//            dataOrder = Dal.Order.Get(orderId);
+//            boOrder = Get(orderId);
+//        }
+//        catch (DO.NotFoundException e)
+//        {
+//            throw new BO.DataRequestFailedException(e.Message);
+//        }
+//        catch (BO.InvalidValueException e)
+//        {
+//            throw new BO.InvalidValueException(e.Message);
+//        }
+
+
+//        //If the given status is that the order has been approved (but not yet shipped),
+//        //then update the delivery date to now.
+//        if (boOrder.status == BO.Status.APPROVED)
+//        {
+//            dataOrder.ShipDate = DateTime.Now;
+//            boOrder.ShipDate = DateTime.Now;
+//            boOrder.status = BO.Status.SHIPPED;
+//        }
+
+//        //Attempting to update the data layer
+//        try
+//        {
+//            Dal.Order.Update(dataOrder);
+//        }
+//        catch (DO.NotFoundException e)
+//        {
+//            throw new BO.DataRequestFailedException(e.Message);
+//        }
+
+//        return boOrder;
+//    }
+
+//    public BO.Status GetStatus(DO.Order order)
+//    {
+//        BO.Status status;
+//        if (order.DeliveryDate != null)
+//            status = BO.Status.DELIVERED;
+//        else
+//        {
+//            if (order.ShipDate != null)
+//                status = BO.Status.SHIPPED;
+//            else status = BO.Status.APPROVED;
+//        }
+//        return status;
+//    }
+//}
+
+
+
+//using BlApi;
+//using BO;
+//using Dal;
+//using DalApi;
+//using System.Collections.Generic;
+
+//namespace BlImplementation
+//{
+//    /// <summary>
+//    /// Icraud method of product and some other method. implementaion of IProduct
+//    /// </summary>
+//    internal class Product : BlApi.IProduct
+//    {
+//        DalApi.IDal Dal = new Dal.DalList();
+//        /// <summary>
+//        /// add a Bl product => chack logical valid of data and add to Dal data surce
+//        /// </summary>
+//        /// <param name="product"></param>
+//        /// <exception cref="BO.InvalidValueException"></exception>
+//        /// <exception cref="DataRequestFailedException"></exception>
+//        public void Add(BO.Product product)
+//        {
+//            //Validity checks of input format
+//            if (product.Id <= 0)
+//                throw new BO.InvalidValueException("Id must be greater than zero");
+//            if (product.Name == null)
+//                throw new BO.InvalidValueException("Name can't be empthy be greater than zero"
+//            if (product.Price <= 0)
+//                throw new BO.InvalidValueException("Price must be greater than zero");
+//            if (product.InStock < 0)
+//                throw new BO.InvalidValueException("InStock Value must be greater than zero");
+
+//            //add a Dal Product to DalList
+//            DO.Product DoProduct = new DO.Product()
+//            {
+//                Id = product.Id,
+//                Name = product.Name,
+//                Price = product.Price,
+//                InStock = product.InStock,
+//                Category = (DO.Category)product.Category
+//            };
+//            try
+//            {
+//                int i = Dal.Product.Add(DoProduct);
+//            }
+//            catch (Exception e)
+//            {
+
+//                throw new DataRequestFailedException(e.Message);
+//            }
+//        }
+
+//        /// <summary>
+//        /// delete a Bl product => chack logical valid of data and delete from Dal data surce
+//        /// </summary>
+//        /// <param name="product"></param>
+//        /// <exception cref="ArgumentException"></exception>
+//        public void Delete(BO.Product product)
+//        {
+//            //chack if product id exsist in orderItem List
+//            if (IsHasBeenOrderd(product.Id))
+//                throw new CantBeDeletedException("The product exist in Item Order List");
+//            try
+//            {
+//                Dal.Product.Delete(product.Id);
+//            }
+//            catch (Exception e)
+//            {
+
+//                throw new DataRequestFailedException(e.Message);
+//            }
+
+//        }
+
+//        /// <summary>
+//        /// get an product from dak and create a lojicial product and return it
+//        /// </summary>
+//        /// <param name="productId"></param>
+//        /// <returns>BO.Product</returns>
+//        /// <exception cref="InvalidValueException"></exception>
+//        /// <exception cref="DataRequestFailedException"></exception>
+//        public BO.Product Get(int productId)
+//        {
+//            if (productId <= 0)
+//                throw new InvalidValueException("id must be greater than zero");
+//            DO.Product dalProduct = new DO.Product();
+//            try
+//            {
+//                dalProduct = Dal.Product.Get(productId);
+//            }
+//            catch (Exception e)
+//            {
+
+//                throw new DataRequestFailedException(e.Message);
+//            }
+//            BO.Product result = new BO.Product()
+//            {
+//                Id = dalProduct.Id,
+//                Name = dalProduct.Name,
+//                Price = dalProduct.Price,
+//                Category = (BO.Category)dalProduct.Category,
+//                InStock = dalProduct.InStock,
+//            };
+//            return result;
+//        }
+
+//        /// <summary>
+//        /// get a product from Dal and create a logicial ProductItem to show un Costomer cart
+//        /// </summary>
+//        /// <param name="productId"></param>
+//        /// <param name="cart"></param>
+//        /// <returns>BO.ProductItem</returns>
+//        /// <exception cref="InvalidValueException"></exception>
+//        /// <exception cref="DataRequestFailedException"></exception>
+//        public BO.ProductItem Get(int productId, BO.Cart cart)
+//        {
+//            if (productId <= 0)
+//                throw new InvalidValueException("id must be greater than zero");
+//            DO.Product dalProduct = new DO.Product();
+//            try
+//            {
+//                dalProduct = Dal.Product.Get(productId);
+//            }
+//            catch (Exception e)
+//            {
+
+//                throw new DataRequestFailedException(e.Message);
+//            }
+//            //calculate the logicial data and return a logicial product for cart screan (customer)
+//            bool inStock_ = dalProduct.InStock > 0;
+//            int amount_ = 0;
+//            foreach (BO.OrderItem item in cart.Items)
+//            {
+//                if (item.Id == productId)
+//                    amount_++;
+//            }
+//            BO.ProductItem productItem = new BO.ProductItem()
+//            {
+//                Id = dalProduct.Id,
+//                Name = dalProduct.Name,
+//                Price = dalProduct.Price,
+//                Category = (BO.Category)dalProduct.Category,
+//                InStock = inStock_,
+//                Amount = amount_
+//            };
+//            return productItem;
+//        }
+
+//        /// <summary>
+//        /// get list of product from Dal and create a logicial productForList
+//        /// </summary>
+//        /// <returns>BO.ProductItem</returns>
+//        /// <exception cref="DataRequestFailedException"></exception>
+//        public IEnumerable<BO.ProductForList> GetList()
+//        {
+//            try
+//            {
+//                IEnumerable<DO.Product> dalProducts = Dal.Product.GetList();
+//                List<BO.ProductForList> result = new List<BO.ProductForList>();
+
+//                foreach (DO.Product product in dalProducts)
+//                {
+//                    result.Add(new BO.ProductForList()
+//                    {
+//                        Id = product.Id,
+//                        Name = product.Name,
+//                        Category = (BO.Category)product.Category,
+//                        Price = product.Price
+//                    });
+//                }
+
+//                return result;
+//            }
+//            catch (Exception e)
+//            {
+
+//                throw new DataRequestFailedException(e.Message);
+//            }
+//        }
+
+//        /// <summary>
+//        /// get as a parameter a logicial Product,
+//        /// chack validation of data and send a DO product to update in Dal
+//        /// </summary>
+//        /// <param name="product"></param>
+//        /// <exception cref="BO.InvalidValueException"></exception>
+//        /// <exception cref="DataRequestFailedException"></exception>
+//        public void Update(BO.Product product)
+//        {
+//            //Validity checks of input format
+//            if (product.Id <= 0)
+//                throw new BO.InvalidValueException("Id must be greater than zero");
+//            if (product.Name == null)
+//                throw new BO.InvalidValueException("Name can't be empthy be greater than zero"
+//            if (product.Price <= 0)
+//                throw new BO.InvalidValueException("Price must be greater than zero");
+//            if (product.InStock < 0)
+//                throw new BO.InvalidValueException("InStock Value must be greater than zero");
+
+//            DO.Product item = new DO.Product()
+//            {
+//                Id = product.Id,
+//                Name = product.Name,
+//                Price = product.Price,
+//                Category = (DO.Category)product.Category,
+//                InStock = product.InStock
+//            };
+//            try
+//            {
+//                Dal.Product.Update(item);
+//            }
+//            catch (Exception e)
+//            {
+
+//                throw new DataRequestFailedException(e.Message);
+//            }
+
+//        }
+
+//        /// <summary>
+//        /// chack if Has the product been ordered?
+//        /// </summary>
+//        /// <param name="productId"></param>
+//        /// <returns>false or true</returns>
+//        public bool IsHasBeenOrderd(int productId)
+//        {
+//            bool exist = false;
+
+//            exist = Dal.OrderItem.GetList().Any(x => x.ProductId == productId);
+//            return exist;
+//        }
+//    }
+//}
+
+
+//BLaPI//
+
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Security.Principal;
+//using System.Text;
+//using System.Threading.Tasks;
+
+//namespace BlApi
+//{
+//    public interface IBl
+//    {
+//        public IProduct Product { get; }
+//        public IOrder Order { get; }
+//        public ICart Cart { get; }
+//    }
+//}
+
+
+
+
+//using BO;
+
+//namespace BlApi
+//{
+//    public interface ICart
+//    {
+//        public Cart Add(Cart cart, int productId);
+//        public Cart Update(Cart cart, int productId, int newAmount);
+//        public void Approve(Cart cart, string customerName, string customerEmail, string customerAdress);
+//    }
+//}
+
+
+//using BO;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+
+//namespace BlApi
+//{
+//    public interface IOrder
+//    {
+//        public Order UpdateOrderSheep(int orderId);
+//        public Order UpdateOrderDelivery(int orderId);
+//        public Order Get(int orderId);
+//        public IEnumerable<OrderForList> GetList();
+//        public OrderTracking GetTracking(int orderId);
+//    }
+//}
+
+
+//using BO;
+//namespace BlApi
+//{
+//    public interface IProduct
+//    {
+//        public void Add(Product product);
+//        public void Update(Product product);
+//        public void Delete(Product product);
+//        public Product Get(int productId);
+//        public ProductItem Get(int productId, Cart cart);
+//        public IEnumerable<ProductForList> GetList();
 //    }
 //}
