@@ -31,12 +31,12 @@ namespace BlTest
             bool exit = false;
             do
             {
-                Console.WriteLine(
-                "Please select one of the following options to test:\n" +
-                   "  1) Product operation\n" +
-                   "  2) Order operation\n"   +
-                   "  3) Cart operation\n"  +
-                   "  0) To exit from menu\n");
+                Console.WriteLine(@"
+    Please select one of the following options to test:
+        1) Product operation
+        2) Order operation
+        3) Cart operation
+        0) To exit from menu");
                 success = MainMenuCode.TryParse(Console.ReadLine(), out menuCode);
                 if (success)
                 {
