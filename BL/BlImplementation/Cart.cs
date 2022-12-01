@@ -8,7 +8,13 @@ namespace BlImplementation
     internal class Cart : ICart
     {
         private DalApi.IDal Dal = new Dal.DalList(); //Using it we can access the data access classes
-
+        /// <summary>
+        /// add a product to the Cart of Customer
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <param name="productId"></param>
+        /// <returns>the cart withr the product adeed</returns>
+        /// <exception cref="BO.DataRequestFailedException"></exception>
         public BO.Cart Add(BO.Cart cart, int productId)
         {
             DO.Product dataProduct = new DO.Product();
@@ -51,6 +57,21 @@ namespace BlImplementation
 
             return cart;
         }
+
+        /// <summary>
+        /// Approve the cart of customer:
+        /// chack validation of data in cart
+        /// Checks that there is sufficient quantity in stock for the order
+        /// update the Amount of product in Dal
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <param name="customerName"></param>
+        /// <param name="customerEmail"></param>
+        /// <param name="customerAdress"></param>
+        /// <exception cref="InvalidValueException"></exception>
+        /// <exception cref="InvalidEmailFormatException"></exception>
+        /// <exception cref="DataRequestFailedException"></exception>
+        /// <exception cref="AmountAndPriceException"></exception>
         public void Approve(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
         {
             //check validation of Customer data parameters
@@ -133,7 +154,14 @@ namespace BlImplementation
             }
         }
 
-
+        /// <summary>
+        /// update amount of a product in cart: chack if it's possible
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <param name="productId"></param>
+        /// <param name="newAmount"></param>
+        /// <returns></returns>
+        /// <exception cref="BO.DataRequestFailedException"></exception>
         public BO.Cart Update(BO.Cart cart, int productId, int newAmount)
         {
             int i = cart.Items.FindIndex(x => x.ProductId == productId);

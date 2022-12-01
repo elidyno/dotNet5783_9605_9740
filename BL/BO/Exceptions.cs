@@ -5,7 +5,7 @@ namespace BO
     [Serializable]
     public class DataRequestFailedException: Exception
     {
-        bool message_ = false;
+        [NonSerialized] bool message_ = false;
         public DataRequestFailedException(): base(){}
         public DataRequestFailedException(string message) : base(message) { message_ = true; }
         public DataRequestFailedException(string message, Exception inner): base(message, inner) { }
