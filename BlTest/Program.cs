@@ -4,6 +4,8 @@ using DalApi;
 using BlImplementation;
 using BO;
 using System.Numerics;
+using Microsoft.VisualBasic;
+using System.Diagnostics.Metrics;
 
 
 namespace BlTest
@@ -21,7 +23,7 @@ namespace BlTest
             UpdateProduct,
             ViewProduct,
             ViewProductToCart,
-            ViewList,
+            ViewList
         }
         enum SubMenu_Order
         {
@@ -60,7 +62,7 @@ namespace BlTest
                             OrderMenu();
                             break;
                         case MainMenuCode.Product:
-                            //call product method
+                            ProductMenu();
                             break;
                         case MainMenuCode.Exit:
                             exit = true;
@@ -251,7 +253,7 @@ namespace BlTest
                                     throw new InvalidInputFormatException("Please entry only a double Number\n");
                                 success = Category.TryParse(Console.ReadLine(), out category);
                                 if (!success)
-                                    throw new InvalidInputFormatException("Please entry only a intiger Number\n");
+                                    throw new InvalidInputFormatException("Please entry only a Category name\n");
                                 success = int.TryParse(Console.ReadLine(), out amount);
                                 if (!success)
                                     throw new InvalidInputFormatException("Please entry only a intiger Number\n");
@@ -264,72 +266,79 @@ namespace BlTest
                                 product.InStock = amount;
                                 bl.Product.Add(product);
                                 break;
-                            case SubMenu_Order.ViewAll:
-                                IEnumerable<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
-                                try
-                                {
-                                    ordersForList = bl.Order.GetList();
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine(e);
-                                    break;
-                                }
-                                foreach (BO.OrderForList order in ordersForList)
-                                    Console.WriteLine(order);
-                                break;
-                            case SubMenu_Order.GetTracking:
-                                Console.WriteLine("Please enter order id");
+                            case SubMenu_Product.DelProduct:
+                                Console.WriteLine("Enter Product Id:");
                                 success = int.TryParse(Console.ReadLine(), out id);
-                                if (success)
-                                {
-                                    BO.OrderTracking orderTracking = new BO.OrderTracking();
-                                    try
-                                    {
-                                        orderTracking = bl.Order.GetTracking(id);
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Console.WriteLine(e);
-                                        break;
-                                    }
-                                    Console.WriteLine(orderTracking);
-                                }
+                                if (!success)
+                                    throw new InvalidInputFormatException("id must be an intinuger number");
+                                bl.Product.Delete(id);
                                 break;
-                            case SubMenu_Order.UpdateOrderDelivery:
-                                Console.WriteLine("Please enter order id");
+                            case SubMenu_Product.UpdateProduct:
+                                Console.WriteLine("Please enter Product id");
                                 success = int.TryParse(Console.ReadLine(), out id);
-                                if (success)
+                                if (!success)
+                                    throw new InvalidInputFormatException("id must be an intinuger number");
+
+                                //get the original item to keep the old value of failde that user wan't to update
+                                BO.Product oldProduct = bl.Product.Get(id);
+
+                                Console.WriteLine("enter new data to updated in Product\n" +
+                                "(only in failde you want to update' else tap Enter)");
+
+                                name = null; //to check after if the user put a value for update
+                                Console.WriteLine("Name:");
+                                name = Console.ReadLine();
+                                if (name == null)
+                                    name = oldProduct.Name;
+
+                                price = double.MinValue; //to check after if the user put a value for update
+                                Console.WriteLine("Price:");
+                                success = double.TryParse(Console.ReadLine(), out price);
+                                if (!success)
+                                    price = oldProduct.Price;
+
+                                //if not entried a new value, keep the old
+                                Console.WriteLine("Category:");
+                                success = Category.TryParse(Console.ReadLine(), out category);
+                                if (!success)
+                                    category = oldProduct.Category;
+
+                                Console.WriteLine("InStock:");
+                                success = int.TryParse(Console.ReadLine(), out amount);
+                                if (!success)
+                                    amount = oldProduct.InStock;
+
+                                BO.Product upProduct = new Product()
                                 {
-                                    BO.Order order = new BO.Order();
-                                    try
-                                    {
-                                        order = bl.Order.UpdateOrderDelivery(id);
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Console.WriteLine(e);
-                                        break;
-                                    }
-                                    Console.WriteLine(order);
-                                }
+                                    Id = id,
+                                    Name = name,
+                                    Price = price,
+                                    Category = category,
+                                    InStock = amount
+                                };
+                                bl.Product.Update(upProduct);
                                 break;
-                            case SubMenu_Order.UpdateOrderSheep:
-                                Console.WriteLine("Please enter order id");
+                            case SubMenu_Product.ViewProduct:
+                                Console.WriteLine("Please enter Product id");
                                 success = int.TryParse(Console.ReadLine(), out id);
-                                if (success)
+                                if (!success)
+                                    throw new InvalidInputFormatException("Please entry only a intiger Number\n");
+                                product = bl.Product.Get(id);
+                                Console.WriteLine(product);
+                                break;
+                            case SubMenu_Product.ViewProductToCart:
+                                Console.WriteLine("Please enter product id");
+                                success = int.TryParse(Console.ReadLine(), out id);
+                                if (!success)
+                                    throw new InvalidInputFormatException("Please entry only a intiger Number\n");
+                                BO.ProductItem item = new();
+                                //need to compleate
+                                break;
+                            case SubMenu_Product.ViewList:
+                                IEnumerable<BO.ProductForList> allProduct = bl.Product.GetList();
+                                foreach (var p in allProduct)
                                 {
-                                    BO.Order order = new BO.Order();
-                                    try
-                                    {
-                                        order = bl.Order.UpdateOrderSheep(id);
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Console.WriteLine(e);
-                                        break;
-                                    }
-                                    Console.WriteLine(order);
+                                    Console.WriteLine(p);
                                 }
                                 break;
                             default:
@@ -354,4 +363,5 @@ namespace BlTest
         }
     }
 }
+
 

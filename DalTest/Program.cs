@@ -155,7 +155,6 @@ class Program
         Enter The New new price");
                     double tmpPrice2 = double.MinValue; //to check after if the user put a value for update
                     double.TryParse(Console.ReadLine(), out tmpPrice2);
-
                     int tmpAmount2 = int.MinValue; //to check after if the user put a value for update
                     Console.WriteLine(@"
         Enter the new amount in stok");

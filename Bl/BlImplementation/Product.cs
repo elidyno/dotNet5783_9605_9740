@@ -53,23 +53,22 @@ namespace BlImplementation
         /// <summary>
         /// delete a Bl product => chack logical valid of data and delete from Dal data surce
         /// </summary>
-        /// <param name="product"></param>
+        /// <param name="productI"></param>
         /// <exception cref="ArgumentException"></exception>
-        public void Delete(BO.Product product)
+        public void Delete(int productId)
         {
             //chack if product id exsist in orderItem List
-            if (IsHasBeenOrderd(product.Id))
+            if (IsHasBeenOrderd(productId))
                 throw new CantBeDeletedException("The product exist in Item Order List");
             try
             {
-                Dal.Product.Delete(product.Id);
+                Dal.Product.Delete(productId);
             }
             catch (Exception e)
             {
 
                 throw new DataRequestFailedException(e.Message);
             }
-
         }
 
         /// <summary>

@@ -11,11 +11,11 @@ public class ProductItem
     public bool InStock { get; set; }
 
     public override string ToString() => $@"
-    Product Id : {Id},
-    Name :       {Name},
-    Category:    {Category},
-    Price:       {Price},
-    Amount in stock: {Amount}
-    It is in stock: {InStock}
+  Product Id:  {Id},
+  Nam:         {Name},
+  Category:    {Category},
+  Price:       {Price},
+  Amount:      {Amount},
+  in stock?    {InStock}
 ";
 }
