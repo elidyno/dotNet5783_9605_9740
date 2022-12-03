@@ -12,9 +12,13 @@ namespace BlTest
 {
     internal class Program
     {
-        // enum for main menu
+        /// <summary>
+        /// enum for main menu
+        /// </summary>
         enum MainMenuCode { Exit, Product, Order, Cart }
-        // enum for sub menue: order operation
+        /// <summary>
+        /// enum for sub menue: test product operation
+        /// </summary>
         enum SubMenu_Product
         {
             ExitSubMenu = 0,
@@ -25,6 +29,9 @@ namespace BlTest
             ViewProductToCart,
             ViewList
         }
+        /// <summary>
+        /// enum for sub menue: test order operation
+        /// </summary>
         enum SubMenu_Order
         {
             ExitSubMenu = 0,
@@ -39,6 +46,10 @@ namespace BlTest
         private static MainMenuCode menuCode;
         private static IBl bl = new BlImplementation.Bl();
 
+        /// <summary>
+        /// main program for test BL
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             bool success = false;
@@ -82,6 +93,9 @@ namespace BlTest
 
         }
 
+        /// <summary>
+        /// chack operation of order in BlImplementation
+        /// </summary>
         static void OrderMenu()
         {
             bool success = false;

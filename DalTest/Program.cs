@@ -4,16 +4,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Dal;
 #region Emums
+/// <summary>
+/// enums for main menu
+/// </summary>
 enum MainMenuCode { Exit, Product, Order, OrderItem };
+/// <summary>
+/// enum to for CRAUD option in sub menus
+/// </summary>
 enum SubMenu_CRAUD { ExitSubMenu = 0, Add, View, ViewAll, Update, Delete, };
-enum SubMenu_ItemOrder { Add = 1, View, ViewAll, Update, Delete, itemByOrderAndProduct, itemListByOrder };
+/// <summary>
+/// special sub menu to check additional operation OrderItem
+/// </summary>
+enum SubMenu_OrderItem { Add = 1, View, ViewAll, Update, Delete, itemByOrderAndProduct, itemListByOrder };
 #endregion     
 class Program
 {
     #region Variable enum
     private static MainMenuCode menuCode;// enum for main menu
     private static SubMenu_CRAUD subMenu_CRAUD;// enum for sub menue: craud operation
-    private static SubMenu_ItemOrder subMenu_ItemOrder; //enum for ItemOrder sub menue: includ also privet method of itemOrder
+    private static SubMenu_OrderItem subMenu_OrderItem; //enum for OrderItem sub menue: includ also privet method of OrderItem
     private static bool exitSubMenu = false; // indicate if exit the sub menue
     private static int exit_ = int.MinValue;
     #endregion
@@ -80,116 +89,125 @@ class Program
         5) To delete a product");
 
             SubMenu_CRAUD.TryParse(Console.ReadLine(), out subMenu_CRAUD);
-            switch (subMenu_CRAUD)
+            try
             {
-                case SubMenu_CRAUD.Add:
-                    Console.WriteLine(@"
+                switch (subMenu_CRAUD)
+                {
+                    case SubMenu_CRAUD.Add:
+                        Console.WriteLine(@"
         Enter the product ID number that you want to add");
-                    int id;
-                    int.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine(@"
+                        int id;
+                        int.TryParse(Console.ReadLine(), out id);
+                        Console.WriteLine(@"
         Enter a product name that you want to add");
-                    string? name;
-                    name = Console.ReadLine();
-                    Console.WriteLine(@"
+                        string? name;
+                        name = Console.ReadLine();
+                        Console.WriteLine(@"
         Enter a product category that you want to add");
-                    Category catgory;
-                    Category.TryParse(Console.ReadLine(), out catgory);
+                        Category catgory;
+                        Category.TryParse(Console.ReadLine(), out catgory);
 
-                    Console.WriteLine(@"
+                        Console.WriteLine(@"
         Enter a product price that you want to add");
-                    double tmpPrice;
-                    double.TryParse(Console.ReadLine(), out tmpPrice);
-                    int tmpAmount;
-                    Console.WriteLine(@"
+                        double tmpPrice;
+                        double.TryParse(Console.ReadLine(), out tmpPrice);
+                        int tmpAmount;
+                        Console.WriteLine(@"
         Enter a product Amount in stok that you want to add");
-                    int.TryParse(Console.ReadLine(), out tmpAmount);
+                        int.TryParse(Console.ReadLine(), out tmpAmount);
 
-                    Product addedProduct = new Product()
-                    {
-                        Id = id,
-                        Name = name,
-                        Category = catgory,
-                        Price = tmpPrice,
-                        InStock = tmpAmount
-                    };
-                    //<Receives a new product and returns his ID>
-                    int addedProductId = dal.Product.Add(addedProduct);
-                    Console.WriteLine("\tThe Product id: " + addedProductId);
-                    break;
-                case SubMenu_CRAUD.View:
-                    Console.WriteLine(@"
+                        Product addedProduct = new Product()
+                        {
+                            Id = id,
+                            Name = name,
+                            Category = catgory,
+                            Price = tmpPrice,
+                            InStock = tmpAmount
+                        };
+                        //<Receives a new product and returns his ID>
+                        int addedProductId = dal.Product.Add(addedProduct);
+                        Console.WriteLine("\tThe Product id: " + addedProductId);
+                        break;
+                    case SubMenu_CRAUD.View:
+                        Console.WriteLine(@"
         Enter the product ID number that you want to see his details");
-                    int.TryParse(Console.ReadLine(), out id);
-                    Product productToShow = new Product();
-                    //<Receives a product ID and returns all product details>
-                    productToShow = dal.Product.Get(id);
-                    Console.WriteLine("\n\t" + productToShow);
-                    break;
-                case SubMenu_CRAUD.ViewAll:
-                    //<Returns all products in the store>
-                    IEnumerable<Product> productsList = dal.Product.GetList();
-                    foreach (Product item in productsList)
-                    {
-                        Console.WriteLine(item);
-                    }
-                    break;
-                case SubMenu_CRAUD.Update:
-                    Console.WriteLine(@"
+                        int.TryParse(Console.ReadLine(), out id);
+                        Product productToShow = new Product();
+                        //<Receives a product ID and returns all product details>
+                        productToShow = dal.Product.Get(id);
+                        Console.WriteLine("\n\t" + productToShow);
+                        break;
+                    case SubMenu_CRAUD.ViewAll:
+                        //<Returns all products in the store>
+                        IEnumerable<Product> productsList = dal.Product.GetList();
+                        foreach (Product item in productsList)
+                        {
+                            Console.WriteLine(item);
+                        }
+                        break;
+                    case SubMenu_CRAUD.Update:
+                        Console.WriteLine(@"
         Enter the product ID number that you want to update his details");
-                    int.TryParse(Console.ReadLine(), out id);
-                    Product oldProduct = dal.Product.Get(id);
-                    Console.WriteLine(oldProduct);
+                        int.TryParse(Console.ReadLine(), out id);
+                        Product oldProduct = dal.Product.Get(id);
+                        Console.WriteLine(oldProduct);
 
-                    name = null; //to check after if the user put a value for update
-                    Console.WriteLine(@"
+                        name = null; //to check after if the user put a value for update
+                        Console.WriteLine(@"
         Enter the new name");
-                    name = Console.ReadLine();
+                        name = Console.ReadLine();
 
-                    Console.WriteLine(@"
+                        Console.WriteLine(@"
         Enter the new category");
-                    int tmpCategory = int.MinValue; //to check after if the user put a value for update
-                    int.TryParse(Console.ReadLine(), out tmpCategory);
+                        int tmpCategory = int.MinValue; //to check after if the user put a value for update
+                        int.TryParse(Console.ReadLine(), out tmpCategory);
 
-                    Console.WriteLine(@"
+                        Console.WriteLine(@"
         Enter The New new price");
-                    double tmpPrice2 = double.MinValue; //to check after if the user put a value for update
-                    double.TryParse(Console.ReadLine(), out tmpPrice2);
-                    int tmpAmount2 = int.MinValue; //to check after if the user put a value for update
-                    Console.WriteLine(@"
+                        double tmpPrice2 = double.MinValue; //to check after if the user put a value for update
+                        double.TryParse(Console.ReadLine(), out tmpPrice2);
+                        int tmpAmount2 = int.MinValue; //to check after if the user put a value for update
+                        Console.WriteLine(@"
         Enter the new amount in stok");
-                    int.TryParse(Console.ReadLine(), out tmpAmount2);
+                        int.TryParse(Console.ReadLine(), out tmpAmount2);
 
-                    //if user not update keep the old value
-                    if (name == null)
-                        name = oldProduct.Name;
-                    if (tmpCategory == null)
-                        tmpCategory = (int)oldProduct.Category;
-                    if (tmpPrice2 == double.MinValue)
-                        tmpPrice2 = oldProduct.Price;
-                    if (tmpAmount2 == int.MinValue)
-                        tmpPrice2 = oldProduct.InStock;
-                    Product updateProduct = new Product()
-                    {
-                        Id = id,
-                        Name = name, // if name is null kipe the old value
-                        Category = (Category)tmpCategory,
-                        Price = tmpPrice2,
-                        InStock = tmpAmount2
-                    };
-                    //<Receives preferred product details and updates it>
-                    dal.Product.Update(updateProduct);
-                    break;
-                case SubMenu_CRAUD.Delete:
-                    Console.WriteLine(@"
+                        //if user not update keep the old value
+                        if (name == null)
+                            name = oldProduct.Name;
+                        if (tmpCategory == null)
+                            tmpCategory = (int)oldProduct.Category;
+                        if (tmpPrice2 == double.MinValue)
+                            tmpPrice2 = oldProduct.Price;
+                        if (tmpAmount2 == int.MinValue)
+                            tmpPrice2 = oldProduct.InStock;
+                        Product updateProduct = new Product()
+                        {
+                            Id = id,
+                            Name = name, // if name is null kipe the old value
+                            Category = (Category)tmpCategory,
+                            Price = tmpPrice2,
+                            InStock = tmpAmount2
+                        };
+                        //<Receives preferred product details and updates it>
+                        dal.Product.Update(updateProduct);
+                        break;
+                    case SubMenu_CRAUD.Delete:
+                        Console.WriteLine(@"
         Enter the product ID number that you want to remove");
-                    int.TryParse(Console.ReadLine(), out id);
-                    //<Receives a product tag and deletes it from the menu>
-                    dal.Product.Delete(id);
-                    break;
-                default:
-                    break;
+                        int.TryParse(Console.ReadLine(), out id);
+                        //<Receives a product tag and deletes it from the menu>
+                        dal.Product.Delete(id);
+                        break;
+                    default:
+                        break;
+                }
             }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e);
+            }
+            
 
             exitSubMenu = false; // innitilize the  continue flag
             Console.ReadKey();
@@ -223,13 +241,14 @@ class Program
         4) To updat an order
         5) To delete an order");
 
+            bool succses;
             int id = int.MinValue;
             string? customeName = null;
             string? email = null;
             string? adress = null;
-            DateTime? orderCreate = null;
-            DateTime? orderShip = null;
-            DateTime? delivery = null;
+            DateTime orderCreate;
+            DateTime orderShip;
+            DateTime delivery;
 
             SubMenu_CRAUD.TryParse(Console.ReadLine(), out subMenu_CRAUD);
             switch (subMenu_CRAUD)
@@ -247,7 +266,7 @@ class Program
                     adress = Console.ReadLine();
                     Console.WriteLine(@"
         Enter a created Order  time");
-                    DateTime.value.TryParse(Console.ReadLine(), out orderCreate);
+                    succses = DateTime.TryParse(Console.ReadLine(), out orderCreate);
                     Console.WriteLine(@"
         Enter a Ship Order  time");
                     DateTime.TryParse(Console.ReadLine(), out orderShip);
@@ -316,18 +335,18 @@ class Program
         Enter the new create date");
                     DateTime.TryParse(Console.ReadLine(), out orderCreate);
                     if (orderCreate == DateTime.MinValue)
-                        orderCreate = oldOrder.OrderDate;
+                        orderCreate = (DateTime)oldOrder.OrderDate;
 
                     Console.WriteLine(@"
         Enter the new ship date");
                     DateTime.TryParse(Console.ReadLine(), out orderShip);
                     if (orderShip == DateTime.MinValue)
-                        orderShip = oldOrder.OrderDate;
+                        orderShip = (DateTime)oldOrder.OrderDate;
 
                     Console.WriteLine(@"Enter the new delivery date");
                     DateTime.TryParse(Console.ReadLine(), out delivery);
                     if (delivery == DateTime.MinValue)
-                        delivery = oldOrder.OrderDate;
+                        delivery = (DateTime)oldOrder.OrderDate;
 
                     Order updateOrder = new Order()
                     {
@@ -372,7 +391,7 @@ class Program
 
     #region OrderItem menu
 
-    // <Gives a submenu for the itemorder entity>
+    // <Gives a submenu for the OrderItem entity>
     static void OrderItemMenue()
     {
         
@@ -388,16 +407,16 @@ class Program
         6) To Show an order item by given product and order Id's
         7) To Shw all order item belongs to one order");
 
-            SubMenu_ItemOrder OrderItem;
+            SubMenu_OrderItem OrderItem;
             int id = int.MinValue;
             int productId = int.MinValue;
             int orderId = int.MinValue;
             int amount = int.MinValue;
             double price = double.MaxValue;
-            SubMenu_ItemOrder.TryParse(Console.ReadLine(), out subMenu_ItemOrder);
-            switch (subMenu_ItemOrder)
+            SubMenu_OrderItem.TryParse(Console.ReadLine(), out subMenu_OrderItem);
+            switch (subMenu_OrderItem)
             {
-                case SubMenu_ItemOrder.Add:
+                case SubMenu_OrderItem.Add:
                     Console.WriteLine(@"
         Enter productID number to add");
                     int.TryParse(Console.ReadLine(), out productId);
@@ -422,7 +441,7 @@ class Program
                     int addedOrderId = dal.OrderItem.Add(addedOrderItem);
                     Console.WriteLine("\tThe Orde item id: " + addedOrderId);
                     break;
-                case SubMenu_ItemOrder.View:
+                case SubMenu_OrderItem.View:
                     Console.WriteLine(@"
         Enter the Order Item ID number that you want to see his details");
                     while (!int.TryParse(Console.ReadLine(), out orderId)) ;
@@ -431,44 +450,44 @@ class Program
                     OrderItemToShow = dal.OrderItem.Get(orderId);
                     Console.WriteLine("\n\t" + OrderItemToShow);
                     break;
-                case SubMenu_ItemOrder.ViewAll:
+                case SubMenu_OrderItem.ViewAll:
                     //<Returns all items in the order>
                     IEnumerable<OrderItem> OrdersItemList = dal.OrderItem.GetList();
                     foreach (OrderItem orderItem in OrdersItemList)
                         Console.WriteLine("\t" + orderItem);
                     break;
-                case SubMenu_ItemOrder.Update:
+                case SubMenu_OrderItem.Update:
                     Console.WriteLine(@"
         Enter the Order item ID number that you want to update his details");
                     int.TryParse(Console.ReadLine(), out orderId);
-                    OrderItem oldItemOrder = dal.OrderItem.Get(orderId);
-                    Console.WriteLine("\t" + oldItemOrder);
+                    OrderItem oldOrderItem = dal.OrderItem.Get(orderId);
+                    Console.WriteLine("\t" + oldOrderItem);
 
                     Console.WriteLine(@"
         Enter the productID number  to update");
                     int.TryParse(Console.ReadLine(), out productId);
                     if (productId == int.MinValue)
-                        productId = oldItemOrder.ProductId;
+                        productId = oldOrderItem.ProductId;
 
                     Console.WriteLine(@"
         Enter the order to update");
                     int.TryParse(Console.ReadLine(), out orderId);
                     if (orderId == int.MinValue)
-                        orderId = oldItemOrder.OrderId;
+                        orderId = oldOrderItem.OrderId;
 
                     Console.WriteLine(@"
         Enter the amountto update");
                     int.TryParse(Console.ReadLine(), out amount);
                     if (amount == int.MinValue)
-                        amount = oldItemOrder.Amount;
+                        amount = oldOrderItem.Amount;
 
                     Console.WriteLine(@"
         Enter the price to update");
                     double.TryParse(Console.ReadLine(), out price);
                     if (price == double.MinValue)
-                        price = oldItemOrder.Price;
+                        price = oldOrderItem.Price;
 
-                    OrderItem updateItemOrder = new OrderItem()
+                    OrderItem updateOrderItem = new OrderItem()
                     {
                         Id = id,
                         ProductId = productId,
@@ -477,16 +496,16 @@ class Program
                         Price = price
                     };
                     //<Receives an updated order item and updates it>
-                    dal.OrderItem.Update(updateItemOrder);
+                    dal.OrderItem.Update(updateOrderItem);
                     break;
-                case SubMenu_ItemOrder.Delete:
+                case SubMenu_OrderItem.Delete:
                     Console.WriteLine(@"
         Enter the Order item ID number to remove");
                     int.TryParse(Console.ReadLine(), out orderId);
                     //<Receives an ID number of an item in the order and cancels it>
                     dal.OrderItem.Delete(orderId);
                     break;
-                case SubMenu_ItemOrder.itemByOrderAndProduct:
+                case SubMenu_OrderItem.itemByOrderAndProduct:
                     Console.WriteLine(@"
         Enter the Order ID:");
                     int.TryParse(Console.ReadLine(), out orderId);
@@ -497,7 +516,7 @@ class Program
                     OrderItem itemToShowByProductAndOrder = dal.OrderItem.GetItemByOrderAndProduct(orderId, productId);
                     Console.WriteLine(itemToShowByProductAndOrder);
                     break;
-                case SubMenu_ItemOrder.itemListByOrder:
+                case SubMenu_OrderItem.itemListByOrder:
                     Console.WriteLine(@"
         Enter the Order ID number that you want to see Item Order that belogs to him");
                     int.TryParse(Console.ReadLine(), out orderId);
