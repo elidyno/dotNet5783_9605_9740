@@ -42,8 +42,9 @@ namespace BlImplementation
                     };
                     cart.Items.Add(orderItem);
                     cart.TotalPrice += dataProduct.Price;
-
                 }
+                else
+                    throw new AmountAndPriceException("The product is out of stock");
 
             }
             //If the product is in the cart, update the amount and price
@@ -54,7 +55,8 @@ namespace BlImplementation
                 cart.Items[i].TotalPrice += cart.Items[i].Price;
                 cart.TotalPrice += cart.Items[i].Price;
             }
-
+            else
+                throw new AmountAndPriceException("The product is out of stock");
             return cart;
         }
 

@@ -46,7 +46,7 @@ The format must be: Example@domain.suffix";
         public AmountAndPriceException(string message) : base(message) { }
         public override string ToString()
         {
-            return "Error - Amount or Price: " + Message;
+            return "Error - Amount / Price: " + Message;
         }
     }
     [Serializable]

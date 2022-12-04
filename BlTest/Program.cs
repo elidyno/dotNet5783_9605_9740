@@ -3,6 +3,9 @@ using Dal;
 using DalApi;
 using BlImplementation;
 using BO;
+using System.Numerics;
+using Microsoft.VisualBasic;
+using System.Diagnostics.Metrics;
 
 
 namespace BlTest
@@ -12,6 +15,16 @@ namespace BlTest
         // enum for main menu
         enum MainMenuCode { Exit, Product, Order, Cart }
         // enum for sub menue: order operation
+        enum SubMenu_Product
+        {
+            ExitSubMenu = 0,
+            AddProduct,
+            DelProduct,
+            UpdateProduct,
+            ViewProduct,
+            ViewProductToCart,
+            ViewList
+        }
         enum SubMenu_Order
         {
             ExitSubMenu = 0,
@@ -22,6 +35,7 @@ namespace BlTest
             UpdateOrderSheep
         }
         private static SubMenu_Order subMenu_Order;
+        private static SubMenu_Product subMenu_Product;
         private static MainMenuCode menuCode;
         private static IBl bl = new BlImplementation.Bl();   //?
 
@@ -48,18 +62,18 @@ namespace BlTest
                             OrderMenu();
                             break;
                         case MainMenuCode.Product:
-                            //call product method
+                            ProductMenu();
                             break;
                         case MainMenuCode.Exit:
                             exit = true;
                             break;
                         default:
-                            Console.WriteLine("Invalid value, please try again\n");
+                            Console.WriteLine("Invalid number:\n Please enter one of the numbers shown in the menu\n");
                             break;
                     }
                 }
                 else
-                    Console.WriteLine("Invalid value, please try again\n");
+                    Console.WriteLine("Please entry only a intiger Number\n");
                 Console.WriteLine("press any key to continue...");
                 Console.ReadKey();
                 Console.Clear();
@@ -197,7 +211,165 @@ namespace BlTest
 
 
             } while (!exit);
+        
+        }
+        
+        /// <summary>
+        /// chack operation of Product in BlImplementation
+        /// </summary>
+        static void ProductMenu()
+        {
+            bool success = false;
+            bool exit = false;
+            int id;
+            string name;
+            double price;
+            BO.Category category;
+            int amount;
+            BO.Product product = new();
+            do
+            {
+                Console.WriteLine(
+                      "Select operation to test:\n" +
+                      "  1) To add a Product\n" +
+                      "  2) To del a Product\n" +
+                      "  3) To update a Product\n" +
+                      "  4) To show a product - Admin screan\n" +
+                      "  5) To show a product - Cart screan\n" +
+                      "  6) To show list of all product\n" +
+                      "  0) To exit from sub menu\n"
+                       );
+                try
+                {
+                    success = SubMenu_Product.TryParse(Console.ReadLine(), out subMenu_Product);
+                    if (success)
+                    {
+                        switch (subMenu_Product)
+                        {
+                            case SubMenu_Product.ExitSubMenu:
+                                exit = true;
+                                break;
+                            case SubMenu_Product.AddProduct:
+                                //requst data of new product to add
+                                Console.WriteLine(" Enter Id number of new Product");
+                                success = int.TryParse(Console.ReadLine(), out id);
+                                if (!success)
+                                    throw new InvalidInputFormatException("Please entry only a intiger Number\n");
+                                name = Console.ReadLine();
+                                success = double.TryParse(Console.ReadLine(), out price);
+                                if (!success)
+                                    throw new InvalidInputFormatException("Please entry only a double Number\n");
+                                success = Category.TryParse(Console.ReadLine(), out category);
+                                if (!success)
+                                    throw new InvalidInputFormatException("Please entry only a Category name\n");
+                                success = int.TryParse(Console.ReadLine(), out amount);
+                                if (!success)
+                                    throw new InvalidInputFormatException("Please entry only a intiger Number\n");
+
+                                //creat a new product and try to add it to database
+                                product.Id = id;
+                                product.Name = name;
+                                product.Price = price;
+                                product.Category = category;
+                                product.InStock = amount;
+                                bl.Product.Add(product);
+                                break;
+                            case SubMenu_Product.DelProduct:
+                                Console.WriteLine("Enter Product Id:");
+                                success = int.TryParse(Console.ReadLine(), out id);
+                                if (!success)
+                                    throw new InvalidInputFormatException("id must be an intinuger number");
+                                bl.Product.Delete(id);
+                                break;
+                            case SubMenu_Product.UpdateProduct:
+                                Console.WriteLine("Please enter Product id");
+                                success = int.TryParse(Console.ReadLine(), out id);
+                                if (!success)
+                                    throw new InvalidInputFormatException("id must be an intinuger number");
+
+                                //get the original item to keep the old value of failde that user wan't to update
+                                BO.Product oldProduct = bl.Product.Get(id);
+
+                                Console.WriteLine("enter new data to updated in Product\n" +
+                                "(only in failde you want to update' else tap Enter)");
+
+                                name = null; //to check after if the user put a value for update
+                                Console.WriteLine("Name:");
+                                name = Console.ReadLine();
+                                if (name == null)
+                                    name = oldProduct.Name;
+
+                                price = double.MinValue; //to check after if the user put a value for update
+                                Console.WriteLine("Price:");
+                                success = double.TryParse(Console.ReadLine(), out price);
+                                if (!success)
+                                    price = oldProduct.Price;
+
+                                //if not entried a new value, keep the old
+                                Console.WriteLine("Category:");
+                                success = Category.TryParse(Console.ReadLine(), out category);
+                                if (!success)
+                                    category = oldProduct.Category;
+
+                                Console.WriteLine("InStock:");
+                                success = int.TryParse(Console.ReadLine(), out amount);
+                                if (!success)
+                                    amount = oldProduct.InStock;
+
+                                BO.Product upProduct = new Product()
+                                {
+                                    Id = id,
+                                    Name = name,
+                                    Price = price,
+                                    Category = category,
+                                    InStock = amount
+                                };
+                                bl.Product.Update(upProduct);
+                                break;
+                            case SubMenu_Product.ViewProduct:
+                                Console.WriteLine("Please enter Product id");
+                                success = int.TryParse(Console.ReadLine(), out id);
+                                if (!success)
+                                    throw new InvalidInputFormatException("Please entry only a intiger Number\n");
+                                product = bl.Product.Get(id);
+                                Console.WriteLine(product);
+                                break;
+                            case SubMenu_Product.ViewProductToCart:
+                                Console.WriteLine("Please enter product id");
+                                success = int.TryParse(Console.ReadLine(), out id);
+                                if (!success)
+                                    throw new InvalidInputFormatException("Please entry only a intiger Number\n");
+                                BO.ProductItem item = new();
+                                //need to compleate
+                                break;
+                            case SubMenu_Product.ViewList:
+                                IEnumerable<BO.ProductForList> allProduct = bl.Product.GetList();
+                                foreach (var p in allProduct)
+                                {
+                                    Console.WriteLine(p);
+                                }
+                                break;
+                            default:
+                                throw new InvalidInputFormatException("Invalid number:\n Please enter one of the numbers shown in the menu \n");
+                                break;
+
+                        }
+                    }
+                    else
+                        throw new InvalidInputFormatException("Please entry only a intiger Number\n");
+
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e);
+                }
+                Console.WriteLine("press any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
+            } while (!exit);
         }
     }
 }
+
 
