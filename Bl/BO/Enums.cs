@@ -3,7 +3,7 @@
 public enum Category
 {
     MEN,
-    WOMANS,
+    WOMEN,
     BOYS,
     GIRLS,
     ACCESSORIES
