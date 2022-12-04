@@ -11,9 +11,16 @@ namespace BO
         public int ID { get; set; }
         public Status status { get; set; }
         public List<(DateTime?, string)>? TrackingList { get; set; }
-        public override string ToString() => $@"
-        Order ID: {ID}, 
-        Status: {status}";
+        public override string ToString()
+        {
+            string str = "";
+            foreach(var t in TrackingList)
+                str += t.ToString() + "\n" + "      ";
+
+            return $"      Order Id: {ID}\n" +
+            $"      status: {status}\n" +
+            $"      {str}";
+        }
     }
 }
 

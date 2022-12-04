@@ -14,7 +14,7 @@ namespace BlTest
     {
         // enum for main menu
         enum MainMenuCode { Exit, Product, Order, Cart }
-        // enum for sub menue: order operation
+        // enum for sub menue: product operation
         enum SubMenu_Product
         {
             ExitSubMenu = 0,
@@ -25,6 +25,7 @@ namespace BlTest
             ViewProductToCart,
             ViewList
         }
+        // enum for sub menue: order operation
         enum SubMenu_Order
         {
             ExitSubMenu = 0,
@@ -34,10 +35,20 @@ namespace BlTest
             UpdateOrderDelivery,
             UpdateOrderSheep
         }
+        // enum for sub menue: cart operation
+        enum SubMenu_Cart
+        {
+            ExitSubMenu = 0,
+            AddItemToCart,
+            UpdateCart,
+            ApproveCart
+        }
+        private static MainMenuCode menuCode;
         private static SubMenu_Order subMenu_Order;
         private static SubMenu_Product subMenu_Product;
-        private static MainMenuCode menuCode;
-        private static IBl bl = new BlImplementation.Bl();   //?
+        private static SubMenu_Cart subMenu_cart;
+       
+        private static IBl bl = new BlImplementation.Bl();   
 
         static void Main(string[] args)
         {
@@ -56,7 +67,7 @@ namespace BlTest
                     switch (menuCode)
                     {
                         case MainMenuCode.Cart:
-                            //call cart method
+                            CartMenu();
                             break;
                         case MainMenuCode.Order:
                             OrderMenu();
@@ -81,7 +92,9 @@ namespace BlTest
             } while (!exit);
 
         }
-
+        /// <summary>
+        /// chack operation of order in BlImplementation
+        /// </summary>
         static void OrderMenu()
         {
             bool success = false;
@@ -123,6 +136,8 @@ namespace BlTest
                                 }
                                 Console.WriteLine(order);
                             }
+                            else
+                                Console.WriteLine("id must be an intinuger number\n"); 
                             break;
                         case SubMenu_Order.ViewAll:
                             IEnumerable<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
@@ -155,6 +170,8 @@ namespace BlTest
                                 }
                                 Console.WriteLine(orderTracking);
                             }
+                            else
+                                Console.WriteLine("id must be an intinuger number\n");
                             break;
                         case SubMenu_Order.UpdateOrderDelivery:
                             Console.WriteLine("Please enter order id");
@@ -173,6 +190,8 @@ namespace BlTest
                                 }
                                 Console.WriteLine(order);
                             }
+                            else
+                                Console.WriteLine("id must be an intinuger number\n");
                             break;
                         case SubMenu_Order.UpdateOrderSheep:
                             Console.WriteLine("Please enter order id");
@@ -191,29 +210,115 @@ namespace BlTest
                                 }
                                 Console.WriteLine(order);
                             }
+                            else
+                                Console.WriteLine("id must be an intinuger number\n");
                             break;
                         default:
                             Console.WriteLine("Invalid value, please try again\n");
-                            Console.WriteLine("press any key to continue...");
-                            Console.ReadKey();
-                            Console.Clear();
                             break;
-
-                    }
+                    }                
                 }
                 else
-                {
                     Console.WriteLine("Invalid value, please try again\n");
-                    Console.WriteLine("press any key to continue...");
-                    Console.ReadKey();
-                    Console.Clear();
-                }
-
+                Console.WriteLine("press any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
 
             } while (!exit);
         
         }
-        
+        /// <summary>
+        /// chack operation of cart in BlImplementation
+        /// </summary>
+        /// <exception cref="InvalidInputFormatException"></exception>
+        static void CartMenu()
+        {
+            string? name, adress, email;
+            int productId, amount;
+            //Creates a cart entity with input from the user
+            Console.WriteLine("Please enter the customer's name");
+            name = Console.ReadLine();
+            Console.WriteLine("Please enter the customer's Email");
+            email = Console.ReadLine();
+            Console.WriteLine("Please enter the customer's adress");
+            adress = Console.ReadLine();
+            BO.Cart cart = new Cart()
+            {
+                CustomerName = name,
+                CustomerAdress = adress,
+                CustomerEmail = email,
+                Items = new List<OrderItem>(),
+                TotalPrice = 0
+            };
+          
+            bool success = false;
+            bool exit = false;
+            do
+            {
+                Console.WriteLine(
+                      "Select operation to test:\n" +
+                      "  1) To add item to cart\n" +
+                      "  2) To update the cart\n" +
+                      "  3) To approve the cart of customer\n" +
+                      "  0) To exit from sub menu\n"
+                       );
+                try
+                {
+                    success = SubMenu_Cart.TryParse(Console.ReadLine(), out subMenu_cart);
+                    if (success)
+                    {
+                        switch (subMenu_cart)
+                        {
+                            case SubMenu_Cart.ApproveCart:
+                                Console.WriteLine("Please enter the customer's name");
+                                name = Console.ReadLine();
+                                Console.WriteLine("Please enter the customer's email");
+                                email = Console.ReadLine();
+                                Console.WriteLine("Please enter the customer's adress");
+                                adress = Console.ReadLine();
+                                bl.Cart.Approve(cart, name, email, adress);
+                                break;
+                            case SubMenu_Cart.AddItemToCart:
+                                Console.WriteLine("Please enter the product id");
+                                success = int.TryParse(Console.ReadLine(), out productId);
+                                if (success)
+                                {
+                                    cart = bl.Cart.Add(cart, productId);
+                                    Console.WriteLine(cart);
+                                }
+                                else
+                                    throw new InvalidInputFormatException("id must be an intinuger number");  
+                                break;
+                            case SubMenu_Cart.UpdateCart:
+                                Console.WriteLine("Please enter the product id");
+                                success = int.TryParse(Console.ReadLine(), out productId);
+                                if (!success)
+                                    throw new InvalidInputFormatException("id must be an intinuger number");
+                                Console.WriteLine("Please enter the new amount");
+                                success = int.TryParse(Console.ReadLine(), out amount);
+                                if (!success)
+                                    throw new InvalidInputFormatException("amount must be an intinuger number");
+                                cart = bl.Cart.Update(cart, productId, amount);
+                                Console.WriteLine(cart);
+                                break;
+                            case SubMenu_Cart.ExitSubMenu:
+                                exit = true;
+                                break;
+                            default: throw new InvalidInputFormatException("Invalid number:\nPlease enter one of the numbers shown in the menu \n");
+                        }
+                    }
+                    else
+                        throw new InvalidInputFormatException("Please entry only a intiger Number\n");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                Console.WriteLine("press any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
+            } while (!exit);
+        }
         /// <summary>
         /// chack operation of Product in BlImplementation
         /// </summary>
@@ -369,6 +474,7 @@ namespace BlTest
                 Console.Clear();
             } while (!exit);
         }
+
     }
 }
 

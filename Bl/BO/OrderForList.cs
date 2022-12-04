@@ -14,10 +14,10 @@ namespace BO
         public double TotalPrice { get; set; }
         public Status status { get; set; }
         public override string ToString() => $@"
-        Order Id: {Id},
-        Name: {CustomerName},
-        Amount of items: {AmountOfItems},
-        Total Price: {TotalPrice},
+        Order Id: {Id}
+        Name: {CustomerName}
+        Amount of items: {AmountOfItems}
+        Total Price: {TotalPrice}
         Status: {status}";
 
     }
