@@ -19,22 +19,24 @@ namespace BO
         {
             string str = "";
             foreach (var item in Items)
-                str += item.ToString();
-
-            return $@"
-            Order Id: {Id}
-            Name: {CustomerName}
-            Email: {CustomerEmail}
-            Adress: {CustomerAdress}
-            Order date: {OrderDate}
-            Ship Date: {ShipDate}
-            Delivery Date: {DeliveryDate}
-            Status: {status}
-            Items: {str}
-            Total Price: {TotalPrice}";
-
+            {
+                if (item.Id != Items[Items.Count -1].Id)
+                    str += item.ToString() + "\n";
+                else
+                    str += item.ToString();
+            }
+                
+            str.Remove(str.Length - 2);
+            return $"      Order Id: {Id}\n" +
+            $"      Name: {CustomerName}\n" +
+            $"      Email: {CustomerEmail}\n" +
+            $"      Adress: {CustomerAdress}\n" +
+            $"      Order date: {OrderDate}\n" +
+            $"      Ship Date: {ShipDate}\n" +
+            $"      Delivery Date: {DeliveryDate}\n" +
+            $"      Status: {status}\n" +
+            $"      Items: {str}\n" +
+            $"      Total Price: {TotalPrice}\n";
         }
-
-
     }
 }

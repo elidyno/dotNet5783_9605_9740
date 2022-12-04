@@ -23,7 +23,7 @@ namespace BlTest
         }
         private static SubMenu_Order subMenu_Order;
         private static MainMenuCode menuCode;
-        private static IBl bl = new BlImplementation.Bl();
+        private static IBl bl = new BlImplementation.Bl();   //?
 
         static void Main(string[] args)
         {
@@ -180,13 +180,21 @@ namespace BlTest
                             break;
                         default:
                             Console.WriteLine("Invalid value, please try again\n");
+                            Console.WriteLine("press any key to continue...");
+                            Console.ReadKey();
+                            Console.Clear();
                             break;
 
                     }
-
-
-
                 }
+                else
+                {
+                    Console.WriteLine("Invalid value, please try again\n");
+                    Console.WriteLine("press any key to continue...");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+
 
             } while (!exit);
         }
