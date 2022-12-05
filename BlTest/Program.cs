@@ -85,15 +85,17 @@ namespace BlTest
                             exit = true;
                             break;
                         default:
-                            Console.WriteLine("Invalid number:\n Please enter one of the numbers shown in the menu\n");
+                            Console.WriteLine("Invalid number: Please enter one of the numbers shown in the menu\n");
                             break;
                     }
                 }
                 else
+                {
                     Console.WriteLine("Please entry only a intiger Number\n");
-                Console.WriteLine("press any key to continue...");
-                Console.ReadKey();
-                Console.Clear();
+                    Console.WriteLine("press any key to continue...");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
 
             } while (!exit);
 
