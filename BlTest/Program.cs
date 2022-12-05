@@ -281,6 +281,7 @@ namespace BlTest
                                 Console.WriteLine("Please enter the customer's adress");
                                 adress = Console.ReadLine();
                                 bl.Cart.Approve(cart, name, email, adress);
+                                Console.WriteLine("The ordr has been orderd succsesufy");
                                 break;
                             case SubMenu_Cart.AddItemToCart:
                                 Console.WriteLine("Please enter the product id");
@@ -329,6 +330,7 @@ namespace BlTest
         /// </summary>
         static void ProductMenu()
         {
+            //all varibe need for all operation
             bool success = false;
             bool exit = false;
             int id;
@@ -337,6 +339,7 @@ namespace BlTest
             BO.Category category;
             int amount;
             BO.Product product = new();
+            IEnumerable<BO.ProductForList> productsList = new List<BO.ProductForList>();
             do
             {
                 Console.WriteLine(
@@ -394,6 +397,13 @@ namespace BlTest
                                 if (!success)
                                     throw new InvalidInputFormatException("id must be an intinuger number");
                                 bl.Product.Delete(id);
+
+                                //get list of product to show the product is deleted from data surce
+                                productsList = bl.Product.GetList();
+                                foreach (var product_ in productsList)
+                                {
+                                    Console.WriteLine(product_);
+                                }
                                 break;
                             case SubMenu_Product.UpdateProduct:
                                 Console.WriteLine("Please enter Product id");
@@ -405,12 +415,12 @@ namespace BlTest
                                 BO.Product oldProduct = bl.Product.Get(id);
 
                                 Console.WriteLine("enter new data to updated in Product\n" +
-                                "(only in failde you want to update' else tap Enter)");
+                                "only in failde you want to update");
 
                                 name = null; //to check after if the user put a value for update
                                 Console.WriteLine("Name:");
                                 name = Console.ReadLine();
-                                if (name == null)
+                                if (name == null || name == "\n")
                                     name = oldProduct.Name;
 
                                 price = double.MinValue; //to check after if the user put a value for update
@@ -439,6 +449,10 @@ namespace BlTest
                                     InStock = amount
                                 };
                                 bl.Product.Update(upProduct);
+
+                                //get list of product to show the product was updated
+                                Console.WriteLine("The product was updated:");
+                                Console.WriteLine(product);
                                 break;
                             case SubMenu_Product.ViewProduct:
                                 Console.WriteLine("Please enter Product id");
@@ -458,6 +472,8 @@ namespace BlTest
                                 //cart is a static var of program class, the user suposte to select this case only after adedd data to the cart
                                 //else, the logic lyer will throw an exception 
                                 item = bl.Product.Get(id, cart);
+                                Console.WriteLine("Product Item in cart:");
+                                Console.WriteLine(item);
                                 break;
                             case SubMenu_Product.ViewList:
                                 IEnumerable<BO.ProductForList> allProduct = bl.Product.GetList();

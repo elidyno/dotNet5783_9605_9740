@@ -2,6 +2,7 @@
 using BO;
 using Dal;
 using DalApi;
+using DO;
 using System.Collections.Generic;
 
 namespace BlImplementation
@@ -23,6 +24,8 @@ namespace BlImplementation
             //Validity checks of input format
             if (product.Id <= 0)
                 throw new BO.InvalidValueException("Id must be greater than zero");
+            if (product.Id < (10 ^ 4) || product.Id >= (10 ^ 5))
+                throw new BO.InvalidValueException("Id must be a 6 digit number");
             if (product.Name == null)
                 throw new BO.InvalidValueException("Name can't be empthy be greater than zero");
             if (product.Price <= 0)
@@ -57,6 +60,11 @@ namespace BlImplementation
         /// <exception cref="ArgumentException"></exception>
         public void Delete(int productId)
         {
+            //Validity checks of input format
+            if (productId <= 0)
+                throw new BO.InvalidValueException("Id must be greater than zero");
+            if (productId < (10 ^ 4) || productId >= (10 ^ 5))
+                throw new BO.InvalidValueException("Id must be a 6 digit number");
             //chack if product id exsist in orderItem List
             if (IsHasBeenOrderd(productId))
                 throw new CantBeDeletedException("The product exist in Item Order List");
@@ -80,8 +88,11 @@ namespace BlImplementation
         /// <exception cref="DataRequestFailedException"></exception>
         public BO.Product Get(int productId)
         {
+            //Validity checks of input format
             if (productId <= 0)
-                throw new InvalidValueException("id must be greater than zero");
+                throw new BO.InvalidValueException("Id must be greater than zero");
+            if (productId < (10 ^ 4) || productId >= (10 ^ 5))
+                throw new BO.InvalidValueException("Id must be a 6 digit number");
             DO.Product dalProduct = new DO.Product();
             try
             {
@@ -113,8 +124,11 @@ namespace BlImplementation
         /// <exception cref="DataRequestFailedException"></exception>
         public BO.ProductItem Get(int productId, BO.Cart cart)
         {
+            //Validity checks of input format
             if (productId <= 0)
-                throw new InvalidValueException("id must be greater than zero");
+                throw new BO.InvalidValueException("Id must be greater than zero");
+            if (productId < (10 ^ 4) || productId >= (10 ^ 5))
+                throw new BO.InvalidValueException("Id must be a 6 digit number");
             DO.Product dalProduct = new DO.Product();
             try
             {
@@ -189,6 +203,8 @@ namespace BlImplementation
             //Validity checks of input format
             if (product.Id <= 0)
                 throw new BO.InvalidValueException("Id must be greater than zero");
+            if (product.Id < (10 ^ 4) || product.Id >= (10 ^ 5))
+                throw new BO.InvalidValueException("Id must be a 6 digit number");
             if (product.Name == null)
                 throw new BO.InvalidValueException("Name can't be empthy be greater than zero");
             if (product.Price <= 0)

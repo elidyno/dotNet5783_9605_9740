@@ -8,9 +8,9 @@ public class ProductForList
     public Category Category { get; set; }
 
     public override string ToString() => $@"
-  Product Id : {Id},
-  Name :       {Name},
-  Category:    {Category},
-  Price:       {Price},
+  Product Id:  {Id}
+  Name:        {Name}
+  Category:    {Category}
+  Price:       {Price}
 ";
 }

@@ -10,10 +10,10 @@ public class Product
     public int InStock { get; set; }
 
     public override string ToString() => $@"
-  Product Id:   {Id},
-  Name:         {Name},
-  Category:     {Category},
-  Price:        {Price},
+  Product Id:   {Id}
+  Name:         {Name}
+  Category:     {Category}
+  Price:        {Price}
   in stock:     {InStock}
 ";
 }

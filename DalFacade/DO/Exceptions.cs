@@ -12,7 +12,7 @@ namespace DO
         public NotFoundException() : base() { }
         public NotFoundException(string message): base(message){}
         public override string ToString()
-        => $@"Dal Exception, Data not found: " + Message;
+        => $@"Dal Exception - Data not found: " + Message;
 
     }
 
