@@ -58,7 +58,8 @@ namespace BlTest
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            
+            int x = 10 ^ 5;
+            Console.WriteLine(x);
             bool success = false;
             bool exit = false;
             do
@@ -330,7 +331,7 @@ namespace BlTest
         /// </summary>
         static void ProductMenu()
         {
-            //all varibe need for all operation
+            //all variable need for all operation
             bool success = false;
             bool exit = false;
             int id;

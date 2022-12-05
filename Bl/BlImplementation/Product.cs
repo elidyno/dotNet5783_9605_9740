@@ -24,7 +24,7 @@ namespace BlImplementation
             //Validity checks of input format
             if (product.Id <= 0)
                 throw new BO.InvalidValueException("Id must be greater than zero");
-            if (product.Id < (10 ^ 5) || product.Id >= (10 ^ 6))
+            if (product.Id < 100000 || product.Id >= 1000000)
                 throw new BO.InvalidValueException("Id must be a 6 digit number");
             if (product.Name == null)
                 throw new BO.InvalidValueException("Name can't be empthy be greater than zero");
@@ -63,7 +63,7 @@ namespace BlImplementation
             //Validity checks of input format
             if (productId <= 0)
                 throw new BO.InvalidValueException("Id must be greater than zero");
-            if (productId < (10 ^ 5) || productId >= (10 ^ 6))
+            if (productId < 100000 || productId >= 1000000)
                 throw new BO.InvalidValueException("Id must be a 6 digit number");
             //chack if product id exsist in orderItem List
             if (IsHasBeenOrderd(productId))
@@ -91,7 +91,7 @@ namespace BlImplementation
             //Validity checks of input format
             if (productId <= 0)
                 throw new BO.InvalidValueException("Id must be greater than zero");
-            if (productId < (10 ^ 5) || productId >= (10 ^ 6))
+            if (productId < 100000 || productId >= 1000000)
                 throw new BO.InvalidValueException("Id must be a 6 digit number");
             DO.Product dalProduct = new DO.Product();
             try
@@ -127,7 +127,7 @@ namespace BlImplementation
             //Validity checks of input format
             if (productId <= 0)
                 throw new BO.InvalidValueException("Id must be greater than zero");
-            if (productId < (10 ^ 5) || productId >= (10 ^ 6))
+            if (productId < 100000 || productId >= 1000000)
                 throw new BO.InvalidValueException("Id must be a 6 digit number");
             DO.Product dalProduct = new DO.Product();
             try
@@ -203,7 +203,7 @@ namespace BlImplementation
             //Validity checks of input format
             if (product.Id <= 0)
                 throw new BO.InvalidValueException("Id must be greater than zero");
-            if (product.Id < (10 ^ 5) || product.Id >= (10 ^ 6))
+            if (product.Id < 100000 || product.Id >= 1000000)
                 throw new BO.InvalidValueException("Id must be a 6 digit number");
             if (product.Name == null)
                 throw new BO.InvalidValueException("Name can't be empthy be greater than zero");
