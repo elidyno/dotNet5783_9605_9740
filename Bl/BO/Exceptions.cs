@@ -9,8 +9,7 @@
         public DataRequestFailedException(string message, Exception inner) : base(message, inner) { }
         public override string ToString()
         {
-            string generalMess = "Data Request Failed Exception:\" +
-                "n";
+            string generalMess = "Data Request Failed Exception:\n";
             string toString = message_ ? (Message + " " + generalMess + " " + InnerException)
                 : (generalMess + " " + InnerException);
             return toString;
