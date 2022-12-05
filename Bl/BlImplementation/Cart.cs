@@ -26,37 +26,34 @@ namespace BlImplementation
             {
                 throw new BO.DataRequestFailedException(e.Message);
             }
+
+            //If the product is out of stock throw an exception
+            if (dataProduct.InStock < 1)
+                throw new AmountAndPriceException("Out of stock");
+
             //If the product does not exist in the cart, then add a new product
             if (!cart.Items.Exists(x => x.ProductId == productId))
             {
-                if (dataProduct.InStock > 0)
+                BO.OrderItem orderItem = new BO.OrderItem()
                 {
-                    BO.OrderItem orderItem = new BO.OrderItem()
-                    {
-                        ProductId = productId,
-                        ProductName = dataProduct.Name,
-                        Amount = 1,
-                        Id = 0,
-                        Price = dataProduct.Price,
-                        TotalPrice = dataProduct.Price
-                    };
-                    cart.Items.Add(orderItem);
-                    cart.TotalPrice += dataProduct.Price;
-                }
-                else
-                    throw new AmountAndPriceException("The product is out of stock");
-
+                    ProductId = productId,
+                    ProductName = dataProduct.Name,
+                    Amount = 1,
+                    Id = 0,
+                    Price = dataProduct.Price,
+                    TotalPrice = dataProduct.Price
+                };
+                cart.Items.Add(orderItem);
+                cart.TotalPrice += dataProduct.Price;
             }
             //If the product is in the cart, update the amount and price
-            else if (dataProduct.InStock > 0)
+            else
             {
                 int i = cart.Items.FindIndex(x => x.ProductId == productId);
                 cart.Items[i].Amount += 1;
                 cart.Items[i].TotalPrice += cart.Items[i].Price;
                 cart.TotalPrice += cart.Items[i].Price;
             }
-            else
-                throw new AmountAndPriceException("The product is out of stock");
             return cart;
         }
 
@@ -163,21 +160,29 @@ namespace BlImplementation
         /// <param name="productId"></param>
         /// <param name="newAmount"></param>
         /// <returns></returns>
-        /// <exception cref="BO.DataRequestFailedException"></exception>
+        /// <exception cref="BO.NotFoundException"></exception>
         public BO.Cart Update(BO.Cart cart, int productId, int newAmount)
         {
             int i = cart.Items.FindIndex(x => x.ProductId == productId);
             if (i < 0)
             {
-                throw new BO.DataRequestFailedException("knkn"); //?
+                throw new BO.NotFoundException("product not found"); 
             }
             //Adding items from an existing product
             else if (cart.Items[i].Amount < newAmount)
             {
-                int additionalItems = newAmount - cart.Items[i].Amount;
-                cart.Items[i].Amount = newAmount;
-                cart.Items[i].TotalPrice += cart.Items[i].Price * additionalItems;
-                cart.TotalPrice += cart.Items[i].Price * additionalItems;
+                //Try to add a requested amount of items as long as the stock does not run out
+                for (int j = 0; j < newAmount; j++)
+                {
+                    try
+                    {
+                        Add(cart, productId);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new AmountAndPriceException(e.Message);
+                    }
+                }                 
             }
             //Deleting a product from the cart
             else if (newAmount == 0)

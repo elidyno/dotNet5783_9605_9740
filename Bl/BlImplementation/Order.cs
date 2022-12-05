@@ -77,14 +77,15 @@ internal class Order : IOrder
             OrderDate = dataOrder.OrderDate,
             ShipDate = dataOrder.ShipDate,
             DeliveryDate = dataOrder.DeliveryDate,
-            //Items = orderItems,
+            //Items = new List<BO.OrderItem>(orderItems);
             TotalPrice = totalOrderPrice,
             status = status_
         };
 
         boOrder.Items = new List<BO.OrderItem>();
-        foreach (BO.OrderItem item in orderItems)
-            boOrder.Items.Add(item);
+        boOrder.Items = orderItems;
+        //foreach (BO.OrderItem item in orderItems)
+        //    boOrder.Items.Add(item);
         return boOrder;
     }
 
@@ -131,7 +132,12 @@ internal class Order : IOrder
 
         return ordersForList;
     }
-
+    /// <summary>
+    /// Returns a watchlist for a given order
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.DataRequestFailedException"></exception>
     public BO.OrderTracking GetTracking(int orderId)
     {
         DO.Order dataOrder = new DO.Order();
@@ -159,7 +165,14 @@ internal class Order : IOrder
 
         return orderTracking;
     }
-
+    /// <summary>
+    /// Updates the order delivery date
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.DataRequestFailedException"></exception>
+    /// <exception cref="BO.InvalidValueException"></exception>
+    /// <exception cref="BO.UpdateFailedException"></exception>
     public BO.Order UpdateOrderDelivery(int orderId)
     {
         BO.Order boOrder = new BO.Order();
@@ -185,6 +198,8 @@ internal class Order : IOrder
             boOrder.DeliveryDate = DateTime.Now;
             boOrder.status = BO.Status.DELIVERED;
         }
+        else
+            throw new BO.UpdateFailedException("The order has not yet been sent or has already been delivered");
 
         //Attempting to update the data layer
         try
@@ -198,7 +213,14 @@ internal class Order : IOrder
 
         return boOrder;
     }
-
+    /// <summary>
+    /// Updates the order shipping date
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.DataRequestFailedException"></exception>
+    /// <exception cref="BO.InvalidValueException"></exception>
+    /// <exception cref="BO.UpdateFailedException"></exception>
     public BO.Order UpdateOrderSheep(int orderId)
     {
         BO.Order boOrder = new BO.Order();
@@ -226,6 +248,8 @@ internal class Order : IOrder
             boOrder.ShipDate = DateTime.Now;
             boOrder.status = BO.Status.SHIPPED;
         }
+        else
+            throw new BO.UpdateFailedException("The order  has already been shipped");
 
         //Attempting to update the data layer
         try
@@ -239,7 +263,11 @@ internal class Order : IOrder
 
         return boOrder;
     }
-
+    /// <summary>
+    /// Calculates the status of the order
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns></returns>
     public BO.Status GetStatus(DO.Order order)
     {
         BO.Status status;

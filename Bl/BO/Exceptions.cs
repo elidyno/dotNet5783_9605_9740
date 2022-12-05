@@ -59,4 +59,19 @@ The format must be: Example@domain.suffix";
             return "The Item can't be deleted: " + Message;
         }
     }
+    [Serializable]
+    public class NotFoundException : Exception
+    {
+        public NotFoundException() : base() { }
+        public NotFoundException(string message) : base(message) { }
+        public override string ToString() => Message;
+        
+    }
+    public class UpdateFailedException : Exception
+    {
+        public UpdateFailedException() : base() { }
+        public UpdateFailedException(string message) : base(message) { }
+        public override string ToString() => Message;
+
+    }
 }
