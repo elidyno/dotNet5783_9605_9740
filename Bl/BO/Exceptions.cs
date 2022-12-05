@@ -64,14 +64,14 @@ The format must be: Example@domain.suffix";
     {
         public NotFoundException() : base() { }
         public NotFoundException(string message) : base(message) { }
-        public override string ToString() => Message;
+        public override string ToString() => "Error: " + Message;
         
     }
     public class UpdateFailedException : Exception
     {
         public UpdateFailedException() : base() { }
         public UpdateFailedException(string message) : base(message) { }
-        public override string ToString() => Message;
+        public override string ToString() => "Error: " + Message;
 
     }
 }

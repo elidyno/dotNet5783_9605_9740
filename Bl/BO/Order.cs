@@ -26,7 +26,6 @@ namespace BO
                     str += item.ToString();
             }
                 
-            str.Remove(str.Length - 2);
             return $"      Order Id: {Id}\n" +
             $"      Name: {CustomerName}\n" +
             $"      Email: {CustomerEmail}\n" +

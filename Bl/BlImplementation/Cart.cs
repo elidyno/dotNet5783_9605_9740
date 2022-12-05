@@ -49,7 +49,11 @@ namespace BlImplementation
             //If the product is in the cart, update the amount and price
             else
             {
+                
                 int i = cart.Items.FindIndex(x => x.ProductId == productId);
+                //Makes sure that the total of additions to the cart of an item does not exceed the amount of stock
+                if (dataProduct.InStock < cart.Items[i].Amount + 1)
+                    throw new AmountAndPriceException("Out of stock");
                 cart.Items[i].Amount += 1;
                 cart.Items[i].TotalPrice += cart.Items[i].Price;
                 cart.TotalPrice += cart.Items[i].Price;
@@ -171,8 +175,9 @@ namespace BlImplementation
             //Adding items from an existing product
             else if (cart.Items[i].Amount < newAmount)
             {
+                int newItems = newAmount - cart.Items[i].Amount;
                 //Try to add a requested amount of items as long as the stock does not run out
-                for (int j = 0; j < newAmount; j++)
+                for (int j = 0; j < newItems; j++)
                 {
                     try
                     {

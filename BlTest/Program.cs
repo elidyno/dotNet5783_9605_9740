@@ -49,7 +49,7 @@ namespace BlTest
         private static SubMenu_Order subMenu_Order;
         private static SubMenu_Product subMenu_Product;
         private static SubMenu_Cart subMenu_cart;
-       
+        static BO.Cart cart = new Cart();
         private static IBl bl = new BlImplementation.Bl();   
 
         /// <summary>
@@ -58,6 +58,7 @@ namespace BlTest
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            
             bool success = false;
             bool exit = false;
             do
@@ -248,15 +249,12 @@ namespace BlTest
             email = Console.ReadLine();
             Console.WriteLine("Please enter the customer's adress");
             adress = Console.ReadLine();
-            BO.Cart cart = new Cart()
-            {
-                CustomerName = name,
-                CustomerAdress = adress,
-                CustomerEmail = email,
-                Items = new List<OrderItem>(),
-                TotalPrice = 0
-            };
-          
+            cart.CustomerName = name;
+            cart.CustomerAdress = adress;
+            cart.CustomerEmail = email;
+            cart.Items = new List<OrderItem>();
+            cart.TotalPrice = 0;
+
             bool success = false;
             bool exit = false;
             do
@@ -319,10 +317,11 @@ namespace BlTest
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
+                    Console.WriteLine("press any key to continue...");
+                    Console.ReadKey();
+                    Console.Clear();
                 }
-                Console.WriteLine("press any key to continue...");
-                Console.ReadKey();
-                Console.Clear();
+               
             } while (!exit);
         }
         /// <summary>
@@ -362,17 +361,21 @@ namespace BlTest
                                 break;
                             case SubMenu_Product.AddProduct:
                                 //requst data of new product to add
-                                Console.WriteLine(" Enter Id number of new Product");
+                                Console.WriteLine("Enter Id number of new Product");
                                 success = int.TryParse(Console.ReadLine(), out id);
                                 if (!success)
                                     throw new InvalidInputFormatException("Please entry only a intiger Number\n");
+                                Console.WriteLine("Enter the customer name:");
                                 name = Console.ReadLine();
+                                Console.WriteLine("Enter the price:");
                                 success = double.TryParse(Console.ReadLine(), out price);
                                 if (!success)
                                     throw new InvalidInputFormatException("Please entry only a double Number\n");
+                                Console.WriteLine("Enter category:");
                                 success = Category.TryParse(Console.ReadLine(), out category);
                                 if (!success)
                                     throw new InvalidInputFormatException("Please entry only a Category name\n");
+                                Console.WriteLine("Enter the amount in stock:");
                                 success = int.TryParse(Console.ReadLine(), out amount);
                                 if (!success)
                                     throw new InvalidInputFormatException("Please entry only a intiger Number\n");
@@ -450,8 +453,11 @@ namespace BlTest
                                 success = int.TryParse(Console.ReadLine(), out id);
                                 if (!success)
                                     throw new InvalidInputFormatException("Please entry only a intiger Number\n");
+       
                                 BO.ProductItem item = new();
-                                //need to compleate
+                                //cart is a static var of program class, the user suposte to select this case only after adedd data to the cart
+                                //else, the logic lyer will throw an exception 
+                                item = bl.Product.Get(id, cart);
                                 break;
                             case SubMenu_Product.ViewList:
                                 IEnumerable<BO.ProductForList> allProduct = bl.Product.GetList();
