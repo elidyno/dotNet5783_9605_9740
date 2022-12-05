@@ -1,21 +1,21 @@
 ﻿using BlApi;
-//using BO;
-//using DO;
-//using BO;
 using System.Collections.Generic;
 
 namespace BlImplementation;
 
+/// <summary>
+/// implementation of order operation
+/// </summary>
 internal class Order : IOrder
 {
     private DalApi.IDal Dal = new Dal.DalList(); //Using it we can access the data access classes
 
     /// <summary>
-    /// Returns an order (logical entity) by order id
-    /// </summary>
+    /// Returns an order (logical entity) by order i
     /// <param name="orderId"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    /// <exception cref="BO.InvalidValueException"></exception>
+    /// <exception cref="BO.DataRequestFailedException"></exception>
     public BO.Order Get(int orderId)
     {
         DO.Order dataOrder = new DO.Order();

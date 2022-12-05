@@ -43,7 +43,7 @@ internal class DalOrder : IOrder
         if (DataSource._orderList.Exists(x => x.Id == OrderId))
             return DataSource._orderList.Find(x => x.Id == OrderId);
         else
-            throw new NotFoundException("Id not exist");
+            throw new NotFoundException("Order Id not exist");
     }
 
 
@@ -66,7 +66,7 @@ internal class DalOrder : IOrder
     {
         int delIndex = DataSource._orderList.FindIndex(x => x.Id == orderId);
         if (delIndex == -1)
-            throw new NotFoundException("Id not exist");
+            throw new NotFoundException("Order Id not exist");
         else
         DataSource._orderList.RemoveAt(delIndex);
     }
@@ -81,7 +81,7 @@ internal class DalOrder : IOrder
         if (updateIndex != -1)
             DataSource._orderList[updateIndex] = p;
         else
-            throw new NotFoundException("Id not exist");
+            throw new NotFoundException("Order Id not exist");
     }
 
 }

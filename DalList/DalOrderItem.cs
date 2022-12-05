@@ -39,7 +39,7 @@ internal class DalOrderItem :IOrderItem
         if (DataSource._orderItemList.Exists(x => x.Id == OrderItemId))
             return DataSource._orderItemList.Find(x => x.Id == OrderItemId);
         else
-            throw new NotFoundException("Id not exist");
+            throw new NotFoundException("OrderItem Id not exist");
         
     }
     /// <summary>
@@ -61,7 +61,7 @@ internal class DalOrderItem :IOrderItem
     {
         int delIndex = DataSource._orderItemList.FindIndex(x => x.Id == orderItemId);
         if (delIndex == -1)
-            throw new NotFoundException("Id not exist");
+            throw new NotFoundException("OrderItem Id not exist");
         else
             DataSource._orderItemList.RemoveAt(delIndex);
     }
@@ -76,7 +76,7 @@ internal class DalOrderItem :IOrderItem
         if (updateIndex != -1)
             DataSource._orderItemList[updateIndex] = item;
         else
-            throw new NotFoundException("Id not exist");
+            throw new NotFoundException("OrderItem Id not exist");
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ internal class DalOrderItem :IOrderItem
                 break;
         }
         if (i == DataSource._orderItemList.Count)
-            throw new NotFoundException("Id not exist");
+            throw new NotFoundException("OrderItem Id not exist");
 
         OrderItem item = DataSource._orderItemList[i];
         return item;
@@ -108,7 +108,7 @@ internal class DalOrderItem :IOrderItem
     public IEnumerable<OrderItem> GetItemsListByOrderId(int orderId)
     {
         if(!DataSource._orderItemList.Exists(x => x.OrderId == orderId))
-            throw new NotFoundException("Id not exist");
+            throw new NotFoundException("OrderItem Id not exist");
         //else
         List<OrderItem> orderItems = new List<OrderItem>();
         foreach (OrderItem item in DataSource._orderItemList)

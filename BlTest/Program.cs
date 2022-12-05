@@ -58,8 +58,6 @@ namespace BlTest
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            int x = 10 ^ 5;
-            Console.WriteLine(x);
             bool success = false;
             bool exit = false;
             do
@@ -415,8 +413,7 @@ namespace BlTest
                                 //get the original item to keep the old value of failde that user wan't to update
                                 BO.Product oldProduct = bl.Product.Get(id);
 
-                                Console.WriteLine("enter new data to updated in Product\n" +
-                                "only in failde you want to update");
+                                Console.WriteLine("enter new data to updated in Product (only in failde yo want to update):");
 
                                 name = null; //to check after if the user put a value for update
                                 Console.WriteLine("Name:");

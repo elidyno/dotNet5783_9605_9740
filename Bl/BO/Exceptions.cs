@@ -10,8 +10,8 @@
         public override string ToString()
         {
             string generalMess = "Data Request Failed Exception:\n";
-            string toString = message_ ? (Message + " " + generalMess + " " + InnerException)
-                : (generalMess + " " + InnerException);
+            string toString = message_ ? (generalMess + Message)
+                : (generalMess + " " + Message + " " + InnerException);
             return toString;
         }
     }

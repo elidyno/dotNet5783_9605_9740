@@ -45,10 +45,10 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception"></exception>
     public Product Get(int productId)
     {
-        if (DataSource._productList.Exists(x => x.Id == productId))    //אולי אפשר לקצר
+        if (DataSource._productList.Exists(x => x.Id == productId))  
             return DataSource._productList.Find(x => x.Id == productId);
         else
-            throw new NotFoundException();  //?  
+            throw new NotFoundException("Product Id not exist");   
     }
     
     /// <summary>
@@ -73,7 +73,7 @@ internal class DalProduct : IProduct
     {
         int delIndex = DataSource._productList.FindIndex(x => x.Id == productId);
         if (delIndex == -1)
-            throw new NotFoundException();
+            throw new NotFoundException("Product Id not exist");
         else
             DataSource._productList.RemoveAt(delIndex);
     }
@@ -88,7 +88,7 @@ internal class DalProduct : IProduct
         if (updateIndex != -1)
             DataSource._productList[updateIndex] = p;
         else
-            throw new NotFoundException();
+            throw new NotFoundException("Product Id not exist");
     }
 
 }
