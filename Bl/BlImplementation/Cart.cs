@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BlImplementation
 {
+    /// <summary>
+    /// method of cart . implementaion of ICart
+    /// </summary>
     internal class Cart : ICart
     {
         private DalApi.IDal Dal = new Dal.DalList(); //Using it we can access the data access classes
@@ -12,8 +15,9 @@ namespace BlImplementation
         /// </summary>
         /// <param name="cart"></param>
         /// <param name="productId"></param>
-        /// <returns>the cart withr the product adeed</returns>
+        /// <returns></returns>
         /// <exception cref="BO.DataRequestFailedException"></exception>
+        /// <exception cref="AmountAndPriceException"></exception>
         public BO.Cart Add(BO.Cart cart, int productId)
         {
             DO.Product dataProduct = new DO.Product();
@@ -157,13 +161,14 @@ namespace BlImplementation
         }
 
         /// <summary>
-        /// update amount of a product in cart: chack if it's possible
+        ///  update amount of a product in cart: chack if it's possible
         /// </summary>
         /// <param name="cart"></param>
         /// <param name="productId"></param>
         /// <param name="newAmount"></param>
         /// <returns></returns>
         /// <exception cref="BO.NotFoundException"></exception>
+        /// <exception cref="AmountAndPriceException"></exception>
         public BO.Cart Update(BO.Cart cart, int productId, int newAmount)
         {
             int i = cart.Items.FindIndex(x => x.ProductId == productId);
