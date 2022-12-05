@@ -19,13 +19,13 @@ namespace BO
             foreach (var item in Items)
                 tmp += item.ToString();
             string toString;
-            toString = ($@"
-        Name: {CustomerName},
-        Email: {CustomerEmail},
-        Adress: {CustomerAdress}");
-            toString += tmp + ($@"
-        TotalPrice: {TotalPrice}");
-            return toString;
+
+            return $"      Name: {CustomerName}\n" +
+            $"      Email: {CustomerEmail}\n" +
+            $"      Adress: {CustomerAdress}\n" +
+            $"      Items: {tmp}\n" +
+            $"      TotalPrice: {TotalPrice}";
+
         }
     }
 }
