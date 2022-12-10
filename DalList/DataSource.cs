@@ -168,9 +168,9 @@ namespace Dal
                 {
                     _randProduct = rand.Next(1, _productList.Count) - 1;
                     tmpId = Config.OrderItemRunningId;
-                    tmpOrderId = _orderList[i].Id; 
-                    tmpProductId = _productList[_randProduct].Id;
-                    tmpPrice = _productList[_randProduct].Price;
+                    tmpOrderId = ((Order)_orderList[i]).Id; 
+                    tmpProductId = ((Product)_productList[_randProduct]).Id;
+                    tmpPrice = ((Product)_productList[_randProduct]).Price;
                     tmpOmunt = rand.Next(1, 3); // piople not buying mor of 3 same Shosse per 
                     OrderItem newOrderItem = new OrderItem()
                     {
@@ -194,9 +194,9 @@ namespace Dal
                     {
                         _randProduct = rand.Next(1, _productList.Count) - 1;
                         tmpId = Config.OrderItemRunningId;
-                        tmpOrderId = _orderList[i].Id;
-                        tmpProductId = _productList[_randProduct].Id;
-                        tmpPrice = _productList[_randProduct].Price;
+                        tmpOrderId = ((Order)_orderList[i]).Id;
+                        tmpProductId = ((Product)_productList[_randProduct]).Id;
+                        tmpPrice = ((Product)_productList[_randProduct]).Price;
                         tmpOmunt = rand.Next(1, 3); // piople not buying mor of 3 same Shosse per 
                         OrderItem newOrderItem = new OrderItem()
                         {
