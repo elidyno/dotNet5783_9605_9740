@@ -1,5 +1,7 @@
 ﻿using DalApi;
 using DO;
+using System.Data;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Dal;
 //A class that links between the order-item class (DO file) and the Data class (which is linked to collections in Data) through methods
@@ -36,9 +38,7 @@ internal class DalOrderItem :IOrderItem
     /// <exception cref="Exception"></exception>
     public OrderItem Get(int OrderItemId)
     {
-        if (DataSource._orderItemList.Exists(x => x.Id == OrderItemId))
-            return DataSource._orderItemList.Find(x => x.Id == OrderItemId);
-        else
+        return DataSource._orderItemList.Find(x => x?.Id == OrderItemId) ??
             throw new NotFoundException("OrderItem Id not exist");
         
     }
@@ -46,10 +46,10 @@ internal class DalOrderItem :IOrderItem
     /// Returns all items in the order
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderItem> GetList()
+    public IEnumerable<OrderItem?> GetList()
     {
-        List<OrderItem> orderItems = new List<OrderItem>();
-        orderItems = DataSource._orderItemList.ToList<OrderItem>();
+        List<OrderItem?> orderItems = new List<OrderItem?>();
+        orderItems = DataSource._orderItemList.ToList<OrderItem?>();
         return orderItems;
     }
     /// <summary>
@@ -59,7 +59,7 @@ internal class DalOrderItem :IOrderItem
     /// <exception cref="Exception"></exception>
     public void Delete(int orderItemId)
     {
-        int delIndex = DataSource._orderItemList.FindIndex(x => x.Id == orderItemId);
+        int delIndex = DataSource._orderItemList.FindIndex(x => x?.Id == orderItemId);
         if (delIndex == -1)
             throw new NotFoundException("OrderItem Id not exist");
         else
@@ -72,12 +72,30 @@ internal class DalOrderItem :IOrderItem
     /// <exception cref="Exception"></exception>
     public void Update(OrderItem item)
     {
-        int updateIndex = DataSource._orderItemList.FindIndex(x => x.Id == item.Id);
+        int updateIndex = DataSource._orderItemList.FindIndex(x => x?.Id == item.Id);
         if (updateIndex != -1)
             DataSource._orderItemList[updateIndex] = item;
         else
             throw new NotFoundException("OrderItem Id not exist");
     }
+
+    public IEnumerable<OrderItem?> GetList(Func<OrderItem?, bool>? select_ = null)
+    {
+        List<OrderItem?> orderItems = new List<OrderItem?>();
+        if (select_ == null)
+            orderItems = DataSource._orderItemList.ToList<OrderItem?>();
+        else
+            orderItems = DataSource._orderItemList.FindAll(x => select_(x));
+
+        return orderItems;
+    }
+
+    public OrderItem Get(Func<OrderItem?, bool>? select_)
+    {
+        return DataSource._orderItemList.Find(x => select_(x)) ??
+             throw new NullException();
+    }
+
 
     /// <summary>
     /// Receives a number of the order and a number of the product and returns the item in the appropriate orde
@@ -86,34 +104,20 @@ internal class DalOrderItem :IOrderItem
     /// <param name="ProductId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public OrderItem GetItemByOrderAndProduct(int OrderId, int ProductId)
+    public OrderItem GetItemByOrderAndProduct(int orderId, int productId)
     {
-        int i;
-        for (i = 0; i < DataSource._orderItemList.Count; i++)
-        {
-            if (OrderId == DataSource._orderItemList[i].OrderId && ProductId == DataSource._orderItemList[i].ProductId)
-                break;
-        }
-        if (i == DataSource._orderItemList.Count)
+       return DataSource._orderItemList.Find(x => x?.ProductId == productId && x?.OrderId == orderId) ??
             throw new NotFoundException("OrderItem Id not exist");
-
-        OrderItem item = DataSource._orderItemList[i];
-        return item;
     }
     /// <summary>
     /// Receives an order number and returns all the items in the order
     /// </summary>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    public IEnumerable<OrderItem> GetItemsListByOrderId(int orderId)
+    public IEnumerable<OrderItem?> GetItemsListByOrderId(int orderId)
     {
-        if(!DataSource._orderItemList.Exists(x => x.OrderId == orderId))
-            throw new NotFoundException("OrderItem Id not exist");
-        //else
-        List<OrderItem> orderItems = new List<OrderItem>();
-        foreach (OrderItem item in DataSource._orderItemList)
-            if (item.OrderId == orderId)
-                orderItems.Add(item);
+        List<OrderItem?> orderItems = new List<OrderItem?>();
+        orderItems = DataSource._orderItemList.FindAll(x => x?.OrderId == orderId);
         return orderItems;
     }
 }
