@@ -12,9 +12,9 @@ namespace Dal
     {
         internal static readonly Random rand = new Random(DateTime.Now.Millisecond);
         #region Data surce arrays
-        internal static List<Product> _productList = new List<Product>();
-        internal static List<Order> _orderList = new List<Order>();
-        internal static List<OrderItem> _orderItemList = new List<OrderItem>();
+        internal static List<Product?> _productList = new List<Product?>();
+        internal static List<Order?> _orderList = new List<Order?>();
+        internal static List<OrderItem?> _orderItemList = new List<OrderItem?>();
         #endregion
         #region constractor
         /// <summary>
@@ -168,7 +168,7 @@ namespace Dal
                 {
                     _randProduct = rand.Next(1, _productList.Count) - 1;
                     tmpId = Config.OrderItemRunningId;
-                    tmpOrderId = _orderList[i].Id;
+                    tmpOrderId = _orderList[i].Id; 
                     tmpProductId = _productList[_randProduct].Id;
                     tmpPrice = _productList[_randProduct].Price;
                     tmpOmunt = rand.Next(1, 3); // piople not buying mor of 3 same Shosse per 

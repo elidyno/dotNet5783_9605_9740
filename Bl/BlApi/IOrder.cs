@@ -12,7 +12,7 @@ namespace BlApi
         public Order UpdateOrderSheep(int orderId);
         public Order UpdateOrderDelivery(int orderId);
         public Order Get(int orderId);
-        public IEnumerable<OrderForList> GetList();
+        public IEnumerable<OrderForList?> GetList();
         public OrderTracking GetTracking(int orderId);
     }
 }

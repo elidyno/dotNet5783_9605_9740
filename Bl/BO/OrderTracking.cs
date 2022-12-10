@@ -9,8 +9,8 @@ namespace BO
     public class OrderTracking
     {
         public int ID { get; set; }
-        public Status status { get; set; }
-        public List<(DateTime?, string)>? TrackingList { get; set; }
+        public Status? status { get; set; }
+        public List<(DateTime?, string?)>? TrackingList { get; set; }
         public override string ToString()
         {
             string str = "";

@@ -38,12 +38,10 @@ internal class DalOrder : IOrder
     /// <param name="OrderId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public Order Get(int OrderId)
+    public Order Get(int OrderId)   //?
     {
-        if (DataSource._orderList.Exists(x => x.Id == OrderId))
-            return DataSource._orderList.Find(x => x.Id == OrderId);
-        else
-            throw new NotFoundException("Order Id not exist");
+        return DataSource._orderList.Find(x => x?.Id == OrderId) ?? 
+               throw new NotFoundException("Order Id not exist");
     }
 
 
@@ -51,11 +49,18 @@ internal class DalOrder : IOrder
     /// Returns all orders
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order> GetList()
+    public IEnumerable<Order?> GetList(Func<Order?, bool>? select = null) //?
     {
-        List<Order> orders = new List<Order>();
-        orders = DataSource._orderList.ToList<Order>();
-        return orders;  
+        List<Order?> orders = new List<Order?>();
+        if (select == null)
+            orders = DataSource._orderList.ToList<Order?>();
+        else
+        {
+            foreach(Order? order in DataSource._orderList)
+                if(select(order))
+                    orders.Add(order);
+        }
+            return orders;       
     }
     /// <summary>
     /// Receives an order number and cancels it
@@ -64,7 +69,7 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public void Delete(int orderId)
     {
-        int delIndex = DataSource._orderList.FindIndex(x => x.Id == orderId);
+        int delIndex = DataSource._orderList.FindIndex(x => x?.Id == orderId);
         if (delIndex == -1)
             throw new NotFoundException("Order Id not exist");
         else
@@ -77,7 +82,7 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public void Update(Order p)
     {
-        int updateIndex = DataSource._orderList.FindIndex(x => x.Id == p.Id);
+        int updateIndex = DataSource._orderList.FindIndex(x => x?.Id == p.Id);
         if (updateIndex != -1)
             DataSource._orderList[updateIndex] = p;
         else
