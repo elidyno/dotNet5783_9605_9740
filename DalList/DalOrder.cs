@@ -49,15 +49,15 @@ internal class DalOrder : IOrder
     /// Returns all orders
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order?> GetList(Func<Order?, bool>? select = null) //?
+    public IEnumerable<Order?> GetList(Func<Order?, bool>? select_ = null) //?
     {
         List<Order?> orders = new List<Order?>();
-        if (select == null)
+        if (select_ == null)
             orders = DataSource._orderList.ToList<Order?>();
         else
         {
-            foreach(Order? order in DataSource._orderList)
-                if(select(order))
+            foreach (Order? order in DataSource._orderList)
+                if (select_(order))
                     orders.Add(order);
         }
             return orders;       
@@ -89,4 +89,13 @@ internal class DalOrder : IOrder
             throw new NotFoundException("Order Id not exist");
     }
 
+    public Order Get(Func<Order?, bool>? select_)
+    {
+        foreach (Order? order in DataSource._orderList)
+            if (select_(order))
+                return order ?? throw new NullException();
+
+        throw new NotFoundException("The requested order does not exist");
+
+    }
 }

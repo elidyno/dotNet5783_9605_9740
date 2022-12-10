@@ -24,5 +24,13 @@ namespace DO
         => $@"The object already exists";
 
     }
+    [Serializable]
+    public class NullException : Exception
+    {
+        public NullException() : base() { }
+        public override string ToString()
+        => $@"Can't return a null entity";
+
+    }
 }   
 

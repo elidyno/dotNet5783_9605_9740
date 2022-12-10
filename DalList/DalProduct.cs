@@ -30,7 +30,7 @@ internal class DalProduct : IProduct
         //    throw new Exception("no place in list to add");
         for (int i = 0; i < DataSource._productList.Count; i++)
         {
-            if (p.Id == DataSource._productList[i].Id)// לבדוק האם צריך לעשות את הבדיקה הזו בשכבת הנתונים
+            if (p.Id == DataSource._productList[i]?.Id)// לבדוק האם צריך לעשות את הבדיקה הזו בשכבת הנתונים
                 throw new Exception("The Product Id alredy exist");
         }
         DataSource._productList.Add(p);
@@ -90,5 +90,15 @@ internal class DalProduct : IProduct
         else
             throw new NotFoundException("Product Id not exist");
     }
+
+    //public Order Get(Func<Order?, bool>? select_)
+    //{
+    //    foreach (Order? order in DataSource._orderList)
+    //        if (select_(order))
+    //            return order ?? throw new NullException();
+
+    //    throw new NotFoundException("The requested order does not exist");
+
+    //}
 
 }
