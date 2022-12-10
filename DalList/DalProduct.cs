@@ -45,24 +45,23 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception"></exception>
     public Product Get(int productId)
     {
-        if (DataSource._productList.Exists(x => x.Id == productId))  
-            return DataSource._productList.Find(x => x.Id == productId);
-        else
-            throw new NotFoundException("Product Id not exist");   
+        return DataSource._productList.Find(x => x?.Id == productId) ??
+         throw new NotFoundException("Product Id not exist");
     }
     
     /// <summary>
     /// Returns all products in the store
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product> GetList()
+    public IEnumerable<Product?> GetList(Func<Product?, bool>? select_ = null)
     {
-
-        if (DataSource._productList.Count == 0)
-            throw new NotFoundException();
-        List<Product> products = new List<Product>();
-        products = DataSource._productList.ToList<Product>();
+        List<Product?> products = new List<Product?>();
+        if (select_ == null)
+            products = DataSource._productList.ToList<Product?>();
+        else
+            products = DataSource._productList.FindAll(x => select_(x));
         return products;
+           
     }
     /// <summary>
     /// Receives a product ID number and deletes the product
@@ -71,7 +70,7 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception"></exception>
     public void Delete(int productId)
     {
-        int delIndex = DataSource._productList.FindIndex(x => x.Id == productId);
+        int delIndex = DataSource._productList.FindIndex(x => x?.Id == productId);
         if (delIndex == -1)
             throw new NotFoundException("Product Id not exist");
         else
@@ -84,21 +83,22 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception"></exception>
     public void Update(Product p)
     {
-        int updateIndex = DataSource._productList.FindIndex(x => x.Id == p.Id);
+        int updateIndex = DataSource._productList.FindIndex(x => x?.Id == p.Id);
         if (updateIndex != -1)
             DataSource._productList[updateIndex] = p;
         else
             throw new NotFoundException("Product Id not exist");
     }
-
-    //public Order Get(Func<Order?, bool>? select_)
-    //{
-    //    foreach (Order? order in DataSource._orderList)
-    //        if (select_(order))
-    //            return order ?? throw new NullException();
-
-    //    throw new NotFoundException("The requested order does not exist");
-
-    //}
+    /// <summary>
+    /// Returns a requested product according to the conditions
+    /// </summary>
+    /// <param name="select_"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    public Product Get(Func<Product?, bool>? select_)
+    {
+        return DataSource._productList.Find(x => select_(x)) ??
+             throw new NotFoundException("The requested product does not exist");
+    }
 
 }

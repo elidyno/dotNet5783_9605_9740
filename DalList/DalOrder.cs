@@ -46,7 +46,7 @@ internal class DalOrder : IOrder
 
 
     /// <summary>
-    /// Returns all orders
+    /// Returns the list of all orders or requested orders according to a condition
     /// </summary>
     /// <returns></returns>
     public IEnumerable<Order?> GetList(Func<Order?, bool>? select_ = null) //?
@@ -55,12 +55,8 @@ internal class DalOrder : IOrder
         if (select_ == null)
             orders = DataSource._orderList.ToList<Order?>();
         else
-        {
-            foreach (Order? order in DataSource._orderList)
-                if (select_(order))
-                    orders.Add(order);
-        }
-            return orders;       
+            orders = DataSource._orderList.FindAll(x => select_(x));
+        return orders;    
     }
     /// <summary>
     /// Receives an order number and cancels it
@@ -88,14 +84,15 @@ internal class DalOrder : IOrder
         else
             throw new NotFoundException("Order Id not exist");
     }
-
+    /// <summary>
+    /// Returns a requested order according to the conditions
+    /// </summary>
+    /// <param name="select_"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
     public Order Get(Func<Order?, bool>? select_)
     {
-        foreach (Order? order in DataSource._orderList)
-            if (select_(order))
-                return order ?? throw new NullException();
-
-        throw new NotFoundException("The requested order does not exist");
-
+        return DataSource._orderList.Find(x => select_(x)) ??
+            throw new NotFoundException("The requested order does not exist");
     }
 }
