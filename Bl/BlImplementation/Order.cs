@@ -33,7 +33,7 @@ internal class Order : IOrder
             throw new BO.DataRequestFailedException(e.Message);
         }
 
-        IEnumerable<DO.OrderItem> items = new List<DO.OrderItem>();
+        IEnumerable<DO.OrderItem?> items = new List<DO.OrderItem?>();
         //Try requesting a List of orderItems from a data layer
         try
         {
@@ -45,7 +45,7 @@ internal class Order : IOrder
         }
 
         //Creating a list of orderItems - logical entities
-        List<BO.OrderItem> orderItems = new List<BO.OrderItem>();
+        List<BO.OrderItem?> orderItems = new List<BO.OrderItem?>();
         foreach (DO.OrderItem item in items)
         {
             orderItems.Add(new BO.OrderItem
@@ -61,7 +61,7 @@ internal class Order : IOrder
 
         //Calculates the total order price
         double totalOrderPrice = 0;
-        foreach (BO.OrderItem item in orderItems)
+        foreach (BO.OrderItem? item in orderItems)
             totalOrderPrice += item.TotalPrice;
 
         //Calculates the status according to the order data in relation to the current time.
@@ -82,7 +82,7 @@ internal class Order : IOrder
             status = status_
         };
 
-        boOrder.Items = new List<BO.OrderItem>();
+        boOrder.Items = new List<BO.OrderItem?>();
         boOrder.Items = orderItems;
         //foreach (BO.OrderItem item in orderItems)
         //    boOrder.Items.Add(item);
@@ -93,20 +93,20 @@ internal class Order : IOrder
     /// Returns a list of orders
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.OrderForList> GetList()
+    public IEnumerable<BO.OrderForList?> GetList()
     {
-        IEnumerable<DO.Order> orders = new List<DO.Order>();
+        IEnumerable<DO.Order?> orders = new List<DO.Order?>();
         //Try requesting order list from a data layer
         orders = Dal.Order.GetList();
 
         //Creating a list of OrderForList -logical entities
-        List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
+        List<BO.OrderForList?> ordersForList = new List<BO.OrderForList?>();
 
         //Populates the list by creating "OrderForList" type objects based on order data and OrderItem data and additional calculations.
         foreach (DO.Order order in orders)
         {
             //For each order, request the list of orderItems
-            IEnumerable<DO.OrderItem> items = new List<DO.OrderItem>();
+            IEnumerable<DO.OrderItem?> items = new List<DO.OrderItem?>();
             items = Dal.OrderItem.GetItemsListByOrderId(order.Id);
 
             int amountOfItems = items.Count();
@@ -156,8 +156,10 @@ internal class Order : IOrder
             status = status_
         };
 
-        orderTracking.TrackingList = new List<(DateTime?, string)>();
-        orderTracking.TrackingList.Add((dataOrder.OrderDate, "The order created"));
+        orderTracking.TrackingList = new List<(DateTime?, string?)>
+        {
+            (dataOrder.OrderDate, "The order created")
+        };
         if (dataOrder.ShipDate != null)
             orderTracking.TrackingList.Add((dataOrder.ShipDate, "The order shipped"));
         if (dataOrder.DeliveryDate != null)
