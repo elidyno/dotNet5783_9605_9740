@@ -318,7 +318,7 @@ namespace BlTest
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    Console.WriteLine("ERROR: " + e);
                     Console.WriteLine("press any key to continue...");
                     Console.ReadKey();
                     Console.Clear();

@@ -38,17 +38,28 @@ internal class DalProduct : IProduct
         return p.Id;
     }
     /// <summary>
-    /// Receives a product ID number and returns it
+    /// Returns a requested product according to the conditions
     /// </summary>
-    /// <param name="productId"></param>
+    /// <param name="select_"></param>
     /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    public Product Get(int productId)
+    /// <exception cref="NotFoundException"></exception>
+    public Product Get(Func<Product?, bool>? select_)
     {
-        return DataSource._productList.Find(x => x?.Id == productId) ??
-         throw new NotFoundException("Product Id not exist");
+        return DataSource._productList.Find(x => select_(x)) ??
+             throw new NotFoundException("The requested product does not exist");
     }
-    
+    ///// <summary>
+    ///// Receives a product ID number and returns it
+    ///// </summary>
+    ///// <param name="productId"></param>
+    ///// <returns></returns>
+    ///// <exception cref="Exception"></exception>
+    //public Product Get(int productId)
+    //{
+    //    return DataSource._productList.Find(x => x?.Id == productId) ??
+    //     throw new NotFoundException("Product Id not exist");
+    //}
+
     /// <summary>
     /// Returns all products in the store
     /// </summary>
@@ -89,16 +100,6 @@ internal class DalProduct : IProduct
         else
             throw new NotFoundException("Product Id not exist");
     }
-    /// <summary>
-    /// Returns a requested product according to the conditions
-    /// </summary>
-    /// <param name="select_"></param>
-    /// <returns></returns>
-    /// <exception cref="NotFoundException"></exception>
-    public Product Get(Func<Product?, bool>? select_)
-    {
-        return DataSource._productList.Find(x => select_(x)) ??
-             throw new NotFoundException("The requested product does not exist");
-    }
+  
 
 }
