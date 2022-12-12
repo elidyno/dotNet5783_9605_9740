@@ -139,7 +139,7 @@ class Program
                         break;
                     case SubMenu_CRAUD.ViewAll:
                         //<Returns all products in the store>
-                        IEnumerable<Product> productsList = dal.Product.GetList();
+                        IEnumerable<Product?> productsList = dal.Product.GetList();
                         foreach (Product item in productsList)
                         {
                             Console.WriteLine(item);
@@ -159,8 +159,8 @@ class Program
 
                         Console.WriteLine(@"
         Enter the new category");
-                        int tmpCategory = int.MinValue; //to check after if the user put a value for update
-                        int.TryParse(Console.ReadLine(), out tmpCategory);
+                        DO.Category? tmpCategory = null; //to check after if the user put a value for update
+                        DO.CategoryTryParse(Console.ReadLine(), out tmpCategory);
 
                         Console.WriteLine(@"
         Enter The New new price");
