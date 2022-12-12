@@ -433,7 +433,7 @@ namespace BlTest
                                 Console.WriteLine("Category:");
                                 success = Category.TryParse(Console.ReadLine(), out category);
                                 if (!success)
-                                    category = oldProduct.Category;
+                                    category = (BO.Category)oldProduct.Category;
 
                                 Console.WriteLine("InStock:");
                                 success = int.TryParse(Console.ReadLine(), out amount);
