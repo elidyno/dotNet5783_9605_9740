@@ -148,7 +148,7 @@ namespace BlTest
                                 Console.WriteLine("id must be an intinuger number\n"); 
                             break;
                         case SubMenu_Order.ViewAll:
-                            IEnumerable<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
+                            IEnumerable<BO.OrderForList?> ordersForList = new List<BO.OrderForList?>();
                             try
                             {
                                 ordersForList = bl.Order.GetList();
@@ -158,7 +158,7 @@ namespace BlTest
                                 Console.WriteLine(e);
                                 break;
                             }
-                            foreach (BO.OrderForList order in ordersForList)
+                            foreach (BO.OrderForList? order in ordersForList)
                                 Console.WriteLine(order);
                             break;
                         case SubMenu_Order.GetTracking:
@@ -245,15 +245,15 @@ namespace BlTest
             int productId, amount;
             //Creates a cart entity with input from the user
             Console.WriteLine("Please enter the customer's name");
-            name = Console.ReadLine();
+            name = Console.ReadLine() ?? null;
             Console.WriteLine("Please enter the customer's Email");
-            email = Console.ReadLine();
+            email = Console.ReadLine() ?? null;
             Console.WriteLine("Please enter the customer's adress");
-            adress = Console.ReadLine();
+            adress = Console.ReadLine() ?? null;
             cart.CustomerName = name;
             cart.CustomerAdress = adress;
             cart.CustomerEmail = email;
-            cart.Items = new List<OrderItem>();
+            cart.Items = new List<OrderItem?>();
             cart.TotalPrice = 0;
 
             bool success = false;

@@ -35,7 +35,7 @@ namespace BlImplementation
                 throw new AmountAndPriceException("Out of stock");
 
             //If the product does not exist in the cart, then add a new product
-            if (!cart.Items.Exists(x => x.ProductId == productId))
+            if (!cart.Items.Exists(x => x?.ProductId == productId))
             {
                 BO.OrderItem orderItem = new BO.OrderItem()
                 {
@@ -51,9 +51,8 @@ namespace BlImplementation
             }
             //If the product is in the cart, update the amount and price
             else
-            {
-                
-                int i = cart.Items.FindIndex(x => x.ProductId == productId);
+            {      
+                int i = cart.Items.FindIndex(x => x?.ProductId == productId);
                 //Makes sure that the total of additions to the cart of an item does not exceed the amount of stock
                 if (dataProduct.InStock < cart.Items[i].Amount + 1)
                     throw new AmountAndPriceException("Out of stock");
@@ -171,7 +170,7 @@ namespace BlImplementation
         /// <exception cref="AmountAndPriceException"></exception>
         public BO.Cart Update(BO.Cart cart, int productId, int newAmount)
         {
-            int i = cart.Items.FindIndex(x => x.ProductId == productId);
+            int i = cart.Items.FindIndex(x => x?.ProductId == productId);
             if (i < 0)
             {
                 throw new BO.NotFoundException("product not found"); 
