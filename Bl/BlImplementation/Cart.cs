@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DO;
 using System.ComponentModel.DataAnnotations;
 
 namespace BlImplementation
@@ -23,7 +24,7 @@ namespace BlImplementation
             DO.Product dataProduct = new DO.Product();
             try
             {
-                dataProduct = Dal.Product.Get(productId);
+                dataProduct = Dal.Product.Get(x => x?.Id == productId);
             }
             catch (Exception e)
             {
@@ -103,7 +104,7 @@ namespace BlImplementation
             {
                 try
                 {
-                    product_ = Dal.Product.Get(item.ProductId);
+                    product_ = Dal.Product.Get(x => x?.Id == item.Id);
                 }
                 catch (Exception e)
                 {
@@ -147,7 +148,7 @@ namespace BlImplementation
                     orderItem.Price = item.Price;
                     int orderItemId = Dal.OrderItem.Add(orderItem);
                     //update amount of product in Dak
-                    product_ = Dal.Product.Get(item.ProductId);
+                    product_ = Dal.Product.Get(x => x?.Id == item.ProductId);
                     product_.InStock -= item.Amount;
                     Dal.Product.Update(product_);
                 }
