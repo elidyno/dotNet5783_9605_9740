@@ -35,5 +35,10 @@ namespace PL.Product
             ProductListview.ItemsSource = bl.Product.GetList(
                 (BO.ProductForList product) => product.Category == (BO.Category)(AttributeSelector.SelectedItem));
         }
+
+        private void CategoryLableMouseKlick(object sender, MouseButtonEventArgs e)
+        {
+            ProductListview.ItemsSource = bl.Product.GetList();
+        }
     }
 }
