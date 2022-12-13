@@ -164,11 +164,11 @@ namespace BlImplementation
         /// </summary>
         /// <returns>BO.ProductItem</returns>
         /// <exception cref="DataRequestFailedException"></exception>
-        public IEnumerable<BO.ProductForList> GetList()
+        public IEnumerable<BO.ProductForList> GetList(Func<ProductForList, bool>? select_ = null)
         {
             try
             {
-                IEnumerable<DO.Product> dalProducts = Dal.Product.GetList();
+                IEnumerable<DO.Product?> dalProducts = Dal.Product.GetList();
                 List<BO.ProductForList> result = new List<BO.ProductForList>();
 
                 foreach (DO.Product product in dalProducts)
@@ -181,6 +181,8 @@ namespace BlImplementation
                         Price = product.Price
                     });
                 }
+                if (select_ != null)
+                    result.RemoveAll(X => !select_(X));
 
                 return result;
             }
@@ -241,7 +243,7 @@ namespace BlImplementation
         {
             bool exist = false;
 
-            exist = Dal.OrderItem.GetList().Any(x => x.ProductId == productId);
+            exist = Dal.OrderItem.GetList().Any(x => x?.ProductId == productId);
             return exist;
         }
     }

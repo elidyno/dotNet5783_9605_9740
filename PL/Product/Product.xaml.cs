@@ -1,6 +1,4 @@
-﻿using BlApi;
-using PL.Product;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,23 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PL.Product
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Product.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Product : Window
     {
-        private IBl bl = new BlImplementation.Bl();
-        public MainWindow()
+        public Product()
         {
             InitializeComponent();
         }
-
-        private void Admin_Click(object sender, RoutedEventArgs e) => new ProductForList().Show();
-       
     }
 }

@@ -8,7 +8,7 @@ namespace BlApi
         public void Delete(int productId);
         public Product Get(int productId);
         public ProductItem Get(int productId, Cart cart);
-        public IEnumerable<ProductForList?> GetList();
+        public IEnumerable<ProductForList?> GetList(Func<ProductForList, bool>? select_ = null);
     }
 }
 
