@@ -30,18 +30,18 @@ internal class DalOrderItem :IOrderItem
         DataSource._orderItemList.Add(item);
         return item.Id;
     }
-    /// <summary>
-    /// Receives an ID number of an item in the order and returns the item
-    /// </summary>
-    /// <param name="OrderItemId"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    public OrderItem Get(int OrderItemId)
-    {
-        return DataSource._orderItemList.Find(x => x?.Id == OrderItemId) ??
-            throw new NotFoundException("OrderItem Id not exist");
+    ///// <summary>
+    ///// Receives an ID number of an item in the order and returns the item
+    ///// </summary>
+    ///// <param name="OrderItemId"></param>
+    ///// <returns></returns>
+    ///// <exception cref="Exception"></exception>
+    //public OrderItem Get(int OrderItemId)
+    //{
+    //    return DataSource._orderItemList.Find(x => x?.Id == OrderItemId) ??
+    //        throw new NotFoundException("OrderItem Id not exist");
         
-    }
+    //}
     /// <summary>
     /// Returns all items in the order
     /// </summary>
@@ -97,27 +97,27 @@ internal class DalOrderItem :IOrderItem
     }
 
 
-    /// <summary>
-    /// Receives a number of the order and a number of the product and returns the item in the appropriate orde
-    /// </summary>
-    /// <param name="OrderId"></param>
-    /// <param name="ProductId"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    public OrderItem GetItemByOrderAndProduct(int orderId, int productId)
-    {
-       return DataSource._orderItemList.Find(x => x?.ProductId == productId && x?.OrderId == orderId) ??
-            throw new NotFoundException("OrderItem Id not exist");
-    }
-    /// <summary>
-    /// Receives an order number and returns all the items in the order
-    /// </summary>
-    /// <param name="orderId"></param>
-    /// <returns></returns>
-    public IEnumerable<OrderItem?> GetItemsListByOrderId(int orderId)
-    {
-        List<OrderItem?> orderItems = new List<OrderItem?>();
-        orderItems = DataSource._orderItemList.FindAll(x => x?.OrderId == orderId);
-        return orderItems;
-    }
+    ///// <summary>
+    ///// Receives a number of the order and a number of the product and returns the item in the appropriate orde
+    ///// </summary>
+    ///// <param name="OrderId"></param>
+    ///// <param name="ProductId"></param>
+    ///// <returns></returns>
+    ///// <exception cref="Exception"></exception>
+    //public OrderItem GetItemByOrderAndProduct(int orderId, int productId)
+    //{
+    //   return DataSource._orderItemList.Find(x => x?.ProductId == productId && x?.OrderId == orderId) ??
+    //        throw new NotFoundException("OrderItem Id not exist");
+    //}
+    ///// <summary>
+    ///// Receives an order number and returns all the items in the order
+    ///// </summary>
+    ///// <param name="orderId"></param>
+    ///// <returns></returns>
+    //public IEnumerable<OrderItem?> GetItemsListByOrderId(int orderId)
+    //{
+    //    List<OrderItem?> orderItems = new List<OrderItem?>();
+    //    orderItems = DataSource._orderItemList.FindAll(x => x?.OrderId == orderId);
+    //    return orderItems;
+    //}
 }

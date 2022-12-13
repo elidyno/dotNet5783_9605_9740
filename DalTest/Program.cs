@@ -1,6 +1,8 @@
 ﻿using DalApi;
 using DO;
+using Microsoft.VisualBasic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace Dal;
 #region Emums
@@ -15,7 +17,7 @@ enum SubMenu_CRAUD { ExitSubMenu = 0, Add, View, ViewAll, Update, Delete, };
 /// <summary>
 /// special sub menu to check additional operation OrderItem
 /// </summary>
-enum SubMenu_OrderItem { Add = 1, View, ViewAll, Update, Delete, itemByOrderAndProduct, itemListByOrder };
+enum SubMenu_OrderItem { Exit, Add, View, ViewAll, Update, Delete, itemByOrderAndProduct, itemListByOrder };
 #endregion     
 class Program
 {
@@ -23,22 +25,21 @@ class Program
     private static MainMenuCode menuCode;// enum for main menu
     private static SubMenu_CRAUD subMenu_CRAUD;// enum for sub menue: craud operation
     private static SubMenu_OrderItem subMenu_OrderItem; //enum for OrderItem sub menue: includ also privet method of OrderItem
-    private static bool exitSubMenu = false; // indicate if exit the sub menue
-    private static int exit_ = int.MinValue;
     #endregion
 
     private static IDal dal = new DalList();
     static void Main(string[] args)
     {
-        Console.WriteLine("Welcome to the 'Jerusalem Shoes' shoe Store");
+
+        Console.WriteLine("\nWelcome to the 'Jerusalem Shoes' shoe Store");
 
         do
         {
-            Console.WriteLine("Please select one of the following options to test\n"
-               + "  1) Product operation\n"
-               + "  2) Order operation\n "
-               + "  3) Order Item operation\n"       
-               + "  0) To exit from menu");
+            Console.WriteLine(@"Please select one of the following options to test
+               1) Product operation
+               2) Order operation
+               3) Order Item operation      
+               0) To exit from menu");
 
 
             MainMenuCode.TryParse(Console.ReadLine(), out menuCode);
@@ -59,7 +60,7 @@ class Program
                     case MainMenuCode.Exit:
                         return;
                     default:
-                        throw new Exception("Unvalide choice");
+                        throw new Exception("Invalide choice");
                         break;
                 }
             }
@@ -78,6 +79,13 @@ class Program
     // <Gives a submenu for the product entity>
     static void ProductMenue()
     {
+        int id;
+        string? name = null;
+        DO.Category? category_ = null;
+        DO.Category tmpCategory_ = 0;
+        double price;
+        int inStock;
+        bool success = false;
         do
         {
             Console.WriteLine(@"
@@ -88,41 +96,46 @@ class Program
         4) To updat a product
         5) To delete a product");
 
-            SubMenu_CRAUD.TryParse(Console.ReadLine(), out subMenu_CRAUD);
+          
             try
             {
+                success = SubMenu_CRAUD.TryParse(Console.ReadLine(), out subMenu_CRAUD);
+                if (!success)
+                    throw new DalTest.InvalidInputFormatException("please use only an intiger number from the menu");
                 switch (subMenu_CRAUD)
                 {
                     case SubMenu_CRAUD.Add:
                         Console.WriteLine(@"
         Enter the product ID number that you want to add");
-                        int id;
-                        int.TryParse(Console.ReadLine(), out id);
+                        success = int.TryParse(Console.ReadLine(), out id);
+                        if (!success)
+                            throw new DalTest.InvalidInputFormatException("please use only an intiger number");
                         Console.WriteLine(@"
         Enter a product name that you want to add");
-                        string? name;
                         name = Console.ReadLine();
                         Console.WriteLine(@"
         Enter a product category that you want to add");
-                        Category catgory;
-                        Category.TryParse(Console.ReadLine(), out catgory);
-
+                        success = DO.Category.TryParse(Console.ReadLine(), out tmpCategory_);
+                        category_ = tmpCategory_;//cast to a nullable category
+                        if (!success)
+                            throw new DalTest.InvalidInputFormatException("please use only a Category name");
                         Console.WriteLine(@"
         Enter a product price that you want to add");
-                        double tmpPrice;
-                        double.TryParse(Console.ReadLine(), out tmpPrice);
-                        int tmpAmount;
+                        success = double.TryParse(Console.ReadLine(), out price);
+                        if (!success)
+                            throw new DalTest.InvalidInputFormatException("please use only an double number");
                         Console.WriteLine(@"
         Enter a product Amount in stok that you want to add");
-                        int.TryParse(Console.ReadLine(), out tmpAmount);
-
+                        success = int.TryParse(Console.ReadLine(), out inStock);
+                        if (!success)
+                            throw new DalTest.InvalidInputFormatException("please use only an intiger number");
                         Product addedProduct = new Product()
                         {
                             Id = id,
                             Name = name,
-                            Category = catgory,
-                            Price = tmpPrice,
-                            InStock = tmpAmount
+                            Category = category_,
+                            Price = price,
+                            InStock = inStock
                         };
                         //<Receives a new product and returns his ID>
                         int addedProductId = dal.Product.Add(addedProduct);
@@ -131,10 +144,12 @@ class Program
                     case SubMenu_CRAUD.View:
                         Console.WriteLine(@"
         Enter the product ID number that you want to see his details");
-                        int.TryParse(Console.ReadLine(), out id);
+                        success = int.TryParse(Console.ReadLine(), out id);
+                        if (!success)
+                            throw new DalTest.InvalidInputFormatException("please entry only an intiger number");
                         Product productToShow = new Product();
                         //<Receives a product ID and returns all product details>
-                        productToShow = dal.Product.Get(id);
+                        productToShow = dal.Product.Get(product => product?.Id == id);
                         Console.WriteLine("\n\t" + productToShow);
                         break;
                     case SubMenu_CRAUD.ViewAll:
@@ -148,48 +163,74 @@ class Program
                     case SubMenu_CRAUD.Update:
                         Console.WriteLine(@"
         Enter the product ID number that you want to update his details");
-                        int.TryParse(Console.ReadLine(), out id);
-                        Product oldProduct = dal.Product.Get(id);
+                        success = int.TryParse(Console.ReadLine(), out id);
+                        Product oldProduct = dal.Product.Get(product => product?.Id == id);
                         Console.WriteLine(oldProduct);
 
+                        Console.WriteLine("enter new data to updated in Product (only in failde yo want to update):");
                         name = null; //to check after if the user put a value for update
                         Console.WriteLine(@"
-        Enter the new name");
+        name:");
                         name = Console.ReadLine();
 
                         Console.WriteLine(@"
-        Enter the new category");
-                        DO.Category? tmpCategory = null; //to check after if the user put a value for update
-                        DO.CategoryTryParse(Console.ReadLine(), out tmpCategory);
-
+        category:");
+                        string? tmpStringCategory = null;
+                        tmpStringCategory = Console.ReadLine();
                         Console.WriteLine(@"
-        Enter The New new price");
-                        double tmpPrice2 = double.MinValue; //to check after if the user put a value for update
-                        double.TryParse(Console.ReadLine(), out tmpPrice2);
-                        int tmpAmount2 = int.MinValue; //to check after if the user put a value for update
+       price:");
+                        price = double.MinValue; //to check after if the user put a value for update
+                        double.TryParse(Console.ReadLine(), out price);
+                       inStock = int.MinValue; //to check after if the user put a value for update
                         Console.WriteLine(@"
-        Enter the new amount in stok");
-                        int.TryParse(Console.ReadLine(), out tmpAmount2);
+        amount in stok:");
+                        int.TryParse(Console.ReadLine(), out inStock);
 
                         //if user not update keep the old value
-                        if (name == null)
+                        if (name == null || name == "\n")
                             name = oldProduct.Name;
-                        if (tmpCategory == null)
-                            tmpCategory = (int)oldProduct.Category;
-                        if (tmpPrice2 == double.MinValue)
-                            tmpPrice2 = oldProduct.Price;
-                        if (tmpAmount2 == int.MinValue)
-                            tmpPrice2 = oldProduct.InStock;
+                        if (tmpStringCategory == null || tmpStringCategory =="\n")
+                            category_ = oldProduct.Category;
+                        else
+                        {
+                            //convert the category name from string to DO.Category
+                            switch (tmpStringCategory)
+                            {
+                                case ("MEN"):
+                                    category_ = DO.Category.MEN;
+                                    break;
+                                case ("WOMEN"):
+                                    category_ = DO.Category.WOMEN;
+                                    break;
+                                case ("BOYS"):
+                                    category_ = DO.Category.BOYS;
+                                    break;
+                                case ("GIRLS"):
+                                    category_ = DO.Category.GIRLS;
+                                    break;
+                                case ("ACCESSORIES"):
+                                    category_ = DO.Category.ACCESSORIES;
+                                    break;
+                                default:
+                                    throw new DalTest.InvalidInputFormatException("pleas entry only a correct catwwgory name");
+                            }
+                        }
+                            
+                        if (price == double.MinValue)
+                            price = oldProduct.Price;
+                        if (inStock == int.MinValue)
+                            inStock = oldProduct.InStock;
                         Product updateProduct = new Product()
                         {
                             Id = id,
                             Name = name, // if name is null kipe the old value
-                            Category = (Category)tmpCategory,
-                            Price = tmpPrice2,
-                            InStock = tmpAmount2
+                            Category = category_,
+                            Price = price,
+                            InStock = inStock
                         };
                         //<Receives preferred product details and updates it>
                         dal.Product.Update(updateProduct);
+                        Console.WriteLine("The item was updated successfuly");
                         break;
                     case SubMenu_CRAUD.Delete:
                         Console.WriteLine(@"
@@ -199,29 +240,23 @@ class Program
                         dal.Product.Delete(id);
                         break;
                     default:
+                        throw new DalTest.InvalidInputFormatException("please select one of the menu option");
                         break;
                 }
             }
             catch (Exception e)
             {
 
-                Console.WriteLine(e);
+                Console.WriteLine("ERROR: " + e);
             }
             
 
-            exitSubMenu = false; // innitilize the  continue flag
-            Console.ReadKey();
             Console.Clear();
-
             Console.WriteLine(@"
-        press 0 to return to Main menu
-        presss any other key to continue");
+        presss any  key to continue");
+            Console.ReadKey();
 
-            int.TryParse(Console.ReadLine(), out exit_);
-            if (exit_ == (int)SubMenu_CRAUD.ExitSubMenu)
-                exitSubMenu = true;
-
-        } while (!exitSubMenu);
+        } while (subMenu_CRAUD != SubMenu_CRAUD.ExitSubMenu);
     }
     #endregion
 
@@ -241,150 +276,160 @@ class Program
         4) To updat an order
         5) To delete an order");
 
-            bool succses;
-            int id = int.MinValue;
+            bool success;
+            int id;
             string? customeName = null;
             string? email = null;
             string? adress = null;
             DateTime orderCreate;
             DateTime orderShip;
             DateTime delivery;
-
-            SubMenu_CRAUD.TryParse(Console.ReadLine(), out subMenu_CRAUD);
-            switch (subMenu_CRAUD)
+            try
             {
-                case SubMenu_CRAUD.Add:
+                success = SubMenu_CRAUD.TryParse(Console.ReadLine(), out subMenu_CRAUD);
+                switch (subMenu_CRAUD)
+                {
+                    case SubMenu_CRAUD.Add:
 
-                    Console.WriteLine(@"
+                        Console.WriteLine(@"
         Enter a Customer name that you want to add");
-                    customeName = Console.ReadLine();
-                    Console.WriteLine(@"
+                        customeName = Console.ReadLine();
+                        Console.WriteLine(@"
         Enter a Customer email that you want to add");
-                    email = Console.ReadLine();
-                    Console.WriteLine(@"
+                        email = Console.ReadLine();
+                        Console.WriteLine(@"
         Enter a Customer adress that you want to add");
-                    adress = Console.ReadLine();
-                    Console.WriteLine(@"
+                        adress = Console.ReadLine();
+                        Console.WriteLine(@"
         Enter a created Order  time");
-                    succses = DateTime.TryParse(Console.ReadLine(), out orderCreate);
-                    Console.WriteLine(@"
+
+                        orderCreate = Convert.ToDateTime(Console.ReadLine());
+                        success = DateTime.TryParse(Console.ReadLine(), out orderCreate);
+                        if (!success)
+                            throw new DalTest.InvalidInputFormatException("please entry a DateTime format");
+                        Console.WriteLine(@"
         Enter a Ship Order  time");
-                    DateTime.TryParse(Console.ReadLine(), out orderShip);
-                    Console.WriteLine(@"
+                        success = DateTime.TryParse(Console.ReadLine(), out orderShip);
+                        if (!success)
+                            throw new DalTest.InvalidInputFormatException("please entry a DateTime format");
+                        Console.WriteLine(@"
         Enter a delivery Order time");
-                    DateTime.TryParse(Console.ReadLine(), out delivery);
-                    Order addedOrder = new Order()
-                    {
-                        CustomerAdress = adress,
-                        CustomerEmail = email,
-                        CustomerName = customeName,
-                        OrderDate = orderCreate,
-                        ShipDate = orderShip,
-                        DeliveryDate = delivery
-                    };
-                    //<Receives a new product order and returns the order number>
-                    int addedOrderId = dal.Order.Add(addedOrder);
-                    Console.WriteLine("\tThe Order id: " + addedOrderId);
-                    break;
-                case SubMenu_CRAUD.View:
-                    Console.WriteLine(@"
+                        success = DateTime.TryParse(Console.ReadLine(), out delivery);
+                        if (!success)
+                            throw new DalTest.InvalidInputFormatException("please entry a DateTime format");
+                        Order addedOrder = new Order()
+                        {
+                            CustomerAdress = adress,
+                            CustomerEmail = email,
+                            CustomerName = customeName,
+                            OrderDate = orderCreate,
+                            ShipDate = orderShip,
+                            DeliveryDate = delivery
+                        };
+                        //<Receives a new product order and returns the order number>
+                        int addedOrderId = dal.Order.Add(addedOrder);
+                        Console.WriteLine("\tThe Order id: " + addedOrderId);
+                        break;
+                    case SubMenu_CRAUD.View:
+                        Console.WriteLine(@"
         Enter the Order ID number that you want to see his details");
-                    int.TryParse(Console.ReadLine(), out id);
-                    Order orderToShow = new Order();
-                    //<Gets the order number and returns the order details>
-                    orderToShow = dal.Order.Get(id);
-                    Console.WriteLine("\n\t" + orderToShow);
-                    break;
-                case SubMenu_CRAUD.ViewAll:
-                    //<Returns all order details>
-                    IEnumerable<Order> OrdersList = dal.Order.GetList();
-                    foreach (Order Order in OrdersList)
-                        Console.WriteLine("\t" + Order);
-                    break;
-                case SubMenu_CRAUD.Update:
+                        int.TryParse(Console.ReadLine(), out id);
+                        Order orderToShow = new Order();
+                        //<Gets the order number and returns the order details>
+                        orderToShow = dal.Order.Get(order => order?.Id == id);
+                        Console.WriteLine("\n\t" + orderToShow);
+                        break;
+                    case SubMenu_CRAUD.ViewAll:
+                        //<Returns all order details>
+                        IEnumerable<Order?> OrdersList = dal.Order.GetList();
+                        foreach (Order Order in OrdersList)
+                            Console.WriteLine("\t" + Order);
+                        break;
+                    case SubMenu_CRAUD.Update:
 
-                    Console.WriteLine(@"Enter the Order ID number that you want to update his details");
-                    int.TryParse(Console.ReadLine(), out id);
-                    Order oldOrder = dal.Order.Get(id);
-                    Console.WriteLine(oldOrder);
+                        Console.WriteLine(@"Enter the Order ID number that you want to update his details");
+                        int.TryParse(Console.ReadLine(), out id);
+                        Order oldOrder = dal.Order.Get(order => order?.Id == id);
+                        Console.WriteLine(oldOrder);
 
-                    Console.WriteLine(@"
+                        Console.WriteLine(@"
         To update a faild enter the new value when it requaide,
         For keep the old value press on the 'enter' key");
 
-                    //ask the new detaile to update
-                    Console.WriteLine(@"
+                        //ask the new detaile to update
+                        Console.WriteLine(@"
         Enter the new customer name");
-                    customeName = Console.ReadLine();
-                    if (customeName == "\n" || customeName == null)
-                        customeName = oldOrder.CustomerName;
+                        customeName = Console.ReadLine();
+                        if (customeName == "\n" || customeName == null)
+                            customeName = oldOrder.CustomerName;
 
-                    Console.WriteLine(@"
+                        Console.WriteLine(@"
         Enter the new customer email");
-                    email = Console.ReadLine();
-                    if (email == "\n" || email == null)
-                        email = oldOrder.CustomerEmail;
+                        email = Console.ReadLine();
+                        if (email == "\n" || email == null)
+                            email = oldOrder.CustomerEmail;
 
-                    Console.WriteLine(@"
+                        Console.WriteLine(@"
         Enter the new customer adress");
-                    adress = Console.ReadLine();
-                    if (adress == "\n" || adress == null)
-                        adress = oldOrder.CustomerAdress;
+                        adress = Console.ReadLine();
+                        if (adress == "\n" || adress == null)
+                            adress = oldOrder.CustomerAdress;
 
-                    Console.WriteLine(@"
+                        Console.WriteLine(@"
         Enter the new create date");
-                    DateTime.TryParse(Console.ReadLine(), out orderCreate);
-                    if (orderCreate == DateTime.MinValue)
-                        orderCreate = (DateTime)oldOrder.OrderDate;
+                        DateTime.TryParse(Console.ReadLine(), out orderCreate);
+                        if (orderCreate == DateTime.MinValue)
+                            orderCreate = (DateTime)oldOrder.OrderDate;
 
-                    Console.WriteLine(@"
+                        Console.WriteLine(@"
         Enter the new ship date");
-                    DateTime.TryParse(Console.ReadLine(), out orderShip);
-                    if (orderShip == DateTime.MinValue)
-                        orderShip = (DateTime)oldOrder.OrderDate;
+                        DateTime.TryParse(Console.ReadLine(), out orderShip);
+                        if (orderShip == DateTime.MinValue)
+                            orderShip = (DateTime)oldOrder.OrderDate;
 
-                    Console.WriteLine(@"Enter the new delivery date");
-                    DateTime.TryParse(Console.ReadLine(), out delivery);
-                    if (delivery == DateTime.MinValue)
-                        delivery = (DateTime)oldOrder.OrderDate;
+                        Console.WriteLine(@"Enter the new delivery date");
+                        DateTime.TryParse(Console.ReadLine(), out delivery);
+                        if (delivery == DateTime.MinValue)
+                            delivery = (DateTime)oldOrder.OrderDate;
 
-                    Order updateOrder = new Order()
-                    {
-                        Id = id,
-                        CustomerAdress = adress,
-                        CustomerEmail = email,
-                        CustomerName = customeName,
-                        OrderDate = orderCreate,
-                        ShipDate = orderShip,
-                        DeliveryDate = delivery
-                    };
-                    //<Receives preferred order details and updates them>
-                    dal.Order.Update(updateOrder);
-                    break;
-                case SubMenu_CRAUD.Delete:
-                    Console.WriteLine(@"
+                        Order updateOrder = new Order()
+                        {
+                            Id = id,
+                            CustomerAdress = adress,
+                            CustomerEmail = email,
+                            CustomerName = customeName,
+                            OrderDate = orderCreate,
+                            ShipDate = orderShip,
+                            DeliveryDate = delivery
+                        };
+                        //<Receives preferred order details and updates them>
+                        dal.Order.Update(updateOrder);
+                        Console.WriteLine("The item was updated successfuly");
+                        break;
+                    case SubMenu_CRAUD.Delete:
+                        Console.WriteLine(@"
         Enter the Order ID number that you want to remove");
-                    int.TryParse(Console.ReadLine(), out id);
-                    //<Receives an order number and cancels it>
-                    dal.Order.Delete(id);
-                    break;
-                default:
-                    break;
+                        int.TryParse(Console.ReadLine(), out id);
+                        //<Receives an order number and cancels it>
+                        dal.Order.Delete(id);
+                        break;
+                    default:
+                        throw new DalTest.InvalidInputFormatException("please select one of the menu option");
+                        break;
+                }
             }
+            catch (Exception e)
+            {
 
-            exitSubMenu = false; // innitilize the  continue flag 
-            Console.ReadKey();
+                Console.WriteLine(e);
+            }
+            
             Console.Clear();
 
             Console.WriteLine(@"
-       press 0 to return to Main menu
-        presss any other key to continue");
+        presss any key to continue");
 
-            int.TryParse(Console.ReadLine(), out exit_);
-            if (exit_ == (int)SubMenu_CRAUD.ExitSubMenu)
-                exitSubMenu = true;
-
-        } while (!exitSubMenu);
+        } while (subMenu_CRAUD != SubMenu_CRAUD.ExitSubMenu);
 
     }
     #endregion
@@ -405,7 +450,8 @@ class Program
         4) To updat an order item
         5) To delete an order item
         6) To Show an order item by given product and order Id's
-        7) To Shw all order item belongs to one order");
+        7) To Shw all order item belongs to one order
+        0) To Exit the sub menu");
 
             SubMenu_OrderItem OrderItem;
             int id = int.MinValue;
@@ -447,12 +493,12 @@ class Program
                     while (!int.TryParse(Console.ReadLine(), out orderId)) ;
                     OrderItem OrderItemToShow = new OrderItem();
                     //<Receives an ID number of the item in the order and returns its details>
-                    OrderItemToShow = dal.OrderItem.Get(orderId);
+                    OrderItemToShow = dal.OrderItem.Get(orderItem => orderItem?.Id == id);
                     Console.WriteLine("\n\t" + OrderItemToShow);
                     break;
                 case SubMenu_OrderItem.ViewAll:
                     //<Returns all items in the order>
-                    IEnumerable<OrderItem> OrdersItemList = dal.OrderItem.GetList();
+                    IEnumerable<OrderItem?> OrdersItemList = dal.OrderItem.GetList();
                     foreach (OrderItem orderItem in OrdersItemList)
                         Console.WriteLine("\t" + orderItem);
                     break;
@@ -460,7 +506,7 @@ class Program
                     Console.WriteLine(@"
         Enter the Order item ID number that you want to update his details");
                     int.TryParse(Console.ReadLine(), out orderId);
-                    OrderItem oldOrderItem = dal.OrderItem.Get(orderId);
+                    OrderItem oldOrderItem = dal.OrderItem.Get(orderItem => orderItem?.Id == id);
                     Console.WriteLine("\t" + oldOrderItem);
 
                     Console.WriteLine(@"
@@ -497,6 +543,7 @@ class Program
                     };
                     //<Receives an updated order item and updates it>
                     dal.OrderItem.Update(updateOrderItem);
+                    Console.WriteLine("The item was updated successfuly");
                     break;
                 case SubMenu_OrderItem.Delete:
                     Console.WriteLine(@"
@@ -513,7 +560,8 @@ class Program
         Enter the product ID:");
                     int.TryParse(Console.ReadLine(), out productId);
                     //<Receives the ID number of the order and the product and returns the item details in the order>
-                    OrderItem itemToShowByProductAndOrder = dal.OrderItem.GetItemByOrderAndProduct(orderId, productId);
+                    OrderItem itemToShowByProductAndOrder = dal.OrderItem.Get(orderItem => orderItem?.OrderId == orderId &&
+                    orderItem?.ProductId == productId);
                     Console.WriteLine(itemToShowByProductAndOrder);
                     break;
                 case SubMenu_OrderItem.itemListByOrder:
@@ -521,26 +569,20 @@ class Program
         Enter the Order ID number that you want to see Item Order that belogs to him");
                     int.TryParse(Console.ReadLine(), out orderId);
                     //<Receives an ID number of the order and returns all the details of the products in this order>
-                    IEnumerable<OrderItem> ordersItemsList = dal.OrderItem.GetItemsListByOrderId(orderId);
+                    IEnumerable<OrderItem?> ordersItemsList = dal.OrderItem.GetList(orderItem => orderItem?.OrderId == orderId);
                     foreach (OrderItem item in ordersItemsList)
                         Console.WriteLine(item);
                     break;
                 default:
                     break;
             }
-            exitSubMenu = false; // innitilize the  continue flag 
-            Console.ReadKey();
             Console.Clear();
 
             Console.WriteLine(@"
-        press 0 to return to Main menu
-        presss any other key to continue");
+             presss any key to continue");
+            Console.ReadKey();
 
-            int.TryParse(Console.ReadLine(), out exit_);
-            if (exit_ == (int)SubMenu_CRAUD.ExitSubMenu)
-                exitSubMenu = true;
-
-        } while (!exitSubMenu);
+        } while (subMenu_OrderItem != SubMenu_OrderItem.Exit);
 
     }
     #endregion

@@ -32,17 +32,17 @@ internal class DalOrder : IOrder
         DataSource._orderList.Add(o);
         return o.Id;
     }
-    /// <summary>
-    /// Receives an order number and returns all order details
-    /// </summary>
-    /// <param name="OrderId"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    public Order Get(int OrderId)   //?
-    {
-        return DataSource._orderList.Find(x => x?.Id == OrderId) ?? 
-               throw new NotFoundException("Order Id not exist");
-    }
+    ///// <summary>
+    ///// Receives an order number and returns all order details
+    ///// </summary>
+    ///// <param name="OrderId"></param>
+    ///// <returns></returns>
+    ///// <exception cref="Exception"></exception>
+    //public Order Get(int OrderId)   //?
+    //{
+    //    return DataSource._orderList.Find(x => x?.Id == OrderId) ?? 
+    //           throw new NotFoundException("Order Id not exist");
+    //}
 
 
     /// <summary>

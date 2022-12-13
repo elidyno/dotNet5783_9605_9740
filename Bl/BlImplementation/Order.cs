@@ -26,7 +26,7 @@ internal class Order : IOrder
         //Try requesting an order from data layer
         try
         {
-            dataOrder = Dal.Order.Get(orderId);
+            dataOrder = Dal.Order.Get(x => x?.Id == orderId);
         }
         catch (Exception e)
         {
@@ -34,10 +34,10 @@ internal class Order : IOrder
         }
 
         IEnumerable<DO.OrderItem?> items = new List<DO.OrderItem?>();
-        //Try requesting a List of orderItems from a data layer
+        //Try requesting a List of orderItems from data layer
         try
         {
-            items = Dal.OrderItem.GetItemsListByOrderId(orderId);
+            items = Dal.OrderItem.GetList( x => x?.Id == orderId);
         }
         catch (Exception e)
         {
@@ -55,7 +55,7 @@ internal class Order : IOrder
                 Price = item.Price,
                 ProductId = item.ProductId,
                 TotalPrice = item.Price * item.Amount,
-                ProductName = Dal.Product.Get(item.ProductId).Name
+                ProductName = Dal.Product.Get(x => x?.Id == item.ProductId).Name
             });
         }
 
@@ -107,7 +107,7 @@ internal class Order : IOrder
         {
             //For each order, request the list of orderItems
             IEnumerable<DO.OrderItem?> items = new List<DO.OrderItem?>();
-            items = Dal.OrderItem.GetItemsListByOrderId(order.Id);
+            items = Dal.OrderItem.GetList(x => x?.Id == order.Id);
 
             int amountOfItems = items.Count();
 
@@ -143,7 +143,7 @@ internal class Order : IOrder
         DO.Order dataOrder = new DO.Order();
         try
         {
-            dataOrder = Dal.Order.Get(orderId);
+            dataOrder = Dal.Order.Get(x => x?.Id == orderId);
         }
         catch (Exception e)
         {
@@ -181,7 +181,7 @@ internal class Order : IOrder
         DO.Order dataOrder = new DO.Order();
         try
         {
-            dataOrder = Dal.Order.Get(orderId);
+            dataOrder = Dal.Order.Get(x => x?.Id == orderId);
             boOrder = Get(orderId);
         }
         catch (DO.NotFoundException e)
@@ -229,7 +229,7 @@ internal class Order : IOrder
         DO.Order dataOrder = new DO.Order();
         try
         {
-            dataOrder = Dal.Order.Get(orderId);
+            dataOrder = Dal.Order.Get(x => x?.Id == orderId);
             boOrder = Get(orderId);
         }
         catch (DO.NotFoundException e)

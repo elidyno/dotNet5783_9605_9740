@@ -11,7 +11,6 @@ namespace DalApi
         public int Add(T item);
         public void Delete(int item);
         public void Update (T item);
-        public T Get (int item);
         public IEnumerable<T?> GetList(Func<T?, bool>? select_ = null);
         public T Get(Func<T?, bool>? select_);
     }

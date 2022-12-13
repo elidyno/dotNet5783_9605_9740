@@ -85,7 +85,7 @@ namespace BlTest
                             exit = true;
                             break;
                         default:
-                            Console.WriteLine("Invalid number: Please enter one of the numbers shown in the menu\n");
+                            Console.WriteLine("ERROR - Invalid number: Please enter one of the numbers shown in the menu\n");
                             break;
                     }
                 }
@@ -139,7 +139,7 @@ namespace BlTest
                                 }
                                 catch (Exception e)
                                 {
-                                    Console.WriteLine(e);
+                                    Console.WriteLine("ERROR - " + e);
                                     break;
                                 }
                                 Console.WriteLine(order);
@@ -155,7 +155,7 @@ namespace BlTest
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine(e);
+                                Console.WriteLine("ERROR - " + e);
                                 break;
                             }
                             foreach (BO.OrderForList? order in ordersForList)
@@ -173,7 +173,7 @@ namespace BlTest
                                 }
                                 catch (Exception e)
                                 {
-                                    Console.WriteLine(e);
+                                    Console.WriteLine("ERROR - " + e);
                                     break;
                                 }
                                 Console.WriteLine(orderTracking);
@@ -193,7 +193,7 @@ namespace BlTest
                                 }
                                 catch (Exception e)
                                 {
-                                    Console.WriteLine(e);
+                                    Console.WriteLine("ERROR - " + e);
                                     break;
                                 }
                                 Console.WriteLine(order);
@@ -213,7 +213,7 @@ namespace BlTest
                                 }
                                 catch (Exception e)
                                 {
-                                    Console.WriteLine(e);
+                                    Console.WriteLine("ERROR - " + e);
                                     break;
                                 }
                                 Console.WriteLine(order);
@@ -222,7 +222,7 @@ namespace BlTest
                                 Console.WriteLine("id must be an intinuger number\n");
                             break;
                         default:
-                            Console.WriteLine("Invalid value, please try again\n");
+                            Console.WriteLine("ERROR - Invalid value, please try again\n");
                             break;
                     }                
                 }
@@ -318,7 +318,7 @@ namespace BlTest
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    Console.WriteLine("ERROR: " + e);
                     Console.WriteLine("press any key to continue...");
                     Console.ReadKey();
                     Console.Clear();
@@ -335,7 +335,7 @@ namespace BlTest
             bool success = false;
             bool exit = false;
             int id;
-            string name;
+            string? name;
             double price;
             BO.Category category;
             int amount;
@@ -370,7 +370,7 @@ namespace BlTest
                                 if (!success)
                                     throw new InvalidInputFormatException("Please entry only a intiger Number\n");
                                 Console.WriteLine("Enter the customer name:");
-                                name = Console.ReadLine();
+                                name = Console.ReadLine() ?? null;
                                 Console.WriteLine("Enter the price:");
                                 success = double.TryParse(Console.ReadLine(), out price);
                                 if (!success)
@@ -417,10 +417,9 @@ namespace BlTest
 
                                 Console.WriteLine("enter new data to updated in Product (only in failde yo want to update):");
 
-                                name = null; //to check after if the user put a value for update
                                 Console.WriteLine("Name:");
-                                name = Console.ReadLine();
-                                if (name == null || name == "\n")
+                                name = Console.ReadLine() ?? null;
+                                if (name == "")
                                     name = oldProduct.Name;
 
                                 price = double.MinValue; //to check after if the user put a value for update
@@ -433,7 +432,7 @@ namespace BlTest
                                 Console.WriteLine("Category:");
                                 success = Category.TryParse(Console.ReadLine(), out category);
                                 if (!success)
-                                    category = oldProduct.Category;
+                                    category = (BO.Category)oldProduct.Category;
 
                                 Console.WriteLine("InStock:");
                                 success = int.TryParse(Console.ReadLine(), out amount);
@@ -452,6 +451,7 @@ namespace BlTest
 
                                 //get list of product to show the product was updated
                                 Console.WriteLine("The product was updated:");
+                                product = bl.Product.Get(upProduct.Id);
                                 Console.WriteLine(product);
                                 break;
                             case SubMenu_Product.ViewProduct:

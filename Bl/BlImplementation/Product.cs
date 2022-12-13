@@ -96,7 +96,7 @@ namespace BlImplementation
             DO.Product dalProduct = new DO.Product();
             try
             {
-                dalProduct = Dal.Product.Get(productId);
+                dalProduct = Dal.Product.Get(product => product?.Id == productId);
             }
             catch (Exception e)
             {
@@ -132,7 +132,7 @@ namespace BlImplementation
             DO.Product dalProduct = new DO.Product();
             try
             {
-                dalProduct = Dal.Product.Get(productId);
+                dalProduct = Dal.Product.Get(product => product?.Id == productId);
             }
             catch (Exception e)
             {
@@ -241,10 +241,8 @@ namespace BlImplementation
         /// <returns>false or true</returns>
         public bool IsHasBeenOrderd(int productId)
         {
-            bool exist = false;
-
-            exist = Dal.OrderItem.GetList().Any(x => x?.ProductId == productId);
-            return exist;
+            return Dal.OrderItem.GetList().Any(x => x?.ProductId == productId);
+                
         }
     }
 }
