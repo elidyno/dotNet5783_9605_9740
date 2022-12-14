@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
 
 namespace PL.Product
 {
@@ -35,6 +37,7 @@ namespace PL.Product
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             AddOrUpdate.Name = "Update";
             AddOrUpdate.Content = "Update";
+            GetId.IsReadOnly = true;
             BO.Product product = new();
             try
             {
@@ -54,21 +57,37 @@ namespace PL.Product
 
         private void AddOrUpdate_Click(object sender, RoutedEventArgs e)
         {
+            int id = 0, price = 0, inStock = 0;
+            try
+            {
+                id = int.Parse(GetId.Text);
+                price = int.Parse(GetPrice.Text);
+                inStock = int.Parse(GetInStock.Text);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                this.Close();
+                return;
+            }
+            
+            BO.Product product = new()
+            {
+                Category = (BO.Category)CategorySelector.SelectedItem,
+                Name = GetName.Text,
+                Id = id,
+                Price = price,
+                InStock = inStock,
+            };
+
             Button? button = sender as Button;
             
             if (button?.Name == "Add")
-            {
-                BO.Product product = new()
-                {
-                    Category = (BO.Category)CategorySelector.SelectedItem,
-                    Name = GetName.Text,
-                    Id = int.Parse(GetId.Text),
-                    Price = int.Parse(GetPrice.Text),
-                    InStock = int.Parse(GetInStock.Text),
-                };
+            {     
                 try
                 {
                     bl.Product.Add(product);
+                    this.Close();
                 }
                 catch (Exception E)
                 {
@@ -76,11 +95,12 @@ namespace PL.Product
                 }
             }
             //Button = Update
-            else
+            else 
             {
                 try
                 {
-                    bl.Product.Update(bl.Product.Get(int.Parse(GetId.Text)));
+                    bl.Product.Update(product);
+                    this.Close();
                 }
                 catch (Exception E)
                 {

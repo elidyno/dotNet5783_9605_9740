@@ -15,8 +15,8 @@
             <ComboBox Name="CategorySelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="CategorySelector_SelectionChanged"/>
 
         </Grid>
-        <Label Content="Category" Grid.Column="0"  HorizontalAlignment="Left" Margin="137,0,0,10" Height="26" VerticalAlignment="Bottom" MouseLeftButtonDown="CategoryLableMouseKlick"/>
-        <ListView  x:Name="ProductListview" Grid.Row="1"  >
+        <Label Content="Category" Grid.Column="0"  HorizontalAlignment="Left" Margin="137,0,0,10" Height="26" VerticalAlignment="Bottom" />
+        <ListView  x:Name="ProductListview" Grid.Row="1" MouseDoubleClick="product_selected"  >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -24,7 +24,7 @@
             </ListView.View>
         </ListView>
 
-        <Button Name="AddProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="691,5,0,0" Padding="5" Click="AddProduct_Click"/>
+        <Button Name="AddProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddProduct_Click"/>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>

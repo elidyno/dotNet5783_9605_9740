@@ -32,24 +32,28 @@ namespace PL.Product
         {
             if (CategorySelector.SelectedIndex == 5)
                 ProductListview.ItemsSource = bl.Product.GetList();
-            ProductListview.ItemsSource = bl.Product.GetList(
+            else
+            {
+                ProductListview.ItemsSource = bl.Product.GetList(
                 (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedItem));
+            }
+ ;
         }
 
-        private void CategoryLableMouseKlick(object sender, MouseButtonEventArgs e)
+
+        private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
+            new Product().ShowDialog();
             ProductListview.ItemsSource = bl.Product.GetList();
-        }
-
-        public void AddProduct_Click(object sender, RoutedEventArgs e)
-        {
-            new Product().Show();
         }
 
         private void product_selected(object sender, MouseButtonEventArgs e)
         {
             BO.ProductForList p = (BO.ProductForList)ProductListview.SelectedItem;
-            new Product(p.Id).Show();
+            new Product(p.Id).ShowDialog();
+            ProductListview.ItemsSource = bl.Product.GetList();
         }
+
+       
     }
 }
