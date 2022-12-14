@@ -6,7 +6,8 @@ public enum Category
     WOMEN,
     BOYS,
     GIRLS,
-    ACCESSORIES
+    ACCESSORIES,
+    Non
 };
 
 public enum Status

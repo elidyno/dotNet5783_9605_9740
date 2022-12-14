@@ -26,12 +26,12 @@ namespace PL.Product
             InitializeComponent();
             ProductListview.ItemsSource = bl.Product.GetList();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-           
         }
 
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-    
+            if (CategorySelector.SelectedIndex == 5)
+                ProductListview.ItemsSource = bl.Product.GetList();
             ProductListview.ItemsSource = bl.Product.GetList(
                 (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedItem));
         }
