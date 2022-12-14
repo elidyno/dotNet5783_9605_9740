@@ -12,7 +12,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="AttributeSelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="AttributeSelector_SelectionChanged"/>
+            <ComboBox Name="CategorySelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="CategorySelector_SelectionChanged"/>
 
         </Grid>
         <Label Content="Category" Grid.Column="0"  HorizontalAlignment="Left" Margin="137,0,0,10" Height="26" VerticalAlignment="Bottom" MouseLeftButtonDown="CategoryLableMouseKlick"/>
@@ -24,10 +24,13 @@
             </ListView.View>
         </ListView>
 
+        <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="691,5,0,0" Padding="5" Click="Button_Click"/>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
     </Grid>
 </Window>

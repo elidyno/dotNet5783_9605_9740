@@ -25,20 +25,25 @@ namespace PL.Product
         {
             InitializeComponent();
             ProductListview.ItemsSource = bl.Product.GetList();
-            AttributeSelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
            
         }
 
-        private void AttributeSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //AttributeSelector.SelectedItem
+    
             ProductListview.ItemsSource = bl.Product.GetList(
-                (BO.ProductForList product) => product.Category == (BO.Category)(AttributeSelector.SelectedItem));
+                (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedItem));
         }
 
         private void CategoryLableMouseKlick(object sender, MouseButtonEventArgs e)
         {
             ProductListview.ItemsSource = bl.Product.GetList();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new Product().Show();
         }
     }
 }
