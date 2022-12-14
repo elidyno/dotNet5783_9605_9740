@@ -41,9 +41,15 @@ namespace PL.Product
             ProductListview.ItemsSource = bl.Product.GetList();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void AddProduct_Click(object sender, RoutedEventArgs e)
         {
             new Product().Show();
+        }
+
+        private void product_selected(object sender, MouseButtonEventArgs e)
+        {
+            BO.ProductForList p = (BO.ProductForList)ProductListview.SelectedItem;
+            new Product(p.Id).Show();
         }
     }
 }

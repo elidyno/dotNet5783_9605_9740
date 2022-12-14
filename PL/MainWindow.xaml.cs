@@ -28,7 +28,11 @@ namespace PL
             InitializeComponent();
         }
 
-        private void Admin_Click(object sender, RoutedEventArgs e) => new ProductForList().Show();
+        private void Admin_Click(object sender, RoutedEventArgs e)
+        {
+            new ProductForList().Show();
+            this.Close();
+        }
        
     }
 }
