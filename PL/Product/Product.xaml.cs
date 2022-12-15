@@ -74,6 +74,7 @@ namespace PL.Product
                 id = int.Parse(GetId.Text);
                 price = int.Parse(GetPrice.Text);
                 inStock = int.Parse(GetInStock.Text);
+
             }
             catch(Exception ex)
             {

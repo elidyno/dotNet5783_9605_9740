@@ -1,5 +1,8 @@
 ﻿namespace BO;
 
+/// <summary>
+/// category enums for product category
+/// </summary>
 public enum Category
 {
     MEN,
@@ -7,9 +10,11 @@ public enum Category
     BOYS,
     GIRLS,
     ACCESSORIES,
-    NONE
 };
 
+/// <summary>
+/// status enums for order status
+/// </summary>
 public enum Status
 {
     APPROVED, SHIPPED, DELIVERED

@@ -28,7 +28,7 @@ namespace PL.Product
             //The list view control gets the list of products
             ProductListview.ItemsSource = bl.Product.GetList();
             //The comboBox control accepts the category values
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            CategorySelector.ItemsSource = Enum.GetValues(typeof(PL.Product.Category));
         }
         /// <summary>
         /// Category selection event handling
@@ -37,12 +37,17 @@ namespace PL.Product
         /// <param name="e"></param>
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CategorySelector.SelectedIndex == 5)
+            if ((int)CategorySelector.SelectedValue == -1)// the "None" option was selected
                 ProductListview.ItemsSource = bl.Product.GetList();
+            //else
+            //{
+            //    ProductListview.ItemsSource = bl.Product.GetList(
+            //    (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedItem));
+            //}
             else
             {
                 ProductListview.ItemsSource = bl.Product.GetList(
-                (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedItem));
+                (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedIndex));
             }
  ;
         }

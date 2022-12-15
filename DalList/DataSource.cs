@@ -66,9 +66,9 @@ namespace Dal
             {
                 // thake a difren tick of second to each item and make sure that had 6 dgits
                 int tmpId = ((byte)DateTime.Now.Ticks) + 100000;
-                int tmpValCategory = rand.Next(0, 4);
+                int tmpValCategory = rand.Next(0, 5);
 
-                int tmpIndexInDataList = rand.Next(0, 3);
+                int tmpIndexInDataList = rand.Next(0, 4);
                 string tmpName = _productNamesList[tmpValCategory][tmpIndexInDataList];
                 double tmpPrice = _productPriceList[tmpValCategory][tmpIndexInDataList];
                 Category tmpCategory = (Category)tmpValCategory;
@@ -100,8 +100,8 @@ namespace Dal
             for (int i = 0; i < _rand; i++)
             {
                 int tmpId = Config.OrderRunningId;
-                int firstNameIndex = rand.Next(0, 9);
-                int lastNameIndex = rand.Next(0, 9);
+                int firstNameIndex = rand.Next(0, 10);
+                int lastNameIndex = rand.Next(0, 10);
 
                 string tmpName = CustomersData.firstNames[firstNameIndex] + " " + CustomersData.lastNames[lastNameIndex];
                 string tmpEmail = CustomersData.firstNames[firstNameIndex] + CustomersData.lastNames[lastNameIndex] + "@gmail.com";
@@ -161,7 +161,7 @@ namespace Dal
             int tmpOmunt;
             for (int i = 0; i < _orderList.Count; i++)
             {
-                _rand = rand.Next(1, 4);
+                _rand = rand.Next(1, 5);
                 if (_rand == 4)
                     itemsForOneOrder[i] = int.MaxValue; // flag that this order has alredy four items
                 for (int j = 0; j < _rand; j++)
