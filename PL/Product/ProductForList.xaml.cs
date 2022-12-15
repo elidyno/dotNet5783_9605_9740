@@ -17,6 +17,7 @@ namespace PL.Product
 {
     /// <summary>
     /// Interaction logic for ProductForList.xaml
+    /// Creates a product display window with the option to switch to the add or update window
     /// </summary>
     public partial class ProductForList : Window
     {
@@ -24,10 +25,16 @@ namespace PL.Product
         public ProductForList()
         {
             InitializeComponent();
+            //The list view control gets the list of products
             ProductListview.ItemsSource = bl.Product.GetList();
+            //The comboBox control accepts the category values
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
-
+        /// <summary>
+        /// Category selection event handling
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (CategorySelector.SelectedIndex == 5)
@@ -40,13 +47,22 @@ namespace PL.Product
  ;
         }
 
-
+        /// <summary>
+        /// Handling the event of clicking on the add product button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
             new Product().ShowDialog();
             ProductListview.ItemsSource = bl.Product.GetList();
         }
-
+        /// <summary>
+        /// Handling the event of clicking on a product from the list  
+        /// calls the constructor of "product" with the product ID to open an update window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void product_selected(object sender, MouseButtonEventArgs e)
         {
             BO.ProductForList p = (BO.ProductForList)ProductListview.SelectedItem;

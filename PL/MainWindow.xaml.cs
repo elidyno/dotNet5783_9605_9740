@@ -28,6 +28,11 @@ namespace PL
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Opens a product list window and closes the main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Admin_Click(object sender, RoutedEventArgs e)
         {
             new ProductForList().Show();

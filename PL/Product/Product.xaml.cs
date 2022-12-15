@@ -18,11 +18,14 @@ using System.Windows.Shapes;
 namespace PL.Product
 {
     /// <summary>
-    /// Interaction logic for Product.xaml
+    /// Creates a window for adding a product or updating an existing product
     /// </summary>
     public partial class Product : Window
     {
         private IBl bl = new BlImplementation.Bl();
+        /// <summary>
+        /// Constructor for creating a window to add a product
+        /// </summary>
         public Product()
         {
             InitializeComponent();
@@ -30,7 +33,10 @@ namespace PL.Product
             AddOrUpdate.Name = "Add";
             AddOrUpdate.Content = "Add";
         }
-
+        /// <summary>
+        /// Constructor for creating a window to update a product
+        /// </summary>
+        /// <param name="productId"></param>
         public Product(int productId)
         {
             InitializeComponent();
@@ -54,10 +60,15 @@ namespace PL.Product
             GetInStock.Text = product.InStock.ToString();
 
         }
-
+        /// <summary>
+        /// Handles the button click event according to the button type created in the constructor
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddOrUpdate_Click(object sender, RoutedEventArgs e)
         {
-            int id = 0, price = 0, inStock = 0;
+            int id, price, inStock;
+            //Trying to get a valid value from the user
             try
             {
                 id = int.Parse(GetId.Text);
@@ -70,7 +81,7 @@ namespace PL.Product
                 this.Close();
                 return;
             }
-            
+            //Creates a product entity of the user's choice
             BO.Product product = new()
             {
                 Category = (BO.Category)CategorySelector.SelectedItem,
@@ -81,7 +92,7 @@ namespace PL.Product
             };
 
             Button? button = sender as Button;
-            
+            //button == Add
             if (button?.Name == "Add")
             {     
                 try
@@ -94,7 +105,7 @@ namespace PL.Product
                     MessageBox.Show(E.Message);
                 }
             }
-            //Button = Update
+            //Button == Update
             else 
             {
                 try
