@@ -32,5 +32,13 @@ namespace DO
         => $@"Can't return a null entity";
 
     }
-}   
+
+    [Serializable]
+    public class DalConfigException : Exception
+    {
+        public DalConfigException(string msg) : base(msg) { }
+        public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
+    }
+
+}
 
