@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 using System.Collections.Generic;
 
 namespace BlImplementation;
@@ -8,7 +9,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Order : IOrder
 {
-    private DalApi.IDal Dal = new Dal.DalList(); //Using it we can access the data access classes
+    DalApi.IDal? dal = DalApi.Factory.Get();  //Using it we can access the data access classes
 
     /// <summary>
     /// Returns an order (logical entity) by order i
@@ -26,7 +27,7 @@ internal class Order : IOrder
         //Try requesting an order from data layer
         try
         {
-            dataOrder = Dal.Order.Get(x => x?.Id == orderId);
+            dataOrder = dal?.Order.Get(x => x?.Id == orderId) ?? throw new NullableException();
         }
         catch (Exception e)
         {
@@ -37,7 +38,7 @@ internal class Order : IOrder
         //Try requesting a List of orderItems from data layer
         try
         {
-            items = Dal.OrderItem.GetList( x => x?.Id == orderId);
+            items = dal.OrderItem.GetList( x => x?.Id == orderId);
         }
         catch (Exception e)
         {
@@ -55,7 +56,7 @@ internal class Order : IOrder
                 Price = item.Price,
                 ProductId = item.ProductId,
                 TotalPrice = item.Price * item.Amount,
-                ProductName = Dal.Product.Get(x => x?.Id == item.ProductId).Name
+                ProductName = dal.Product.Get(x => x?.Id == item.ProductId).Name
             });
         }
 
@@ -97,7 +98,7 @@ internal class Order : IOrder
     {
         IEnumerable<DO.Order?> orders = new List<DO.Order?>();
         //Try requesting order list from a data layer
-        orders = Dal.Order.GetList();
+        orders = dal?.Order.GetList() ?? throw new NullableException();
 
         //Creating a list of OrderForList -logical entities
         List<BO.OrderForList?> ordersForList = new List<BO.OrderForList?>();
@@ -107,7 +108,7 @@ internal class Order : IOrder
         {
             //For each order, request the list of orderItems
             IEnumerable<DO.OrderItem?> items = new List<DO.OrderItem?>();
-            items = Dal.OrderItem.GetList(x => x?.Id == order.Id);
+            items = dal.OrderItem.GetList(x => x?.Id == order.Id);
 
             int amountOfItems = items.Count();
 
@@ -143,7 +144,7 @@ internal class Order : IOrder
         DO.Order dataOrder = new DO.Order();
         try
         {
-            dataOrder = Dal.Order.Get(x => x?.Id == orderId);
+            dataOrder = dal?.Order.Get(x => x?.Id == orderId) ?? throw new NullableException();
         }
         catch (Exception e)
         {
@@ -181,7 +182,7 @@ internal class Order : IOrder
         DO.Order dataOrder = new DO.Order();
         try
         {
-            dataOrder = Dal.Order.Get(x => x?.Id == orderId);
+            dataOrder = dal?.Order.Get(x => x?.Id == orderId) ?? throw new NullableException();
             boOrder = Get(orderId);
         }
         catch (DO.NotFoundException e)
@@ -206,7 +207,7 @@ internal class Order : IOrder
         //Attempting to update the data layer
         try
         {
-            Dal.Order.Update(dataOrder);
+            dal.Order.Update(dataOrder);
         }
         catch (DO.NotFoundException e)
         {
@@ -229,7 +230,7 @@ internal class Order : IOrder
         DO.Order dataOrder = new DO.Order();
         try
         {
-            dataOrder = Dal.Order.Get(x => x?.Id == orderId);
+            dataOrder = dal?.Order.Get(x => x?.Id == orderId) ?? throw new NullableException(); 
             boOrder = Get(orderId);
         }
         catch (DO.NotFoundException e)
@@ -256,7 +257,7 @@ internal class Order : IOrder
         //Attempting to update the data layer
         try
         {
-            Dal.Order.Update(dataOrder);
+            dal.Order.Update(dataOrder);
         }
         catch (DO.NotFoundException e)
         {

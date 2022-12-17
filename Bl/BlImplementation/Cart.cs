@@ -10,7 +10,8 @@ namespace BlImplementation
     /// </summary>
     internal class Cart : ICart
     {
-        private DalApi.IDal Dal = new Dal.DalList(); //Using it we can access the data access classes
+        DalApi.IDal? dal = DalApi.Factory.Get(); //Using it we can access the data access classes
+
         /// <summary>
         /// add a product to the Cart of Customer
         /// </summary>
@@ -24,7 +25,7 @@ namespace BlImplementation
             DO.Product dataProduct = new DO.Product();
             try
             {
-                dataProduct = Dal.Product.Get(x => x?.Id == productId);
+                dataProduct = dal?.Product.Get(x => x?.Id == productId) ?? throw new NullableException(); 
             }
             catch (Exception e)
             {
@@ -104,7 +105,7 @@ namespace BlImplementation
             {
                 try
                 {
-                    product_ = Dal.Product.Get(x => x?.Id == item.Id);
+                    product_ = dal?.Product.Get(x => x?.Id == item.Id) ?? throw new NullableException(); 
                 }
                 catch (Exception e)
                 {
@@ -136,7 +137,7 @@ namespace BlImplementation
             try
             {
                 //try to add order to data sirce in Dal
-                int orderId = Dal.Order.Add(order);
+                int orderId = dal?.Order.Add(order) ?? throw new NullableException(); 
                 //create orderItem in Dal and update amount of product
                 DO.OrderItem orderItem = new();
                 foreach (var item in cart.Items)
@@ -146,11 +147,11 @@ namespace BlImplementation
                     orderItem.ProductId = item.ProductId;
                     orderItem.Amount = item.Amount;
                     orderItem.Price = item.Price;
-                    int orderItemId = Dal.OrderItem.Add(orderItem);
+                    int orderItemId = dal.OrderItem.Add(orderItem);
                     //update amount of product in Dak
-                    product_ = Dal.Product.Get(x => x?.Id == item.ProductId);
+                    product_ = dal.Product.Get(x => x?.Id == item.ProductId);
                     product_.InStock -= item.Amount;
-                    Dal.Product.Update(product_);
+                    dal.Product.Update(product_);
                 }
             }
             catch (Exception e)

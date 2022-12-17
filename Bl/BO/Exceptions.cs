@@ -67,6 +67,7 @@ The format must be: Example@domain.suffix";
         public override string ToString() => "Error: " + Message;
         
     }
+    [Serializable]
     public class UpdateFailedException : Exception
     {
         public UpdateFailedException() : base() { }
@@ -74,4 +75,11 @@ The format must be: Example@domain.suffix";
         public override string ToString() => "Error: " + Message;
 
     }
+    [Serializable]
+    public class NullableException : Exception
+    {
+        public NullableException() : base() { }
+        public override string ToString() => "Error: can't get data from a nullable type";
+    }
+
 }

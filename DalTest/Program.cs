@@ -27,7 +27,7 @@ class Program
     private static SubMenu_OrderItem subMenu_OrderItem; //enum for OrderItem sub menue: includ also privet method of OrderItem
     #endregion
 
-    private static IDal dal = new DalList();
+    DalApi.IDal? dal = DalApi.Factory.Get();
     static void Main(string[] args)
     {
 

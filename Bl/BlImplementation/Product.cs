@@ -1,6 +1,5 @@
 ﻿using BlApi;
 using BO;
-using Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
@@ -12,7 +11,10 @@ namespace BlImplementation
     /// </summary>
     internal class Product : BlApi.IProduct
     {
-        DalApi.IDal Dal = new Dal.DalList();
+        DalApi.IDal? dal = DalApi.Factory.Get();
+       
+
+
         /// <summary>
         /// add a Bl product => chack logical valid of data and add to Dal data surce
         /// </summary>
@@ -44,7 +46,7 @@ namespace BlImplementation
             };
             try
             {
-                int i = Dal.Product.Add(DoProduct);
+                int i = dal?.Product.Add(DoProduct) ?? throw new NullableException();
             }
             catch (Exception e)
             {
@@ -54,7 +56,7 @@ namespace BlImplementation
         }
 
         /// <summary>
-        /// delete a Bl product => chack logical valid of data and delete from Dal data surce
+        /// delete a Bl product => chack logical valid of data and delete from dal data surce
         /// </summary>
         /// <param name="productI"></param>
         /// <exception cref="ArgumentException"></exception>
@@ -70,7 +72,7 @@ namespace BlImplementation
                 throw new CantBeDeletedException("The product exist in Item Order List");
             try
             {
-                Dal.Product.Delete(productId);
+                dal?.Product.Delete(productId);
             }
             catch (Exception e)
             {
@@ -96,7 +98,7 @@ namespace BlImplementation
             DO.Product dalProduct = new DO.Product();
             try
             {
-                dalProduct = Dal.Product.Get(product => product?.Id == productId);
+                dalProduct = dal?.Product.Get(product => product?.Id == productId) ?? throw new NullableException(); 
             }
             catch (Exception e)
             {
@@ -132,7 +134,7 @@ namespace BlImplementation
             DO.Product dalProduct = new DO.Product();
             try
             {
-                dalProduct = Dal.Product.Get(product => product?.Id == productId);
+                dalProduct = dal?.Product.Get(product => product?.Id == productId) ?? throw new NullableException();
             }
             catch (Exception e)
             {
@@ -168,7 +170,7 @@ namespace BlImplementation
         {
             try
             {
-                IEnumerable<DO.Product?> dalProducts = Dal.Product.GetList();
+                IEnumerable<DO.Product?> dalProducts = dal.Product.GetList();
                 List<BO.ProductForList> result = new List<BO.ProductForList>();
 
                 foreach (DO.Product product in dalProducts)
@@ -224,7 +226,7 @@ namespace BlImplementation
             };
             try
             {
-                Dal.Product.Update(item);
+                dal?.Product.Update(item);
             }
             catch (Exception e)
             {
@@ -241,7 +243,7 @@ namespace BlImplementation
         /// <returns>false or true</returns>
         public bool IsHasBeenOrderd(int productId)
         {
-            return Dal.OrderItem.GetList().Any(x => x?.ProductId == productId);
+            return dal?.OrderItem.GetList().Any(x => x?.ProductId == productId) ??  throw new NullableException(); 
                 
         }
     }
