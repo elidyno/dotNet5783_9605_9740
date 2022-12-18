@@ -5,7 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace Dal;
 //A class that links between the order-item class (DO file) and the Data class (which is linked to collections in Data) through methods
-internal class DalOrderItem :IOrderItem
+internal class DalOrderItem : IOrderItem
 {
     /// <summary>
     /// due to deficult to initilize the data surce
@@ -40,7 +40,7 @@ internal class DalOrderItem :IOrderItem
     //{
     //    return DataSource._orderItemList.Find(x => x?.Id == OrderItemId) ??
     //        throw new NotFoundException("OrderItem Id not exist");
-        
+
     //}
     /// <summary>
     /// Returns all items in the order
@@ -95,29 +95,4 @@ internal class DalOrderItem :IOrderItem
         return DataSource._orderItemList.Find(x => select_(x)) ??
              throw new NullException();
     }
-
-
-    ///// <summary>
-    ///// Receives a number of the order and a number of the product and returns the item in the appropriate orde
-    ///// </summary>
-    ///// <param name="OrderId"></param>
-    ///// <param name="ProductId"></param>
-    ///// <returns></returns>
-    ///// <exception cref="Exception"></exception>
-    //public OrderItem GetItemByOrderAndProduct(int orderId, int productId)
-    //{
-    //   return DataSource._orderItemList.Find(x => x?.ProductId == productId && x?.OrderId == orderId) ??
-    //        throw new NotFoundException("OrderItem Id not exist");
-    //}
-    ///// <summary>
-    ///// Receives an order number and returns all the items in the order
-    ///// </summary>
-    ///// <param name="orderId"></param>
-    ///// <returns></returns>
-    //public IEnumerable<OrderItem?> GetItemsListByOrderId(int orderId)
-    //{
-    //    List<OrderItem?> orderItems = new List<OrderItem?>();
-    //    orderItems = DataSource._orderItemList.FindAll(x => x?.OrderId == orderId);
-    //    return orderItems;
-    //}
 }

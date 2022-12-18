@@ -1,7 +1,7 @@
 ﻿using BlApi;
 namespace BlImplementation
 {
-    sealed internal class Bl : IBl
+     internal class Bl : IBl
     {
         public IProduct Product => new Product();
 

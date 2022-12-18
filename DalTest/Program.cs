@@ -27,7 +27,7 @@ class Program
     private static SubMenu_OrderItem subMenu_OrderItem; //enum for OrderItem sub menue: includ also privet method of OrderItem
     #endregion
 
-    DalApi.IDal? dal = DalApi.Factory.Get();
+    private static DalApi.IDal? dal = DalApi.Factory.Get();
     static void Main(string[] args)
     {
 
@@ -81,7 +81,7 @@ class Program
     {
         int id;
         string? name = null;
-        DO.Category? category_ = null;
+        //DO.Category? category_ = null;
         DO.Category tmpCategory_ = 0;
         double price;
         int inStock;
@@ -116,7 +116,7 @@ class Program
                         Console.WriteLine(@"
         Enter a product category that you want to add");
                         success = DO.Category.TryParse(Console.ReadLine(), out tmpCategory_);
-                        category_ = tmpCategory_;//cast to a nullable category
+                        //category_ = tmpCategory_;//cast to a nullable category
                         if (!success)
                             throw new DalTest.InvalidInputFormatException("please use only a Category name");
                         Console.WriteLine(@"
@@ -133,12 +133,12 @@ class Program
                         {
                             Id = id,
                             Name = name,
-                            Category = category_,
+                            Category = tmpCategory_,
                             Price = price,
                             InStock = inStock
                         };
                         //<Receives a new product and returns his ID>
-                        int addedProductId = dal.Product.Add(addedProduct);
+                        int addedProductId = dal?.Product.Add(addedProduct) ?? throw new NullException();
                         Console.WriteLine("\tThe Product id: " + addedProductId);
                         break;
                     case SubMenu_CRAUD.View:
@@ -149,12 +149,12 @@ class Program
                             throw new DalTest.InvalidInputFormatException("please entry only an intiger number");
                         Product productToShow = new Product();
                         //<Receives a product ID and returns all product details>
-                        productToShow = dal.Product.Get(product => product?.Id == id);
+                        productToShow = dal?.Product.Get(product => product?.Id == id) ?? throw new NullException();
                         Console.WriteLine("\n\t" + productToShow);
                         break;
                     case SubMenu_CRAUD.ViewAll:
                         //<Returns all products in the store>
-                        IEnumerable<Product?> productsList = dal.Product.GetList();
+                        IEnumerable<Product?> productsList = dal?.Product.GetList() ?? throw new NullException(); ;
                         foreach (Product item in productsList)
                         {
                             Console.WriteLine(item);
@@ -164,6 +164,8 @@ class Program
                         Console.WriteLine(@"
         Enter the product ID number that you want to update his details");
                         success = int.TryParse(Console.ReadLine(), out id);
+                        if(!success)
+                            throw new DalTest.InvalidInputFormatException("please entry only an intiger number");
                         Product oldProduct = dal.Product.Get(product => product?.Id == id);
                         Console.WriteLine(oldProduct);
 
@@ -175,8 +177,11 @@ class Program
 
                         Console.WriteLine(@"
         category:");
-                        string? tmpStringCategory = null;
-                        tmpStringCategory = Console.ReadLine();
+
+                        success = DO.Category.TryParse(Console.ReadLine(), out tmpCategory_);
+                        if (!success)
+                            tmpCategory_ = (DO.Category)oldProduct.Category;
+
                         Console.WriteLine(@"
        price:");
                         price = double.MinValue; //to check after if the user put a value for update
@@ -187,35 +192,8 @@ class Program
                         int.TryParse(Console.ReadLine(), out inStock);
 
                         //if user not update keep the old value
-                        if (name == null || name == "\n")
+                        if (name == "")
                             name = oldProduct.Name;
-                        if (tmpStringCategory == null || tmpStringCategory =="\n")
-                            category_ = oldProduct.Category;
-                        else
-                        {
-                            //convert the category name from string to DO.Category
-                            switch (tmpStringCategory)
-                            {
-                                case ("MEN"):
-                                    category_ = DO.Category.MEN;
-                                    break;
-                                case ("WOMEN"):
-                                    category_ = DO.Category.WOMEN;
-                                    break;
-                                case ("BOYS"):
-                                    category_ = DO.Category.BOYS;
-                                    break;
-                                case ("GIRLS"):
-                                    category_ = DO.Category.GIRLS;
-                                    break;
-                                case ("ACCESSORIES"):
-                                    category_ = DO.Category.ACCESSORIES;
-                                    break;
-                                default:
-                                    throw new DalTest.InvalidInputFormatException("pleas entry only a correct catwwgory name");
-                            }
-                        }
-                            
                         if (price == double.MinValue)
                             price = oldProduct.Price;
                         if (inStock == int.MinValue)
@@ -224,7 +202,7 @@ class Program
                         {
                             Id = id,
                             Name = name, // if name is null kipe the old value
-                            Category = category_,
+                            Category = tmpCategory_,
                             Price = price,
                             InStock = inStock
                         };

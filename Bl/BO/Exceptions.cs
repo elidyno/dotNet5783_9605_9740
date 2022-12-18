@@ -82,4 +82,13 @@ The format must be: Example@domain.suffix";
         public override string ToString() => "Error: can't get data from a nullable type";
     }
 
+    [Serializable]
+    public class NullException : Exception
+    {
+        public NullException() : base() { }
+        public override string ToString()
+        => $@"Can't return a null entity";
+
+    }
+
 }

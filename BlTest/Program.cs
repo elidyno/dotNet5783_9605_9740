@@ -49,6 +49,7 @@ namespace BlTest
         private static SubMenu_Order subMenu_Order;
         private static SubMenu_Product subMenu_Product;
         private static SubMenu_Cart subMenu_cart;
+
         static BO.Cart cart = new Cart();
         private static IBl bl = new BlImplementation.Bl();   
 
@@ -340,7 +341,7 @@ namespace BlTest
             BO.Category category;
             int amount;
             BO.Product product = new();
-            IEnumerable<BO.ProductForList> productsList = new List<BO.ProductForList>();
+            IEnumerable<BO.ProductForList?> productsList = new List<BO.ProductForList?>();
             do
             {
                 Console.WriteLine(
@@ -400,7 +401,7 @@ namespace BlTest
                                 bl.Product.Delete(id);
 
                                 //get list of product to show the product is deleted from data surce
-                                productsList = bl.Product.GetList();
+                                productsList = bl?.Product.GetList() ?? throw new NullException();
                                 foreach (var product_ in productsList)
                                 {
                                     Console.WriteLine(product_);
@@ -476,7 +477,7 @@ namespace BlTest
                                 Console.WriteLine(item);
                                 break;
                             case SubMenu_Product.ViewList:
-                                IEnumerable<BO.ProductForList> allProduct = bl.Product.GetList();
+                                IEnumerable<BO.ProductForList?> allProduct = bl?.Product.GetList() ?? throw new NullException();
                                 foreach (var p in allProduct)
                                 {
                                     Console.WriteLine(p);
