@@ -90,6 +90,7 @@ class Program
         {
             Console.WriteLine(@"
     Select operation to test:
+        0) to return to main menu
         1) To add a product
         2) To show a product
         3) To Show all product list
@@ -104,6 +105,8 @@ class Program
                     throw new DalTest.InvalidInputFormatException("please use only an intiger number from the menu");
                 switch (subMenu_CRAUD)
                 {
+                    case SubMenu_CRAUD.ExitSubMenu:
+                        break;
                     case SubMenu_CRAUD.Add:
                         Console.WriteLine(@"
         Enter the product ID number that you want to add");
@@ -227,8 +230,8 @@ class Program
 
                 Console.WriteLine("ERROR: " + e);
             }
-            
 
+            Console.ReadKey();
             Console.Clear();
             Console.WriteLine(@"
         presss any  key to continue");
@@ -401,12 +404,12 @@ class Program
 
                 Console.WriteLine(e);
             }
-            
+            Console.ReadKey();
             Console.Clear();
 
             Console.WriteLine(@"
         presss any key to continue");
-
+            Console.ReadKey();
         } while (subMenu_CRAUD != SubMenu_CRAUD.ExitSubMenu);
 
     }
@@ -554,8 +557,8 @@ class Program
                 default:
                     break;
             }
+            Console.ReadKey();
             Console.Clear();
-
             Console.WriteLine(@"
              presss any key to continue");
             Console.ReadKey();

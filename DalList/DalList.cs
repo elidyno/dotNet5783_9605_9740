@@ -9,8 +9,10 @@ namespace Dal;
 
 internal sealed class DalList : IDal
 {
+    
     public static IDal Instance { get; } = new DalList();
 
+    //static DalList() { }
     private DalList() { }
     public IOrder Order =>  new DalOrder();
 

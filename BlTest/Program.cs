@@ -448,11 +448,11 @@ namespace BlTest
                                     Category = category,
                                     InStock = amount
                                 };
-                                bl.Product.Update(upProduct);
+                                bl?.Product.Update(upProduct);
 
                                 //get list of product to show the product was updated
                                 Console.WriteLine("The product was updated:");
-                                product = bl.Product.Get(upProduct.Id);
+                                product = bl?.Product.Get(upProduct.Id);
                                 Console.WriteLine(product);
                                 break;
                             case SubMenu_Product.ViewProduct:
@@ -460,7 +460,7 @@ namespace BlTest
                                 success = int.TryParse(Console.ReadLine(), out id);
                                 if (!success)
                                     throw new InvalidInputFormatException("Please entry only a intiger Number\n");
-                                product = bl.Product.Get(id);
+                                product = bl?.Product.Get(id);
                                 Console.WriteLine(product);
                                 break;
                             case SubMenu_Product.ViewProductToCart:
