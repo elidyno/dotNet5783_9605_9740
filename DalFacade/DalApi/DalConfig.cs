@@ -1,7 +1,9 @@
 ﻿namespace DalApi;
 using System.Xml.Linq;
 using DO;
-
+/// <summary>
+/// Settings for handling xml files
+/// </summary>
 static class DalConfig
 {
     internal static string? s_dalName;
