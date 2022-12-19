@@ -1,4 +1,4 @@
-﻿using PL.Product;
+﻿//using PL.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +35,7 @@ namespace PL
         /// <param name="e"></param>
         private void Admin_Click(object sender, RoutedEventArgs e)
         {
-            new ProductForList().Show();
+            new Product.ProductForList().Show();
             this.Close();
         }
        
