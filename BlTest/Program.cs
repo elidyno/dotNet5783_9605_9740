@@ -50,8 +50,8 @@ namespace BlTest
         private static SubMenu_Product subMenu_Product;
         private static SubMenu_Cart subMenu_cart;
 
-        static BO.Cart cart = new Cart();
-        private static IBl bl = new BlImplementation.Bl();   
+        static BO.Cart? cart = new Cart();
+        static BlApi.IBl? bl = BlApi.Factory.Get();
 
         /// <summary>
         /// main program for test BL
@@ -133,10 +133,10 @@ namespace BlTest
                             success = int.TryParse(Console.ReadLine(), out id);
                             if (success)
                             {
-                                BO.Order order = new BO.Order();
+                                BO.Order? order = new BO.Order();
                                 try
                                 {
-                                    order = bl.Order.Get(id);
+                                    order = bl?.Order.Get(id);
                                 }
                                 catch (Exception e)
                                 {
@@ -149,10 +149,10 @@ namespace BlTest
                                 Console.WriteLine("id must be an intinuger number\n"); 
                             break;
                         case SubMenu_Order.ViewAll:
-                            IEnumerable<BO.OrderForList?> ordersForList = new List<BO.OrderForList?>();
+                            IEnumerable<BO.OrderForList?>? ordersForList = new List<BO.OrderForList?>();
                             try
                             {
-                                ordersForList = bl.Order.GetList();
+                                ordersForList = bl?.Order.GetList();
                             }
                             catch (Exception e)
                             {
@@ -167,10 +167,10 @@ namespace BlTest
                             success = int.TryParse(Console.ReadLine(), out id);
                             if (success)
                             {
-                                BO.OrderTracking orderTracking = new BO.OrderTracking();
+                                BO.OrderTracking? orderTracking = new BO.OrderTracking();
                                 try
                                 {
-                                    orderTracking = bl.Order.GetTracking(id);
+                                    orderTracking = bl?.Order.GetTracking(id);
                                 }
                                 catch (Exception e)
                                 {
@@ -187,10 +187,10 @@ namespace BlTest
                             success = int.TryParse(Console.ReadLine(), out id);
                             if (success)
                             {
-                                BO.Order order = new BO.Order();
+                                BO.Order? order = new BO.Order();
                                 try
                                 {
-                                    order = bl.Order.UpdateOrderDelivery(id);
+                                    order = bl?.Order.UpdateOrderDelivery(id);
                                 }
                                 catch (Exception e)
                                 {
@@ -207,10 +207,10 @@ namespace BlTest
                             success = int.TryParse(Console.ReadLine(), out id);
                             if (success)
                             {
-                                BO.Order order = new BO.Order();
+                                BO.Order? order = new BO.Order();
                                 try
                                 {
-                                    order = bl.Order.UpdateOrderSheep(id);
+                                    order = bl?.Order.UpdateOrderSheep(id);
                                 }
                                 catch (Exception e)
                                 {
@@ -282,7 +282,7 @@ namespace BlTest
                                 email = Console.ReadLine();
                                 Console.WriteLine("Please enter the customer's adress");
                                 adress = Console.ReadLine();
-                                bl.Cart.Approve(cart, name, email, adress);
+                                bl?.Cart.Approve(cart, name, email, adress);
                                 Console.WriteLine("The ordr has been orderd succsesufy");
                                 break;
                             case SubMenu_Cart.AddItemToCart:
@@ -290,7 +290,7 @@ namespace BlTest
                                 success = int.TryParse(Console.ReadLine(), out productId);
                                 if (success)
                                 {
-                                    cart = bl.Cart.Add(cart, productId);
+                                    cart = bl?.Cart.Add(cart, productId);
                                     Console.WriteLine(cart);
                                 }
                                 else
@@ -305,7 +305,7 @@ namespace BlTest
                                 success = int.TryParse(Console.ReadLine(), out amount);
                                 if (!success)
                                     throw new InvalidInputFormatException("amount must be an intinuger number");
-                                cart = bl.Cart.Update(cart, productId, amount);
+                                cart = bl?.Cart.Update(cart, productId, amount);
                                 Console.WriteLine(cart);
                                 break;
                             case SubMenu_Cart.ExitSubMenu:
@@ -341,7 +341,7 @@ namespace BlTest
             BO.Category category;
             int amount;
             BO.Product product = new();
-            IEnumerable<BO.ProductForList?> productsList = new List<BO.ProductForList?>();
+            IEnumerable<BO.ProductForList?>? productsList = new List<BO.ProductForList?>();
             do
             {
                 Console.WriteLine(
@@ -391,17 +391,17 @@ namespace BlTest
                                 product.Price = price;
                                 product.Category = category;
                                 product.InStock = amount;
-                                bl.Product.Add(product);
+                                bl?.Product.Add(product);
                                 break;
                             case SubMenu_Product.DelProduct:
                                 Console.WriteLine("Enter Product Id:");
                                 success = int.TryParse(Console.ReadLine(), out id);
                                 if (!success)
                                     throw new InvalidInputFormatException("id must be an intinuger number");
-                                bl.Product.Delete(id);
+                                bl?.Product.Delete(id);
 
                                 //get list of product to show the product is deleted from data surce
-                                productsList = bl?.Product.GetList() ?? throw new NullException();
+                                productsList = bl?.Product.GetList();
                                 foreach (var product_ in productsList)
                                 {
                                     Console.WriteLine(product_);
@@ -414,14 +414,14 @@ namespace BlTest
                                     throw new InvalidInputFormatException("id must be an intinuger number");
 
                                 //get the original item to keep the old value of failde that user wan't to update
-                                BO.Product oldProduct = bl.Product.Get(id);
+                                BO.Product? oldProduct = bl?.Product.Get(id);
 
                                 Console.WriteLine("enter new data to updated in Product (only in failde yo want to update):");
 
                                 Console.WriteLine("Name:");
                                 name = Console.ReadLine() ?? null;
                                 if (name == "")
-                                    name = oldProduct.Name;
+                                    name = oldProduct?.Name;
 
                                 price = double.MinValue; //to check after if the user put a value for update
                                 Console.WriteLine("Price:");
@@ -477,7 +477,7 @@ namespace BlTest
                                 Console.WriteLine(item);
                                 break;
                             case SubMenu_Product.ViewList:
-                                IEnumerable<BO.ProductForList?> allProduct = bl?.Product.GetList() ?? throw new NullException();
+                                IEnumerable<BO.ProductForList?>? allProduct = bl?.Product.GetList();
                                 foreach (var p in allProduct)
                                 {
                                     Console.WriteLine(p);

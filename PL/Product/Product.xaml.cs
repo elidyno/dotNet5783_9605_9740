@@ -1,5 +1,4 @@
-﻿using BlApi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -22,7 +21,8 @@ namespace PL.Product
     /// </summary>
     public partial class Product : Window
     {
-        private IBl bl = new BlImplementation.Bl();
+        BlApi.IBl? bl = BlApi.Factory.Get();
+
         /// <summary>
         /// Constructor for creating a window to add a product
         /// </summary>
@@ -44,20 +44,20 @@ namespace PL.Product
             AddOrUpdate.Name = "Update";
             AddOrUpdate.Content = "Update";
             GetId.IsReadOnly = true;
-            BO.Product product = new();
+            BO.Product? product = new();
             try
             {
-               product = bl.Product.Get(productId);
+               product = bl?.Product.Get(productId);
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex);
             }
             GetId.Text = productId.ToString();
-            CategorySelector.Text = product.Category.ToString();
-            GetName.Text = product.Name;
-            GetPrice.Text = product.Price.ToString();
-            GetInStock.Text = product.InStock.ToString();
+            CategorySelector.Text = product?.Category.ToString();
+            GetName.Text = product?.Name;
+            GetPrice.Text = product?.Price.ToString();
+            GetInStock.Text = product?.InStock.ToString();
 
         }
         /// <summary>
@@ -98,7 +98,7 @@ namespace PL.Product
             {     
                 try
                 {
-                    bl.Product.Add(product);
+                    bl?.Product.Add(product);
                     this.Close();
                 }
                 catch (Exception E)
@@ -111,7 +111,7 @@ namespace PL.Product
             {
                 try
                 {
-                    bl.Product.Update(product);
+                    bl?.Product.Update(product);
                     this.Close();
                 }
                 catch (Exception E)

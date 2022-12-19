@@ -1,5 +1,4 @@
-﻿using BlApi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +20,8 @@ namespace PL.Product
     /// </summary>
     public partial class ProductForList : Window
     {
-        private IBl bl = new BlImplementation.Bl();
+        BlApi.IBl? bl = BlApi.Factory.Get();
+
         public ProductForList()
         {
             InitializeComponent();
@@ -44,10 +44,10 @@ namespace PL.Product
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (CategorySelector.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length)// the "All" option was selected
-                ProductListview.ItemsSource = bl.Product.GetList();
+                ProductListview.ItemsSource = bl?.Product.GetList();
             else
             {
-                ProductListview.ItemsSource = bl.Product.GetList(
+                ProductListview.ItemsSource = bl?.Product.GetList(
                 (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedIndex));
             }
  ;
@@ -61,7 +61,7 @@ namespace PL.Product
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
             new Product().ShowDialog();
-            ProductListview.ItemsSource = bl.Product.GetList();
+            ProductListview.ItemsSource = bl?.Product.GetList();
         }
         /// <summary>
         /// Handling the event of clicking on a product from the list  
@@ -73,7 +73,7 @@ namespace PL.Product
         {
             BO.ProductForList p = (BO.ProductForList)ProductListview.SelectedItem;
             new Product(p.Id).ShowDialog();
-            ProductListview.ItemsSource = bl.Product.GetList();
+            ProductListview.ItemsSource = bl?.Product.GetList();
         }
 
     }
