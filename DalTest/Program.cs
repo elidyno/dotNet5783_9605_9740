@@ -119,7 +119,6 @@ class Program
                         Console.WriteLine(@"
         Enter a product category that you want to add");
                         success = DO.Category.TryParse(Console.ReadLine(), out tmpCategory_);
-                        //category_ = tmpCategory_;//cast to a nullable category
                         if (!success)
                             throw new DalTest.InvalidInputFormatException("please use only a Category name");
                         Console.WriteLine(@"
