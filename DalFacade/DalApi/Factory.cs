@@ -3,7 +3,9 @@
 using DO;
 using System.Reflection;
 using static DalApi.DalConfig;
-
+/// <summary>
+/// factory class for data layer
+/// </summary>
 public static class Factory
 {
     public static IDal? Get()
