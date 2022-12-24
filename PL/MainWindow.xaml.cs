@@ -25,7 +25,10 @@ namespace PL
 
         public MainWindow()
         {
+            
             InitializeComponent();
+           // bgImage.Source = new BitmapImage(new Uri("C:\\Networks\\work\\background.jpg"));
+
         }
 
         /// <summary>
