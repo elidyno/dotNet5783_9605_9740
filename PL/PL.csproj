@@ -13,6 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="beckgroundImage.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="beckgroundImage.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Bl\Bl.csproj" />
   </ItemGroup>
 

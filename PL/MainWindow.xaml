@@ -7,8 +7,55 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
-        <Button x:Name="Admin" Content="Admin" HorizontalAlignment="Left" Margin="146,150,0,0" VerticalAlignment="Top" Click="Admin_Click" Background="DarkGray"/>
+        <Image x:Name="BeckgroundImage"/>
+        <Image Source="beckgroundImage.jpg" Stretch="Fill" Panel.ZIndex="-1"/>
+        <Grid x:Name="Buttonse" Grid.Column="3"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height = "auto"/>
+                <RowDefinition Height = "80"/>
+                <RowDefinition Height = "200"/>
+                <RowDefinition Height = "*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="170"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="Title" Content="Welcome to 'online shoe store'" HorizontalAlignment="Center"
+                   Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+                   Margin="0,41,0,0" VerticalAlignment="Top" Height="104" Width="760" IsEnabled="False"
+                   FontSize="36" FontWeight="Bold" FontFamily="Tahoma" 
+               Foreground= "DarkBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label x:Name="SubTitle" Content="Choose your option to start..." HorizontalAlignment="Center"
+                   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5"
+                   Margin="0,0,0,0" VerticalAlignment="Top" IsEnabled="False"
+                   FontSize="24" FontWeight="Medium" FontFamily="Verdana" 
+               Foreground= "DarkBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button x:Name="Admin" Content="Admin" Grid.Row="2" Grid.Column="1"
+                    HorizontalAlignment="Center"  VerticalAlignment="Center" Click="Admin_Click" Background="Green"
+                    Height="51" Width="140" FontFamily="Verdana" FontSize="20" Foreground="White"/>
+            <Button x:Name="NewOrder" Content="New Order >>" Grid.Row="2" Grid.Column="2"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" Click="NewOrder_Click" Background="DarkBlue" Foreground="White"
+                    Width="220" Height="51" FontSize="20"/>
+            <Border Grid.Row="2" Grid.Column="3" BorderThickness="3" BorderBrush="Green" Width="270" HorizontalAlignment="Center" Height="160">
+                <StackPanel>
+                    <TextBox x:Name="OrderNumber" TextWrapping="Wrap" Text="Order Number:" VerticalAlignment="Top" TextChanged="OrderNumber_TextChanged"
+                         HorizontalAlignment="Center" Height="40" Width="210" FontSize="18" FontFamily="Verdana" BorderBrush="DarkBlue"
+                         HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="0,20,0,0" FontStyle="Italic"/>
+                    <Button x:Name="Track" Content="Track" Click="Track_Click" Background="Green" Foreground="White" Width="208" Height="48" FontSize="20" Margin="0,20,0,0"/>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+
+
+
+
+
+
 
     </Grid>
 </Window>

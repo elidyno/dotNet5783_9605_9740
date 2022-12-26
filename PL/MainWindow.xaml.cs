@@ -22,12 +22,12 @@ namespace PL
     public partial class MainWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
+        public static bool AdminAccess { get; set; } = false;
 
         public MainWindow()
         {
             
             InitializeComponent();
-           // bgImage.Source = new BitmapImage(new Uri("C:\\Networks\\work\\background.jpg"));
 
         }
 
@@ -38,9 +38,26 @@ namespace PL
         /// <param name="e"></param>
         private void Admin_Click(object sender, RoutedEventArgs e)
         {
+            new AdminPassWord().ShowDialog();
+            if(!AdminAccess)
+                return;
             new Product.ProductForList().Show();
             this.Close();
         }
-       
+
+        private void NewOrder_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OrderNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Track_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

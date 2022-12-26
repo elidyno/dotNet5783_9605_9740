@@ -51,7 +51,7 @@ namespace PL.Product
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                MessageBox.Show(ex.Message);
             }
             GetId.Text = productId.ToString();
             CategorySelector.Text = product?.Category.ToString();
