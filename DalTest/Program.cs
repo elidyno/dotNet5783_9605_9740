@@ -217,7 +217,8 @@ class Program
         Enter the product ID number that you want to remove");
                         int.TryParse(Console.ReadLine(), out id);
                         //<Receives a product tag and deletes it from the menu>
-                        dal.Product.Delete(id);
+                        dal?.Product.Delete(id);
+                        Console.WriteLine("The Item was deleted successfuly");
                         break;
                     default:
                         throw new DalTest.InvalidInputFormatException("please select one of the menu option");
