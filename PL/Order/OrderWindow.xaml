@@ -1,0 +1,31 @@
+﻿<Window x:Class="PL.Order.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Order"
+        mc:Ignorable="d"
+        Title="OrderWindow" Height="450" Width="800">
+    <Grid>
+        <Label Content="Order Details" HorizontalAlignment="Left" Margin="377,40,0,0" VerticalAlignment="Top"/>
+        <Label Content="order id:" HorizontalAlignment="Left" Margin="260,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
+        <Label Content="name:" HorizontalAlignment="Left" Margin="260,100,0,0" VerticalAlignment="Top"/>
+        <Label Content="Email:" HorizontalAlignment="Left" Margin="260,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
+        <Label Content="Adress:" HorizontalAlignment="Left" Margin="260,160,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
+        <Label Content="Order date:" HorizontalAlignment="Left" Margin="260,190,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
+        <Label Content="ship date:" HorizontalAlignment="Left" Margin="260,220,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
+        <Label Content="Delivery date:" HorizontalAlignment="Left" Margin="260,250,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
+        <Label Content="Status:" HorizontalAlignment="Left" Margin="260,280,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
+        <Label Content="Items:" HorizontalAlignment="Left" Margin="260,310,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
+        <Label Content="Total price:" HorizontalAlignment="Left" Margin="260,340,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
+        <TextBox  Name="GetId"  HorizontalAlignment="Left" Margin="350,70,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170"  Height="25"/>
+        <ComboBox Name="CategorySelector" HorizontalAlignment="Left" Margin="350,100,0,0"  VerticalAlignment="Top" Width="170" Height="25"/>
+        <TextBox  Name="GetName" HorizontalAlignment="Left" Margin="350,130,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
+        <TextBox  Name="GetPrice" HorizontalAlignment="Left" Margin="350,160,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
+        <TextBox  Name="GetInStock" HorizontalAlignment="Left" Margin="350,190,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
+        <Popup x:Name="calendarPopup" StaysOpen="False" PlacementTarget="{Binding ElementName=GetInStock}">
+            <Calendar x:Name="calendarControl" />
+        </Popup>
+
+    </Grid>
+</Window>
