@@ -21,29 +21,28 @@ namespace PL.Product
     public partial class Catalogue : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        IEnumerable<BO.ProductForList?> products = new List<BO.ProductForList?>();
-        ObservableCollection<BO.ProductItem?> ProductItems = new ObservableCollection<BO.ProductItem?>();
+       
+        ObservableCollection<BO.ProductItem> ProductItems = new ObservableCollection<BO.ProductItem>();
+        IEnumerable<BO.ProductItem> Items = new List<BO.ProductItem>();
         static BO.Cart cart  = new BO.Cart();
 
         public Catalogue()
         {
+
             InitializeComponent();
-            DataContext = products;
+            DataContext = ProductItems;
             try
             {
-                products = bl?.Product.GetList();
-                foreach (var item in products)
-                {
-                    ProductItems.Add(bl.Product.Get(item.Id, cart));
-                }
+                Items = bl.Product.GetItemList();
+                foreach (BO.ProductItem item in Items)
+                    ProductItems.Add(item);
             }
             catch (Exception e)
             {
 
-                MessageBox.Show("Error whas created in our Application:\n" + e.Message +"\n please try again");
+                MessageBox.Show("Error whas created in our Application:\n" + e.Message + "\n please try again");
             }
-
-
+            ProductItemList.ItemsSource = Items;
 
         }
 

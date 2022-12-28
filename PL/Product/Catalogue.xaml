@@ -33,14 +33,15 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "60"/>
-            <RowDefinition Height = "*"/>
+            <RowDefinition Height = "auto"/>
         </Grid.RowDefinitions>
 
         <Border BorderBrush="Black" BorderThickness="1" Background="Green" Margin="0,10,0,10" HorizontalAlignment="Center"
                 Width="364" Padding="0,0,0,0" Grid.Row="0">
             <Label Content="Our Product Catalogue" HorizontalAlignment="Center" Margin="0,0,14,0" Foreground="White" Height="44" />
         </Border>
-        <ListBox d:ItemsSource="{Binding}" ItemTemplate="{StaticResource ProductItemTemplate}" Grid.Row="1" SelectionChanged="ListBox_SelectionChanged"/>
+        <ListBox x:Name="ProductItemList" ItemsSource="{Binding}" ItemTemplate="{StaticResource ProductItemTemplate}" Grid.Row="1"
+                 HorizontalContentAlignment="Stretch" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,0,-70"/>
 
     </Grid>
 </Window>
