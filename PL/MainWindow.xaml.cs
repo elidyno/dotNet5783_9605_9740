@@ -47,7 +47,7 @@ namespace PL
 
         private void NewOrder_Click(object sender, RoutedEventArgs e)
         {
-
+            new Product.Catalogue().ShowDialog();
         }
 
         private void OrderNumber_TextChanged(object sender, TextChangedEventArgs e)
