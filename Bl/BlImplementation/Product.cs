@@ -162,9 +162,9 @@ namespace BlImplementation
         }
 
         /// <summary>
-        /// get list of product from Dal and create a logicial productForList
+        /// get list of product from Dal and create a logicial list of productForList
         /// </summary>
-        /// <returns>BO.ProductItem</returns>
+        /// <returns> IEnumerable<BO.ProductForList> </returns>
         /// <exception cref="DataRequestFailedException"></exception>
         public IEnumerable<BO.ProductForList> GetList(Func<ProductForList, bool>? select_ = null)
         {
@@ -185,6 +185,43 @@ namespace BlImplementation
                 }
                 if (select_ != null)
                     result.RemoveAll(X => !select_(X));
+
+                return result;
+            }
+            catch (Exception e)
+            {
+
+                throw new DataRequestFailedException(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// get list of product from Dal and create a logicial list of productItem
+        /// </summary>
+        /// <param name="select_"></param>
+        /// <returns> IEnumerable<ProductItem> </returns>
+        /// <exception cref="DataRequestFailedException"></exception>
+        public IEnumerable<ProductItem> GetItemList(Func<ProductItem, bool>? select_ = null)
+        {
+            try
+            {
+                IEnumerable<DO.Product?> dalProducts = dal.Product.GetList();
+                List<BO.ProductItem> result = new List<BO.ProductItem>();
+
+                foreach (DO.Product product in dalProducts)
+                {
+                    result.Add(new BO.ProductItem()
+                    {
+                        Id = product.Id,
+                        Name = product.Name,
+                        Category = (BO.Category)product.Category,
+                        Price = product.Price,
+                        Amount = product.InStock,
+                        InStock = (product.InStock > 0)
+                    });
+                }
+                if (select_ != null)
+                    result.RemoveAll(x => !select_(x));
 
                 return result;
             }

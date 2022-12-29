@@ -28,17 +28,17 @@
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
                    Margin="0,41,0,0" VerticalAlignment="Top" Height="104" Width="760" IsEnabled="False"
                    FontSize="36" FontWeight="Bold" FontFamily="Tahoma" 
-               Foreground= "DarkBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+               Foreground= "#FF0D3656" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <Label x:Name="SubTitle" Content="Choose your option to start..." HorizontalAlignment="Center"
                    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5"
                    Margin="0,0,0,0" VerticalAlignment="Top" IsEnabled="False"
                    FontSize="24" FontWeight="Medium" FontFamily="Verdana" 
-               Foreground= "DarkBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+               Foreground= "#FF0D3656" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <Button x:Name="Admin" Content="Admin" Grid.Row="2" Grid.Column="1"
-                    HorizontalAlignment="Center"  VerticalAlignment="Center" Click="Admin_Click" Background="Green"
+                    HorizontalAlignment="Center"  VerticalAlignment="Center" Click="Admin_Click" Background="green"
                     Height="51" Width="140" FontFamily="Verdana" FontSize="20" Foreground="White"/>
             <Button x:Name="NewOrder" Content="New Order >>" Grid.Row="2" Grid.Column="2"
-                    HorizontalAlignment="Center" VerticalAlignment="Center" Click="NewOrder_Click" Background="DarkBlue" Foreground="White"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" Click="NewOrder_Click" Background="#FF0D3656" Foreground="White"
                     Width="220" Height="51" FontSize="20"/>
             <Border Grid.Row="2" Grid.Column="3" BorderThickness="3" BorderBrush="Green" Width="270" HorizontalAlignment="Center" Height="160">
                 <StackPanel>
