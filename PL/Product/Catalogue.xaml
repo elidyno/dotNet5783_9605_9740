@@ -13,20 +13,20 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Grid ShowGridLines ="True"/>
-                <TextBlock Grid.Column="0" Text="{Binding Path=Id}"/>
-                <TextBlock Grid.Column="1" Text="{Binding Path=Name}" />
-                <TextBlock Grid.Column="2" Text="{Binding Path=Price}" />
-                <TextBlock Grid.Column="3" Text="{Binding Path=Category}" />
-                <TextBlock Grid.Column="5" Text="{Binding Path=Amount}" />
-                <CheckBox Grid.Column="6" IsEnabled="False" IsChecked="{Binding Path=InStock}" />
+                <TextBlock Grid.Column="0" Text="{Binding Path=Id}" FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
+                <TextBlock Grid.Column="1" Text="{Binding Path=Name}" FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
+                <TextBlock Grid.Column="2" Text="{Binding Path=Price}" FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
+                <TextBlock Grid.Column="3" Text="{Binding Path=Category}" FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
+                <TextBlock Grid.Column="5" Text="{Binding Path=Amount}" FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
+                <CheckBox Grid.Column="6" IsEnabled="False" IsChecked="{Binding Path=InStock}"  FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -41,7 +41,7 @@
             <Label Content="Our Product Catalogue" HorizontalAlignment="Center" Margin="0,0,14,0" Foreground="White" Height="44" />
         </Border>
         <ListBox x:Name="ProductItemList" ItemsSource="{Binding}" ItemTemplate="{StaticResource ProductItemTemplate}" Grid.Row="1"
-                 HorizontalContentAlignment="Stretch" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,0,-70"/>
+                 HorizontalContentAlignment="Center" SelectionChanged="ListBox_SelectionChanged" VerticalContentAlignment="Stretch" BorderThickness="2,2,2,0" Width="500" Margin="20,20,20,20" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
 
     </Grid>
 </Window>
