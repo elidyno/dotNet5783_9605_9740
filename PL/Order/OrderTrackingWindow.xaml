@@ -6,8 +6,20 @@
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
         Title="OrderTrackingWindow" Height="450" Width="800">
-    <Grid>
-        <Label Content="Order Tracking" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="TrackingData" HorizontalAlignment="Center" Margin="0,136,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-    </Grid>
+    
+    <Grid ShowGridLines="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="110" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+               
+        </Grid.RowDefinitions>
+        <Label Content="Order Tracking" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Center" FontSize="20"/>
+        <TextBlock x:Name="TrackingData" HorizontalAlignment="Center" Grid.Row="1" Text="TextBlock" VerticalAlignment="Center"
+                   FontSize="15"/>
+        <Button Content="order details" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" 
+                Background="Green" Foreground="White"  Width="220" Height="51" FontSize="20"/>
+    </Grid>
+
+
 </Window>

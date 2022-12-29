@@ -1,7 +1,9 @@
 ﻿//using PL.Product;
+using PL.Order;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -41,6 +43,7 @@ namespace PL
             new AdminPassWord().ShowDialog();
             if(!AdminAccess)
                 return;
+            //new Order.OrderListWindow().Show();
             new Product.ProductForList().Show();
             this.Close();
         }
@@ -57,7 +60,27 @@ namespace PL
 
         private void Track_Click(object sender, RoutedEventArgs e)
         {
+            int orderId = 0;
+            try 
+            {
+                orderId = int.Parse(OrderNumber.Text);
+            }
+            catch(FormatException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            try
+            {
+                bl?.Order.GetTracking(orderId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
 
+            new Order.OrderTrackingWindow(orderId).Show();
         }
     }
 }

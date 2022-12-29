@@ -67,6 +67,7 @@ namespace PL.Product
         /// <param name="e"></param>
         private void AddOrUpdate_Click(object sender, RoutedEventArgs e)
         {
+
             int id, price, inStock;
             //Trying to get a valid value from the user
             try
@@ -104,7 +105,9 @@ namespace PL.Product
                 catch (Exception E)
                 {
                     MessageBox.Show(E.Message);
+                   
                 }
+               
             }
             //Button == Update
             else 

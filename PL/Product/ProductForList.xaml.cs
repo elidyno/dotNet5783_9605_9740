@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +22,15 @@ namespace PL.Product
     public partial class ProductForList : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-
+        //public  ObservableCollection<BO.ProductForList?> productList;
         public ProductForList()
         {
             InitializeComponent();
             //The list view control gets the list of products
-            ProductListview.ItemsSource = bl.Product.GetList();
+            //productList = new ObservableCollection<BO.ProductForList?>(bl!.Product.GetList());
+            ProductListview.ItemsSource = bl!.Product.GetList();
             //The comboBox control accepts the category values
+            //DataContext = productList;
             BO.Category category = 0;
             for (int i = 0; i < Enum.GetValues(typeof(BO.Category)).Length ; i++)
             {
@@ -61,6 +64,7 @@ namespace PL.Product
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
             new Product().ShowDialog();
+            //productList = bl!.Product.GetList();
             ProductListview.ItemsSource = bl?.Product.GetList();
         }
         /// <summary>
