@@ -8,17 +8,17 @@
         Title="Catalogue" Height="450" Width="800" FontSize="22" FontFamily="Tahoma" FontWeight="Bold">
     <Window.Resources>
         <DataTemplate x:Key="ProductItemTemplate" DataType="local:BO.ProductItem">
-            <Grid>
+            <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ShowGridLines="True">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="30" />
                 </Grid.ColumnDefinitions>
                 <Grid ShowGridLines ="True"/>
                 <TextBlock Grid.Column="0" Text="{Binding Path=Id}" FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
@@ -40,8 +40,8 @@
                 Width="364" Padding="0,0,0,0" Grid.Row="0">
             <Label Content="Our Product Catalogue" HorizontalAlignment="Center" Margin="0,0,14,0" Foreground="White" Height="44" />
         </Border>
-        <ListBox x:Name="ProductItemList" ItemsSource="{Binding}" ItemTemplate="{StaticResource ProductItemTemplate}" Grid.Row="1"
-                 HorizontalContentAlignment="Center" SelectionChanged="ListBox_SelectionChanged" VerticalContentAlignment="Stretch" BorderThickness="2,2,2,0" Width="500" Margin="20,20,20,20" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
-
+        <DataGrid x:Name="ProductItemDataGrid" ItemsSource="{Binding}" ItemTemplate="{StaticResource ProductItemTemplate}" Grid.Row="1" FontSize="10" FontFamily="Verdana" FontWeight="Regular" 
+                  HorizontalContentAlignment="Center" SelectionChanged="ProductItemDataGrid_SelectionChanged" VerticalContentAlignment="Stretch" BorderThickness="2,2,2,2" Width="500" ScrollViewer.VerticalScrollBarVisibility ="Visible" ScrollViewer.CanContentScroll="True"/>
+        
     </Grid>
 </Window>

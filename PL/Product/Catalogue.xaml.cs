@@ -21,9 +21,8 @@ namespace PL.Product
     public partial class Catalogue : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-       
-        ObservableCollection<BO.ProductItem> ProductItems = new ObservableCollection<BO.ProductItem>();
-        IEnumerable<BO.ProductItem> Items = new List<BO.ProductItem>();
+
+        ObservableCollection<BO.ProductItem>? ProductItems;
         static BO.Cart cart  = new BO.Cart();
 
         public Catalogue()
@@ -33,20 +32,19 @@ namespace PL.Product
             DataContext = ProductItems;
             try
             {
-                Items = bl.Product.GetItemList();
-                foreach (BO.ProductItem item in Items)
-                    ProductItems.Add(item);
+                ProductItems = new ObservableCollection<BO.ProductItem>(
+                    bl!.Product.GetItemList());
             }
             catch (Exception e)
             {
 
                 MessageBox.Show("Error whas created in our Application:\n" + e.Message + "\n please try again");
             }
-            ProductItemList.ItemsSource = Items;
+            ProductItemDataGrid.ItemsSource = ProductItems;
 
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ProductItemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
