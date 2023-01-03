@@ -43,8 +43,8 @@ namespace PL
             new AdminPassWord().ShowDialog();
             if(!AdminAccess)
                 return;
-            //new Order.OrderListWindow().Show();
-            new Product.ProductForList().Show();
+            new Order.OrderListWindow().Show();
+           // new Product.ProductForList().Show();
             this.Close();
         }
 

@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="OrderWindow" Height="450" Width="800">
-    <Grid>
+    <Grid DataContext="{Binding isEditMode}">
         <Label Content="Order Details" HorizontalAlignment="Left" Margin="377,40,0,0" VerticalAlignment="Top"/>
         <Label Content="order id:" HorizontalAlignment="Left" Margin="260,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
         <Label Content="name:" HorizontalAlignment="Left" Margin="260,100,0,0" VerticalAlignment="Top"/>
@@ -18,14 +19,15 @@
         <Label Content="Status:" HorizontalAlignment="Left" Margin="260,280,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
         <Label Content="Items:" HorizontalAlignment="Left" Margin="260,310,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
         <Label Content="Total price:" HorizontalAlignment="Left" Margin="260,340,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
-        <TextBox  Name="GetId"  HorizontalAlignment="Left" Margin="350,70,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170"  Height="25"/>
-        <ComboBox Name="CategorySelector" HorizontalAlignment="Left" Margin="350,100,0,0"  VerticalAlignment="Top" Width="170" Height="25"/>
-        <TextBox  Name="GetName" HorizontalAlignment="Left" Margin="350,130,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
-        <TextBox  Name="GetPrice" HorizontalAlignment="Left" Margin="350,160,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
-        <TextBox  Name="GetInStock" HorizontalAlignment="Left" Margin="350,190,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
-        <Popup x:Name="calendarPopup" StaysOpen="False" PlacementTarget="{Binding ElementName=GetInStock}">
-            <Calendar x:Name="calendarControl" />
-        </Popup>
+        <TextBlock x:Name="clientId"  HorizontalAlignment="Left" Margin="350,70,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170"  Height="25"/>
+        <TextBlock x:Name="clientName" HorizontalAlignment="Left" Margin="350,100,0,0"  VerticalAlignment="Top" Width="170" Height="25"/>
+        <TextBlock x:Name="clientEmail" HorizontalAlignment="Left" Margin="350,130,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
+        <TextBlock x:Name="clienAdress" HorizontalAlignment="Left" Margin="350,160,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
+        <TextBlock x:Name="orderDate" HorizontalAlignment="Left" Margin="350,190,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
+        <ComboBox x:Name="editShipDate" HorizontalAlignment="Left" Margin="350,220,0,0" VerticalAlignment="Top" Width="170" Height="25" IsEnabled="{Binding IsEditMode}"/>
+        <TextBlock x:Name="shipDate" HorizontalAlignment="Left" Margin="350,220,0,0" Text="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
+        <TextBox x:Name="deliveryDate" HorizontalAlignment="Left" Margin="350,250,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
+        
 
     </Grid>
 </Window>

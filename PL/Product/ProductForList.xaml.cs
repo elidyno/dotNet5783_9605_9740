@@ -22,15 +22,16 @@ namespace PL.Product
     public partial class ProductForList : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        //public  ObservableCollection<BO.ProductForList?> productList;
+        public static ObservableCollection<BO.ProductForList?>? productList;
         public ProductForList()
         {
             InitializeComponent();
             //The list view control gets the list of products
-            //productList = new ObservableCollection<BO.ProductForList?>(bl!.Product.GetList());
-            ProductListview.ItemsSource = bl!.Product.GetList();
+            productList = new ObservableCollection<BO.ProductForList?>(bl!.Product.GetList());
+            ///ProductListview.ItemsSource = bl!.Product.GetList();
+            
+            DataContext = productList;
             //The comboBox control accepts the category values
-            //DataContext = productList;
             BO.Category category = 0;
             for (int i = 0; i < Enum.GetValues(typeof(BO.Category)).Length ; i++)
             {
@@ -64,8 +65,8 @@ namespace PL.Product
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
             new Product().ShowDialog();
-            //productList = bl!.Product.GetList();
-            ProductListview.ItemsSource = bl?.Product.GetList();
+            ///productLis = bl!.Product.GetList();
+            ///ProductListview.ItemsSource = bl?.Product.GetList();
         }
         /// <summary>
         /// Handling the event of clicking on a product from the list  

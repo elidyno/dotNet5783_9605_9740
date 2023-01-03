@@ -93,34 +93,40 @@ namespace PL.Product
                 InStock = inStock,
             };
 
+            BO.ProductForList productForList = new()
+            {
+                Category = product.Category, Id = id, Name = GetName.Text, Price = price
+            };
+
             Button? button = sender as Button;
             //button == Add
             if (button?.Name == "Add")
             {     
                 try
                 {
-                    bl?.Product.Add(product);
-                    this.Close();
+                    bl?.Product.Add(product);     
                 }
                 catch (Exception E)
                 {
                     MessageBox.Show(E.Message);
-                   
+                    return;
                 }
-               
+                ProductForList.productList?.Add(productForList);
+                this.Close();
             }
             //Button == Update
             else 
             {
                 try
                 {
-                    bl?.Product.Update(product);
-                    this.Close();
+                    bl?.Product.Update(product);                
                 }
                 catch (Exception E)
                 {
                     MessageBox.Show(E.Message);
+                    return;
                 }
+                this.Close();
             }
 
         }

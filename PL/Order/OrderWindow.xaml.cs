@@ -19,11 +19,32 @@ namespace PL.Order
     /// </summary>
     public partial class OrderWindow : Window
     {
-        BlApi.IBl? bl = BlApi.Factory.Get();
-        public OrderWindow(int orderId, bool isEditMode)
+        //BlApi.IBl? bl = BlApi.Factory.Get();
+        public class MyClass : DependencyObject
         {
+            public static readonly DependencyProperty IsEditModeProperty =
+                DependencyProperty.Register(
+                    "IsEditMode",
+                    typeof(bool),
+                    typeof(MyClass),
+                    new PropertyMetadata(true));
+
+            public bool IsEditMode
+            {
+                get { return (bool)GetValue(IsEditModeProperty); }
+                set { SetValue(IsEditModeProperty, value); }
+            }
+        }
+
+        public int OrderId { get; set; }
+        public MyClass isEditMode { get; set; }
+       
+        public OrderWindow()
+        {
+            isEditMode = new();
+            //IsEditMode = true;
             InitializeComponent();
-           // OrderDetails.Text = bl?.Order.Get(orderId).ToString();
+
         }
     }
 }

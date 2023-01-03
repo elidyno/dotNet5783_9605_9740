@@ -16,7 +16,7 @@
 
         </Grid>
         <Label Content="Category" Grid.Column="0"  HorizontalAlignment="Left" Margin="137,0,0,10" Height="26" VerticalAlignment="Bottom" />
-        <ListView  x:Name="ProductListview" Grid.Row="1" MouseDoubleClick="product_selected" >
+        <ListView  x:Name="ProductListview" Grid.Row="1" MouseDoubleClick="product_selected" ItemsSource="{Binding UpdateSourceTrigger=PropertyChanged}" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

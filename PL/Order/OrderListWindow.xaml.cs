@@ -29,5 +29,14 @@ namespace PL.Order
             DataContext = orderList;
             // orderList(bl?.Order.GetList);
         }
+
+        private void orderSelected(object sender, MouseButtonEventArgs e)
+        {
+            BO.OrderForList orderForList = (BO.OrderForList)orderListView.SelectedItem;
+            OrderWindow orderWindow = new ();
+            //orderWindow.IsEditMode = true;
+            orderWindow.OrderId = orderForList.Id;
+            orderWindow.Show();
+        }
     }
 }
