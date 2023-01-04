@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,39 +13,59 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace PL.Order
 {
+    
     /// <summary>
     /// Interaction logic for OrderWindow.xaml
     /// </summary>
     public partial class OrderWindow : Window
     {
-        //BlApi.IBl? bl = BlApi.Factory.Get();
-        public class MyClass : DependencyObject
-        {
-            public static readonly DependencyProperty IsEditModeProperty =
-                DependencyProperty.Register(
-                    "IsEditMode",
-                    typeof(bool),
-                    typeof(MyClass),
-                    new PropertyMetadata(true));
+        public static readonly DependencyProperty OrderProperty = DependencyProperty.Register(
+        "Order", typeof(BO.Order), typeof(OrderWindow), new PropertyMetadata(default(BO.Order)));
 
-            public bool IsEditMode
+        public BO.Order Order
+        {
+            get => (BO.Order)GetValue(OrderProperty);
+            set => SetValue(OrderProperty, value);
+        }
+        BlApi.IBl? bl = BlApi.Factory.Get();       
+        public bool IsEditMode { get; set; }
+       
+        public ObservableCollection<BO.OrderItem?>? items { get; set; }
+        public OrderWindow(bool isEditMode, int orderId)
+        {           
+            Order = new BO.Order();
+            Order = bl!.Order.Get(orderId);
+            IsEditMode = isEditMode;
+            items = new ObservableCollection<BO.OrderItem?>(Order.Items);
+            InitializeComponent();  
+           
+        }
+
+        private void updateShip_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                get { return (bool)GetValue(IsEditModeProperty); }
-                set { SetValue(IsEditModeProperty, value); }
+                Order = bl!.Order.UpdateOrderSheep(Order.Id);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);    
             }
         }
 
-        public int OrderId { get; set; }
-        public MyClass isEditMode { get; set; }
-       
-        public OrderWindow()
+        private void updateDelivery_Click(object sender, RoutedEventArgs e)
         {
-            isEditMode = new();
-            //IsEditMode = true;
-            InitializeComponent();
-
+            try
+            {
+                Order = bl!.Order.UpdateOrderDelivery(Order.Id);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

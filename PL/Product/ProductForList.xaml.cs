@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Order;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -22,15 +23,22 @@ namespace PL.Product
     public partial class ProductForList : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        public static ObservableCollection<BO.ProductForList?>? productList;
+
+        public static readonly DependencyProperty ProductListProperty = DependencyProperty.Register(
+        "ProductList", typeof(IEnumerable<BO.ProductForList?>), typeof(ProductForList),
+        new PropertyMetadata(default(IEnumerable<BO.ProductForList?>)));
+
+        public  IEnumerable<BO.ProductForList?> ProductList
+        {
+            get => (List<BO.ProductForList?>)GetValue(ProductListProperty);
+            set => SetValue(ProductListProperty, value);
+        }
+       
         public ProductForList()
         {
             InitializeComponent();
-            //The list view control gets the list of products
-            productList = new ObservableCollection<BO.ProductForList?>(bl!.Product.GetList());
-            ///ProductListview.ItemsSource = bl!.Product.GetList();
+            ProductList = bl!.Product.GetList();
             
-            DataContext = productList;
             //The comboBox control accepts the category values
             BO.Category category = 0;
             for (int i = 0; i < Enum.GetValues(typeof(BO.Category)).Length ; i++)
@@ -47,12 +55,12 @@ namespace PL.Product
         /// <param name="e"></param>
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CategorySelector.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length)// the "All" option was selected
-                ProductListview.ItemsSource = bl?.Product.GetList();
+            if (CategorySelector.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length) // the "All" option was selected
+                ProductList = bl!.Product.GetList();
             else
             {
-                ProductListview.ItemsSource = bl?.Product.GetList(
-                (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedIndex));
+                ProductList = bl!.Product.GetList(
+                   (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedIndex));
             }
  ;
         }
@@ -64,8 +72,15 @@ namespace PL.Product
         /// <param name="e"></param>
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
-            new Product().ShowDialog();
-            ///productLis = bl!.Product.GetList();
+            new Product(true,true).ShowDialog();
+            ProductList = bl!.Product.GetList();
+            //if (CategorySelector.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length) // the "All" option was selected
+            //    ProductList = bl!.Product.GetList();
+            //else
+            //{
+            //    ProductList = bl!.Product.GetList(
+            //       (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedIndex));
+            //}
             ///ProductListview.ItemsSource = bl?.Product.GetList();
         }
         /// <summary>
@@ -77,8 +92,15 @@ namespace PL.Product
         private void product_selected(object sender, MouseButtonEventArgs e)
         {
             BO.ProductForList p = (BO.ProductForList)ProductListview.SelectedItem;
-            new Product(p.Id).ShowDialog();
-            ProductListview.ItemsSource = bl?.Product.GetList();
+            new Product(true, false, p.Id).ShowDialog();
+            ProductList = bl!.Product.GetList();
+            //if (CategorySelector.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length) // the "All" option was selected
+            //    ProductList = bl!.Product.GetList();
+            //else
+            //{
+            //    ProductList = bl!.Product.GetList(
+            //       (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedIndex));
+            //}
         }
 
     }

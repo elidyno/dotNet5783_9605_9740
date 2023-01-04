@@ -5,18 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
+         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="ProductForList" Height="640" Width="800">
     <Grid Name="MainGrid">
-        <Grid Name="UpGrid" HorizontalAlignment="Left" Height="auto" Grid.Row="0" Width="800">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="500*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Grid.Row="0" Width="800">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
+            <Label Content="Category" Grid.Column="0"  HorizontalAlignment="Center"  VerticalAlignment="Center" />
             <ComboBox Name="CategorySelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="CategorySelector_SelectionChanged"/>
 
         </Grid>
-        <Label Content="Category" Grid.Column="0"  HorizontalAlignment="Left" Margin="137,0,0,10" Height="26" VerticalAlignment="Bottom" />
-        <ListView  x:Name="ProductListview" Grid.Row="1" MouseDoubleClick="product_selected" ItemsSource="{Binding UpdateSourceTrigger=PropertyChanged}" >
+
+        <ListView  x:Name="ProductListview" Grid.Row="1" MouseDoubleClick="product_selected" ItemsSource="{Binding ProductList}" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -26,11 +34,6 @@
 
         <Button Name="AddProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddProduct_Click"/>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
+        
     </Grid>
 </Window>

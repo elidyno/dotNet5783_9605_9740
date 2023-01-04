@@ -18,7 +18,7 @@
         <TextBlock x:Name="TrackingData" HorizontalAlignment="Center" Grid.Row="1" Text="TextBlock" VerticalAlignment="Center"
                    FontSize="15"/>
         <Button Content="order details" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" 
-                Background="Green" Foreground="White"  Width="220" Height="51" FontSize="20"/>
+                Background="Green" Foreground="White"  Width="220" Height="51" FontSize="20" Click="order_details_Click" />
     </Grid>
 
 

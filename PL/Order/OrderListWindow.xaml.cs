@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PL.Product;
 
 namespace PL.Order
 {
@@ -21,22 +22,32 @@ namespace PL.Order
     public partial class OrderListWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        private ObservableCollection<BO.OrderForList?> orderList;
+        public ObservableCollection<BO.OrderForList?> orderList { get; set; }
         public OrderListWindow()
         {
-            InitializeComponent();
             orderList = new ObservableCollection<BO.OrderForList?>(bl!.Order.GetList());
-            DataContext = orderList;
-            // orderList(bl?.Order.GetList);
+            InitializeComponent();
+           
         }
 
         private void orderSelected(object sender, MouseButtonEventArgs e)
         {
             BO.OrderForList orderForList = (BO.OrderForList)orderListView.SelectedItem;
-            OrderWindow orderWindow = new ();
-            //orderWindow.IsEditMode = true;
-            orderWindow.OrderId = orderForList.Id;
+            OrderWindow orderWindow = new (true, orderForList.Id);
             orderWindow.Show();
+        }
+
+        private void Products_Click(object sender, RoutedEventArgs e)
+        {
+            ProductForList ProductsWindow = new ProductForList();
+            ProductsWindow.Show();
+            this.Close();
+        }
+
+        private void Orders_Click(object sender, RoutedEventArgs e)
+        {
+            
+            orderListView.Visibility = Visibility.Visible;
         }
     }
 }

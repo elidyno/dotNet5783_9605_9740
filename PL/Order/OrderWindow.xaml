@@ -7,27 +7,92 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="OrderWindow" Height="450" Width="800">
-    <Grid DataContext="{Binding isEditMode}">
-        <Label Content="Order Details" HorizontalAlignment="Left" Margin="377,40,0,0" VerticalAlignment="Top"/>
-        <Label Content="order id:" HorizontalAlignment="Left" Margin="260,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
-        <Label Content="name:" HorizontalAlignment="Left" Margin="260,100,0,0" VerticalAlignment="Top"/>
-        <Label Content="Email:" HorizontalAlignment="Left" Margin="260,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
-        <Label Content="Adress:" HorizontalAlignment="Left" Margin="260,160,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
-        <Label Content="Order date:" HorizontalAlignment="Left" Margin="260,190,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
-        <Label Content="ship date:" HorizontalAlignment="Left" Margin="260,220,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
-        <Label Content="Delivery date:" HorizontalAlignment="Left" Margin="260,250,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
-        <Label Content="Status:" HorizontalAlignment="Left" Margin="260,280,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
-        <Label Content="Items:" HorizontalAlignment="Left" Margin="260,310,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
-        <Label Content="Total price:" HorizontalAlignment="Left" Margin="260,340,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
-        <TextBlock x:Name="clientId"  HorizontalAlignment="Left" Margin="350,70,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170"  Height="25"/>
-        <TextBlock x:Name="clientName" HorizontalAlignment="Left" Margin="350,100,0,0"  VerticalAlignment="Top" Width="170" Height="25"/>
-        <TextBlock x:Name="clientEmail" HorizontalAlignment="Left" Margin="350,130,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
-        <TextBlock x:Name="clienAdress" HorizontalAlignment="Left" Margin="350,160,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
-        <TextBlock x:Name="orderDate" HorizontalAlignment="Left" Margin="350,190,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
-        <ComboBox x:Name="editShipDate" HorizontalAlignment="Left" Margin="350,220,0,0" VerticalAlignment="Top" Width="170" Height="25" IsEnabled="{Binding IsEditMode}"/>
-        <TextBlock x:Name="shipDate" HorizontalAlignment="Left" Margin="350,220,0,0" Text="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
-        <TextBox x:Name="deliveryDate" HorizontalAlignment="Left" Margin="350,250,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170" Height="25"/>
-        
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="450*"/>
+        </Grid.RowDefinitions>
 
+        <Label Content="Order Details" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Grid.Row="1" Width="800">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="340"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+
+            <Grid Name="InnerGrid" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="13"/>
+                    </Style>
+                    <Style TargetType="Label">
+                        <Setter Property="FontSize" Value="15"/>
+                    </Style>
+                </Grid.Resources>
+
+                <Label Content="order id:" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label Content="name:" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label Content="Email:" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Label Content="Adress:" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Label Content="Order date:" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label Content="ship date:" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Label Content="Delivery date:" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Label Content="Status:" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Label Content="Total price:" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="clientId" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center"  Text="{Binding Order.Id}"/>
+                <TextBlock x:Name="clientName" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Order.CustomerName}"/>
+                <TextBlock x:Name="clientEmail" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Order.CustomerEmail}"/>
+                <TextBlock x:Name="clienAdress" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Order.CustomerAdress}"/>
+                <TextBlock x:Name="orderDate" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Order.OrderDate}"/>
+                <TextBlock x:Name="ShipDate" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                          Text="{Binding Order.ShipDate}"/>
+                <Button x:Name="update" Content="Update" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Click="updateShip_Click" IsEnabled="{Binding IsEditMode}"/>
+                <TextBlock x:Name="deliveryDate" Grid.Row="6" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                          Text="{Binding Order.DeliveryDate}"/>
+                <Button x:Name="updateDelivery" Content="Update" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Click="updateDelivery_Click" IsEnabled="{Binding IsEditMode}"/>
+                <TextBlock x:Name="Status" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Order.status}"/>
+                <TextBlock x:Name="TotalPrice" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Order.TotalPrice}"/>
+
+
+            </Grid>
+            <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Items" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" />
+                <ListView ItemsSource="{Binding items}" Grid.Row="1">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
