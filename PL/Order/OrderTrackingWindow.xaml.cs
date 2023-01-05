@@ -31,7 +31,7 @@ namespace PL.Order
 
         private void order_details_Click(object sender, RoutedEventArgs e)
         {
-            OrderWindow orderWindow = new(false, OrderId);
+            OrderWindow orderWindow = new(true, OrderId);
             orderWindow.Show();
         }
     }

@@ -3,10 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Product"
+        xmlns:local="clr-namespace:PL"   
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="Product" Height="450" Width="800">
+        Title="ProductWindow" Height="450" Width="800">
+    
+    <Window.Resources>
+        <local:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
+    </Window.Resources>
+
     <Grid>
         
         <Label Content="id:" HorizontalAlignment="Left" Margin="280,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
@@ -15,16 +20,18 @@
         <Label Content="Price:" HorizontalAlignment="Left" Margin="280,160,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
         <Label Content="InStock:" HorizontalAlignment="Left" Margin="280,190,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
         <TextBox  Name="GetId"  HorizontalAlignment="Left" Margin="350,70,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
-                  Text="{Binding product.Id, Mode=TwoWay}" IsEnabled="{Binding IsAddWindow}" Width="140"  Height="25"/>
-        <ComboBox Name="CategorySelector" HorizontalAlignment="Left" Margin="350,100,0,0"  VerticalAlignment="Top" Width="140" Height="25"/>
+                  Text="{Binding product.Id, Mode=TwoWay}"  IsReadOnly="{Binding IsDisplayMode}" IsEnabled="{Binding IsAddWindow}" Width="140"  Height="25"/>
+        <ComboBox Name="CategorySelector" HorizontalAlignment="Left" Margin="350,100,0,0" VerticalAlignment="Top" Width="140" Height="25"
+                  />
         <TextBox  Name="GetName" HorizontalAlignment="Left" Margin="350,130,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
-                  Text="{Binding product.Name, Mode=TwoWay}" Width="140" Height="25"/>
+                  Text="{Binding product.Name, Mode=TwoWay}" IsReadOnly="{Binding IsDisplayMode}" Width="140" Height="25"/>
         <TextBox  Name="GetPrice" HorizontalAlignment="Left" Margin="350,160,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
-                  Text="{Binding product.Price, Mode=TwoWay}" Width="140" Height="25"/>
+                  Text="{Binding product.Price, Mode=TwoWay}" IsReadOnly="{Binding IsDisplayMode}" Width="140" Height="25"/>
         <TextBox  Name="GetInStock" HorizontalAlignment="Left" Margin="350,190,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
-                  Text="{Binding product.InStock, Mode=TwoWay}" Width="140" Height="25"/>
-        <Button  Name ="AddOrUpdate" Content="{Binding ButtonContent}" HorizontalAlignment="Left" Margin="280,230,0,0"
-                 VerticalAlignment="Top" RenderTransformOrigin="-0.172,0.363" Click="AddOrUpdate_Click"/>
+                  Text="{Binding product.InStock, Mode=TwoWay}" IsReadOnly="{Binding IsDisplayMode}" Width="140" Height="25"/>
+        <Button  Name ="AddOrUpdate" Content="{Binding ButtonContent}"  HorizontalAlignment="Left" Margin="280,230,0,0"
+                 VerticalAlignment="Top" RenderTransformOrigin="-0.172,0.363" Click="AddOrUpdate_Click"
+                 Visibility="{Binding IsDisplayMode, Converter={StaticResource booleanToVisibilityConverter}}"/>
 
     </Grid>
 </Window>

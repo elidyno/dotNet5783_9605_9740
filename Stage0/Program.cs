@@ -6,7 +6,7 @@ class Program
         Console.WriteLine("Hello Word");
         int x = 5;
         string d = Console.ReadLine();
-        x = (int)d;
+        //x = (int)d;
 
         
         Console.WriteLine(x);

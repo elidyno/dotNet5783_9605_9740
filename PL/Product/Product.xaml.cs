@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Globalization;
 
 
 namespace PL.Product
@@ -23,14 +24,14 @@ namespace PL.Product
     public partial class Product : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-
-        public bool IsEditMode { get; set; }
+        public bool IsDisplayMode { get; set; }
         public bool IsAddWindow { get; set; }
         public string ButtonContent { get; set; }
 
         public static readonly DependencyProperty productProperty = DependencyProperty.Register(
         "product", typeof(BO.Product), typeof(Product), new PropertyMetadata(default(BO.Product)));
 
+       
         public BO.Product product
         {
             get => (BO.Product)GetValue(productProperty);
@@ -39,15 +40,15 @@ namespace PL.Product
         /// <summary>
         /// Constructor for creating a window to add a product
         /// </summary>
-        public Product(bool isEditMode, bool isAddWindow, int productId = 0)
+        public Product(bool isDisplayMode, bool isAddWindow, int productId = 0)
         {
-            IsEditMode = isEditMode;
+            IsDisplayMode = isDisplayMode;
             IsAddWindow = isAddWindow;
             ButtonContent = IsAddWindow ? "Add" : "Update";
             product = new();
             InitializeComponent();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category)); //?
-            if(isEditMode && !isAddWindow)
+            if(!isAddWindow)
             {
                 try
                 {

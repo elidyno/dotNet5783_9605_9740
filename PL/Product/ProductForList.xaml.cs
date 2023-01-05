@@ -72,7 +72,7 @@ namespace PL.Product
         /// <param name="e"></param>
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
-            new Product(true,true).ShowDialog();
+            new Product(false,true).ShowDialog();
             ProductList = bl!.Product.GetList();
             //if (CategorySelector.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length) // the "All" option was selected
             //    ProductList = bl!.Product.GetList();
@@ -92,7 +92,7 @@ namespace PL.Product
         private void product_selected(object sender, MouseButtonEventArgs e)
         {
             BO.ProductForList p = (BO.ProductForList)ProductListview.SelectedItem;
-            new Product(true, false, p.Id).ShowDialog();
+            new Product(false, false, p.Id).ShowDialog();
             ProductList = bl!.Product.GetList();
             //if (CategorySelector.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length) // the "All" option was selected
             //    ProductList = bl!.Product.GetList();

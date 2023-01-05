@@ -31,14 +31,14 @@ namespace PL.Order
             set => SetValue(OrderProperty, value);
         }
         BlApi.IBl? bl = BlApi.Factory.Get();       
-        public bool IsEditMode { get; set; }
+        public bool IsDisplayMode { get; set; }
        
         public ObservableCollection<BO.OrderItem?>? items { get; set; }
-        public OrderWindow(bool isEditMode, int orderId)
+        public OrderWindow(bool isDisplayMode, int orderId)
         {           
             Order = new BO.Order();
             Order = bl!.Order.Get(orderId);
-            IsEditMode = isEditMode;
+            IsDisplayMode = isDisplayMode;
             items = new ObservableCollection<BO.OrderItem?>(Order.Items);
             InitializeComponent();  
            

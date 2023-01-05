@@ -33,7 +33,7 @@ namespace PL.Order
         private void orderSelected(object sender, MouseButtonEventArgs e)
         {
             BO.OrderForList orderForList = (BO.OrderForList)orderListView.SelectedItem;
-            OrderWindow orderWindow = new (true, orderForList.Id);
+            OrderWindow orderWindow = new (false, orderForList.Id);
             orderWindow.Show();
         }
 

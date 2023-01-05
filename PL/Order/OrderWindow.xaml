@@ -3,11 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Order"
+        xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="OrderWindow" Height="450" Width="800">
-    
+    <Window.Resources>
+        <local:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60*"/>
@@ -68,11 +71,11 @@
                 <TextBlock x:Name="ShipDate" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" 
                           Text="{Binding Order.ShipDate}"/>
                 <Button x:Name="update" Content="Update" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"
-                        Click="updateShip_Click" IsEnabled="{Binding IsEditMode}"/>
+                        Click="updateShip_Click" Visibility="{Binding IsDisplayMode, Converter={StaticResource booleanToVisibilityConverter}}"/>
                 <TextBlock x:Name="deliveryDate" Grid.Row="6" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" 
                           Text="{Binding Order.DeliveryDate}"/>
                 <Button x:Name="updateDelivery" Content="Update" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"
-                        Click="updateDelivery_Click" IsEnabled="{Binding IsEditMode}"/>
+                        Click="updateDelivery_Click" Visibility="{Binding IsDisplayMode, Converter={StaticResource booleanToVisibilityConverter}}"/>
                 <TextBlock x:Name="Status" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Order.status}"/>
                 <TextBlock x:Name="TotalPrice" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Order.TotalPrice}"/>
 
