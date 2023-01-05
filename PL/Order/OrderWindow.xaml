@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="OrderWindow" Height="450" Width="800">
+        Title="OrderWindow" Height="450" Width="850" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <local:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
     </Window.Resources>
@@ -19,7 +19,7 @@
 
         <Label Content="Order Details" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
 
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Grid.Row="1" Width="800">
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Grid.Row="1" Width="850">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="340"/>
                 <ColumnDefinition Width="*"/>
@@ -83,15 +83,20 @@
             </Grid>
             <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Items" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" />
-                <ListView ItemsSource="{Binding items}" Grid.Row="1">
+                <TextBlock Text="Items" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="17" />
+                <ListView ItemsSource="{Binding items}" Grid.Row="1" VerticalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="40" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=ProductId}" Header="Product id" Width="70" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=ProductName}" Header="Name" Width="210" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="60" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Header="Amount" Width="50" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="Total price" Width="60" />
                         </GridView>
                     </ListView.View>
                 </ListView>

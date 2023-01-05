@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="OrderListWindow" Height="450" Width="800">
+        Title="OrderListWindow" Height="640" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -22,10 +22,15 @@
             <Button Content="Products" Grid.Column="1" Width="150" FontSize="25" Click="Products_Click"
                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
-        <ListView x:Name="orderListView" Grid.Row="1" Visibility="Collapsed" ItemsSource="{Binding orderList}" MouseDoubleClick="orderSelected">
+        <ListView x:Name="orderListView" Grid.Row="1" Visibility="Collapsed" ItemsSource="{Binding orderList}"
+                  FontSize="14" MouseDoubleClick="orderSelected">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="40" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CustomerName}" Header="Customer Name" Width="150"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=status}" Header="Status" Width="90" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountOfItems}" Header="Items" Width="40" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="Total price" Width="70" />
                 </GridView>
             </ListView.View>
         </ListView>

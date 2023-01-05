@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
          DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="ProductForList" Height="640" Width="800">
+        Title="ProductForList" Height="640" Width="800" WindowStartupLocation="CenterScreen">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -16,18 +16,23 @@
 
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Grid.Row="0" Width="800">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="530"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Content="Category" Grid.Column="0"  HorizontalAlignment="Center"  VerticalAlignment="Center" />
-            <ComboBox Name="CategorySelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="CategorySelector_SelectionChanged"/>
+            <ComboBox Name="CategorySelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"
+                      SelectionChanged="CategorySelector_SelectionChanged"/>
 
         </Grid>
 
-        <ListView  x:Name="ProductListview" Grid.Row="1" MouseDoubleClick="product_selected" ItemsSource="{Binding ProductList}" >
+        <ListView  x:Name="ProductListview" Grid.Row="1" MouseDoubleClick="product_selected" ItemsSource="{Binding ProductList}" FontSize="14" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="80" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="275"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="60"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>

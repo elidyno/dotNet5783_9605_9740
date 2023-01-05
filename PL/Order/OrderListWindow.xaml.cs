@@ -41,7 +41,7 @@ namespace PL.Order
         {
             ProductForList ProductsWindow = new ProductForList();
             ProductsWindow.Show();
-            this.Close();
+            
         }
 
         private void Orders_Click(object sender, RoutedEventArgs e)
