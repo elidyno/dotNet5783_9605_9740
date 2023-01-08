@@ -144,11 +144,15 @@ namespace BlImplementation
             //calculate the logicial data and return a logicial product for cart screan (customer)
             bool inStock_ = dalProduct.InStock > 0;
             int amount_ = 0;
-            foreach (BO.OrderItem item in cart.Items)
+            if(cart.Items != null)
             {
-                if (item.Id == productId)
-                    amount_++;
+                foreach (BO.OrderItem item in cart.Items)
+                {
+                    if (item.Id == productId)
+                        amount_ = item.Amount;
+                }
             }
+
             BO.ProductItem productItem = new BO.ProductItem()
             {
                 Id = dalProduct.Id,
@@ -201,24 +205,16 @@ namespace BlImplementation
         /// <param name="select_"></param>
         /// <returns> IEnumerable<ProductItem> </returns>
         /// <exception cref="DataRequestFailedException"></exception>
-        public IEnumerable<ProductItem> GetItemList(Func<ProductItem, bool>? select_ = null)
+        public IEnumerable<ProductItem> GetItemList(BO.Cart cart, Func<ProductItem, bool>? select_ = null)
         {
             try
             {
-                IEnumerable<DO.Product?> dalProducts = dal.Product.GetList();
-                List<BO.ProductItem> result = new List<BO.ProductItem>();
+                IEnumerable<DO.Product?> dalProducts = dal!.Product.GetList();
+                List<BO.ProductItem?> result = new List<BO.ProductItem?>();
 
                 foreach (DO.Product product in dalProducts)
                 {
-                    result.Add(new BO.ProductItem()
-                    {
-                        Id = product.Id,
-                        Name = product.Name,
-                        Category = (BO.Category)product.Category,
-                        Price = product.Price,
-                        Amount = product.InStock,
-                        InStock = (product.InStock > 0)
-                    });
+                    result.Add(Get(product.Id, cart));
                 }
                 if (select_ != null)
                     result.RemoveAll(x => !select_(x));

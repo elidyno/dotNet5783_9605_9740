@@ -108,7 +108,7 @@ internal class Order : IOrder
         {
             //For each order, request the list of orderItems
             IEnumerable<DO.OrderItem?> items = new List<DO.OrderItem?>();
-            items = dal.OrderItem.GetList(x => x?.Id == order.Id);
+            items = dal.OrderItem.GetList(x => x?.OrderId == order.Id);
 
             int amountOfItems = items.Count();
 
