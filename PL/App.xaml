@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+        <Image x:Key="BeckgroundImage" Source="beckgroundImage.jpg"
+              Stretch="Fill" Panel.ZIndex="-1" />
     </Application.Resources>
 </Application>

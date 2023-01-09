@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BO;
 using PL.Product;
 
 namespace PL.Product
@@ -23,23 +24,38 @@ namespace PL.Product
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-        public ObservableCollection<BO.ProductItem?> ProductItems { get; set; }
+        public static readonly DependencyProperty ProductItemProperty = DependencyProperty.Register(
+  "ProductItems", typeof(IEnumerable<BO.ProductItem?>), typeof(Catalogue),
+  new PropertyMetadata(default(IEnumerable<BO.ProductItem?>)));
+
+        public IEnumerable<BO.ProductItem?> ProductItems
+        {
+            get => (List<BO.ProductItem?>)GetValue(ProductItemProperty);
+            set => SetValue(ProductItemProperty, value);
+        }
+        //public ObservableCollection<BO.ProductItem?> ProductItems { get; set; }
         static BO.Cart cart  = new BO.Cart();
 
         public Catalogue()
         {
-
+            InitializeComponent();
             try
             {
-                ProductItems = new ObservableCollection<BO.ProductItem?>(bl!.Product.GetItemList(cart));
+                ProductItems = bl!.Product.GetItemList(cart);
             }
             catch (Exception e)
             {
 
                 MessageBox.Show("Error whas created in our Application:\n" + e.Message + "\n please try again");
             }
-            InitializeComponent();
-            //catalogueListView.ItemsSource = ProductItems;
+            
+            //The comboBox control accepts the category values
+            BO.Category category = 0;
+            for (int i = 0; i < Enum.GetValues(typeof(BO.Category)).Length; i++)
+            {
+                CategoryComboBox.Items.Add(category++);
+            }
+            CategoryComboBox.Items.Add("All");
 
         }
 
@@ -48,6 +64,22 @@ namespace PL.Product
         private void catalogueListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        private void catalogueListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void CategorySelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (CategoryComboBox.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length) // the "All" option was selected
+                ProductItems = bl!.Product.GetItemList(cart);
+            else
+            {
+                ProductItems = bl!.Product.GetItemList(cart,
+                   (BO.ProductItem productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex));
+            }
         }
     }
 }

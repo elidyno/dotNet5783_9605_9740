@@ -44,7 +44,7 @@
                 <StackPanel>
                     <TextBox x:Name="OrderNumber" TextWrapping="Wrap" Text="Order Number:" VerticalAlignment="Top" TextChanged="OrderNumber_TextChanged"
                          HorizontalAlignment="Center" Height="40" Width="210" FontSize="18" FontFamily="Verdana" BorderBrush="DarkBlue"
-                         HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="0,20,0,0" FontStyle="Italic"/>
+                         HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="1,20,0,0" FontStyle="Italic" Padding="4,0,0,0"/>
                     <Button x:Name="Track" Content="Track" Click="Track_Click" IsDefault="True" Background="Green" Foreground="White" Width="208" Height="48" FontSize="20" Margin="0,20,0,0"/>
                 </StackPanel>
             </Border>
