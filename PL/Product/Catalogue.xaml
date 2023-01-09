@@ -5,43 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
-        Title="Catalogue" Height="450" Width="800" FontSize="22" FontFamily="Tahoma" FontWeight="Bold">
-    <Window.Resources>
-        <DataTemplate x:Key="ProductItemTemplate" DataType="local:BO.ProductItem">
-            <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ShowGridLines="True">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="30" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="30" />
-                </Grid.ColumnDefinitions>
-                <Grid ShowGridLines ="True"/>
-                <TextBlock Grid.Column="0" Text="{Binding Path=Id}" FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
-                <TextBlock Grid.Column="1" Text="{Binding Path=Name}" FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
-                <TextBlock Grid.Column="2" Text="{Binding Path=Price}" FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
-                <TextBlock Grid.Column="3" Text="{Binding Path=Category}" FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
-                <TextBlock Grid.Column="5" Text="{Binding Path=Amount}" FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
-                <CheckBox Grid.Column="6" IsEnabled="False" IsChecked="{Binding Path=InStock}"  FontSize="8" FontFamily="Verdana" FontWeight="Regular" Margin="5,2,5,2" Grid.IsSharedSizeScope="False" Foreground="#FF0D3656"/>
-            </Grid>
-        </DataTemplate>
-    </Window.Resources>
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="Catalogue" Height="450" Width="800" WindowStartupLocation="CenterScreen" HorizontalAlignment="Center">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "60"/>
-            <RowDefinition Height = "auto"/>
+            <RowDefinition Height = "*"/>
         </Grid.RowDefinitions>
 
         <Border BorderBrush="Black" BorderThickness="1" Background="Green" Margin="0,10,0,10" HorizontalAlignment="Center"
                 Width="364" Padding="0,0,0,0" Grid.Row="0">
             <Label Content="Our Product Catalogue" HorizontalAlignment="Center" Margin="0,0,14,0" Foreground="White" Height="44" />
         </Border>
-        <DataGrid x:Name="ProductItemDataGrid" ItemsSource="{Binding}" ItemTemplate="{StaticResource ProductItemTemplate}" Grid.Row="1" FontSize="10" FontFamily="Verdana" FontWeight="Regular" 
-                  HorizontalContentAlignment="Center" SelectionChanged="ProductItemDataGrid_SelectionChanged" VerticalContentAlignment="Stretch" BorderThickness="2,2,2,2" Width="500" ScrollViewer.VerticalScrollBarVisibility ="Visible" ScrollViewer.CanContentScroll="True"/>
-        
+        <ListView x:Name="catalogueListView" Grid.Row="1" Visibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  FontSize="14" MouseDoubleClick="catalogueListView_MouseDoubleClick" ItemsSource="{Binding ProductItems}" HorizontalAlignment="Center" Width="746" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="60"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="280"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="100" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="60" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Header="Amount in cart" Width="130" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=InStock}" Header="In Stock?" Width="100" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </Window>
