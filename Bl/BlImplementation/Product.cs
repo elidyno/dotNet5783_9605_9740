@@ -296,5 +296,13 @@ namespace BlImplementation
             return dal?.OrderItem.GetList().Any(x => x?.ProductId == productId) ??  throw new NullableException(); 
                 
         }
+
+        //public void AddAmountInProductItem(BO.ProductItem? productItem)
+        //{
+        //    if(productItem != null)
+        //        productItem!.Amount++;
+        //    else
+        //        throw new NullableException();
+        //}
     }
 }

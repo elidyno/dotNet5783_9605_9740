@@ -36,6 +36,14 @@ namespace BlImplementation
             if (dataProduct.InStock < 1)
                 throw new AmountAndPriceException("Out of stock");
 
+            
+            //if cart is empthy - initialize some properties
+            if (cart.Items == null)
+            {
+                cart.Items = new List<BO.OrderItem?>();
+                cart.TotalPrice = 0;
+            }
+                
             //If the product does not exist in the cart, then add a new product
             if (!cart.Items!.Exists(x => x?.ProductId == productId))
             {
@@ -62,6 +70,7 @@ namespace BlImplementation
                 cart.Items[i]!.TotalPrice += cart.Items[i]!.Price;
                 cart.TotalPrice += cart.Items[i]!.Price;
             }
+
             return cart;
         }
 

@@ -7,34 +7,69 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Catalogue" Height="450" Width="800" WindowStartupLocation="CenterScreen" HorizontalAlignment="Center">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height = "60"/>
-            <RowDefinition Height = "*"/>
-        </Grid.RowDefinitions>
 
-        <Border BorderBrush="Black" BorderThickness="1" Background="Green" Margin="0,10,0,10" HorizontalAlignment="Center"
-                Width="364" Padding="0,0,0,0" Grid.Row="0">
-            <Label Content="Our Product Catalogue" HorizontalAlignment="Center" Margin="0,0,14,0" Foreground="White" Height="44" />
-        </Border>
-        <ListView x:Name="catalogueListView" Grid.Row="1" Visibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                  FontSize="14" MouseDoubleClick="catalogueListView_MouseDoubleClick" ItemsSource="{Binding ProductItems}" HorizontalAlignment="Center" Width="746" >
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="60"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="280"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="100" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="60" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Header="Amount in cart" Width="130" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=InStock}" Header="In Stock?" Width="100" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+    <Grid>
+        <Image x:Name="BeckgroundImage"/>
+        <Image Source="beckgroundImage.jpg" Stretch="Fill" Panel.ZIndex="-1" Grid.RowSpan="2"/>
+        <Grid Margin="0,20,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height = "60"/>
+                <RowDefinition Height = "*"/>
+            </Grid.RowDefinitions>
+            <Grid HorizontalAlignment="Center">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="173"/>
+                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="173"/>
+                </Grid.ColumnDefinitions>
+                
+                <Border BorderBrush="#FF0D3656" BorderThickness="0"  Margin="26,5,0,5" HorizontalAlignment="Left"
+                Width="150" Padding="0,0,0,0" Grid.Column="0">
+                    <Label Content="Catalogue:" HorizontalAlignment="Left" Margin="-6,-1,0,-5" Foreground="#FF0D3656" Height="44" FontFamily="Tahoma" FontSize="18" FontWeight="Bold" Width="204" />
+                </Border>
+                <Border BorderBrush="#FF0D3656" BorderThickness="1"  Margin="0,5,0,5" HorizontalAlignment="Center"
+                Width="300" Padding="10,0,0,0" Grid.Column="1">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="300">
+                        <Label Content="Caegory:" HorizontalAlignment="Left" Foreground="#FF0D3656" Height="44" FontFamily="Tahoma" FontSize="18" Width="125" Margin="5,0,0,0" />
+                        <ComboBox x:Name="CategoryComboBox" Width="164" Background="Green" Foreground="Green" SelectionChanged="CategorySelected" />
+                    </StackPanel>
+                </Border>
+                <Button x:Name="MyCart" Content="My Cart" Grid.Column="2" Background="Orange" Width="140" Height="40" FontSize="18" FontFamily="Tahoma" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Padding="9,1,1,1" Foreground="#FF0D3656"/>
+            </Grid>
+            
+            
+            <ListView x:Name="catalogueListView" Grid.Row="1" Visibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="catalogueListView_MouseDoubleClick" ItemsSource="{Binding ProductItems}" HorizontalAlignment="Center" Width="746" BorderBrush="#FF0D3656" Foreground="#FF0D3656" SelectionChanged="catalogueListView_SelectionChanged" Margin="0,20,0,0" FontFamily="Tahoma" Padding="0,0,0,0" FontWeight="Bold" >
+                <ListView.Background>
+                    <SolidColorBrush Color="White" Opacity="0.5"/>
+                </ListView.Background>
+                
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="FontWeight" Value="Regular"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="60"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="280"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="100" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="60" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Header="Amount in cart" Width="130" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=InStock}" Header="In Stock?" Width="100" />
+                    </GridView>
+                </ListView.View>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add product to Cart" Click="AddMenuItem_Click" />
+                        <MenuItem Header="View product detailse" Click="ViewMenuItem_Click" />
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+        </Grid>
+
 
     </Grid>
+
 </Window>

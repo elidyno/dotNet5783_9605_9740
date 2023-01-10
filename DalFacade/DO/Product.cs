@@ -9,7 +9,7 @@ public struct Product
 
     public Category? Category { get; set; }
     public int InStock { get; set; }
-
+    
     public override string ToString() => $@"
     Product Id: {Id},
     Name1:       {Name},
