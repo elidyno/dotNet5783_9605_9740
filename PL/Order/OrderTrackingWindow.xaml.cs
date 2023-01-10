@@ -22,11 +22,14 @@ namespace PL.Order
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
         public int OrderId;
+        public BO.OrderTracking orderTracking { get; set; }
         public OrderTrackingWindow(int orderId)
         {
+            orderTracking = new BO.OrderTracking();
+            orderTracking = bl!.Order.GetTracking(orderId);
+            OrderId = orderId;
             InitializeComponent();
-            this.OrderId = orderId;
-            TrackingData.Text = bl?.Order.GetTracking(orderId).ToString();
+            //TrackingData.Text = bl?.Order.GetTracking(orderId).ToString();
         }
 
         private void order_details_Click(object sender, RoutedEventArgs e)

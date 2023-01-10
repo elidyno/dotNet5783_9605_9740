@@ -89,6 +89,11 @@
 
                 <TextBlock Text="Items" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="17" />
                 <ListView ItemsSource="{Binding items}" Grid.Row="1">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="40" />

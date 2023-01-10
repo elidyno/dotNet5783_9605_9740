@@ -18,7 +18,7 @@ namespace BO
             string tmp = "";
             foreach (var item in Items)
                 tmp += item.ToString();
-            string toString;
+            //string toString;
 
             return $"      Name: {CustomerName}\n" +
             $"      Email: {CustomerEmail}\n" +

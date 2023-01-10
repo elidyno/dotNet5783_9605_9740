@@ -26,12 +26,13 @@ namespace PL.Product
         BlApi.IBl? bl = BlApi.Factory.Get();
         public bool IsDisplayMode { get; set; }
         public bool IsAddWindow { get; set; }
+        public bool IsEditMode { get; set; }
         public string ButtonContent { get; set; }
+        public Array categories { get; set; }
 
         public static readonly DependencyProperty productProperty = DependencyProperty.Register(
         "product", typeof(BO.Product), typeof(Product), new PropertyMetadata(default(BO.Product)));
 
-       
         public BO.Product product
         {
             get => (BO.Product)GetValue(productProperty);
@@ -43,11 +44,12 @@ namespace PL.Product
         public Product(bool isDisplayMode, bool isAddWindow, int productId = 0)
         {
             IsDisplayMode = isDisplayMode;
+            IsEditMode = !isDisplayMode;
             IsAddWindow = isAddWindow;
+            categories = Enum.GetValues(typeof(BO.Category));
             ButtonContent = IsAddWindow ? "Add" : "Update";
             product = new();
             InitializeComponent();
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category)); //?
             if(!isAddWindow)
             {
                 try
@@ -58,12 +60,11 @@ namespace PL.Product
                 {
                     MessageBox.Show(ex.Message);
                 }
-                CategorySelector.Text = product?.Category.ToString(); //?
+                
             }
            
         }
 
-        
         /// <summary>
         /// Handles the button click event according to the button type created in the constructor
         /// </summary>
@@ -71,7 +72,6 @@ namespace PL.Product
         /// <param name="e"></param>
         private void AddOrUpdate_Click(object sender, RoutedEventArgs e)
         {
-            product.Category = (BO.Category)CategorySelector.SelectedItem; //?
 
             if (IsAddWindow)
             {
@@ -103,6 +103,16 @@ namespace PL.Product
                 this.Close();
             }
 
+        }
+
+        private void OnlyNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Check if the entered character is a digit or a negative sign (for negative numbers)
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) && !(e.Text == "-" && GetId.SelectionStart == 0))
+            {
+                // If it's not a digit or negative sign, cancel the input
+                e.Handled = true;
+            }
         }
     }
 }

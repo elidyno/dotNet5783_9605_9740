@@ -10,7 +10,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="564.04"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -24,6 +25,11 @@
         </Grid>
         <ListView x:Name="orderListView" Grid.Row="1" Visibility="Collapsed" ItemsSource="{Binding orderList}"
                   FontSize="14" MouseDoubleClick="orderSelected">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="40" />
@@ -34,6 +40,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button x:Name="back" Content="Back" HorizontalAlignment="Left"  Grid.Row="2" 
+                Width="100" FontSize="20" VerticalAlignment="Center" Click="back_Click" />
+
 
     </Grid>
 </Window>

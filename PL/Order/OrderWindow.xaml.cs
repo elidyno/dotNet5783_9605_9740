@@ -24,7 +24,7 @@ namespace PL.Order
     {
         public static readonly DependencyProperty OrderProperty = DependencyProperty.Register(
         "Order", typeof(BO.Order), typeof(OrderWindow), new PropertyMetadata(default(BO.Order)));
-
+        //Dependency Property "Order" for holding order data
         public BO.Order Order
         {
             get => (BO.Order)GetValue(OrderProperty);
@@ -32,7 +32,8 @@ namespace PL.Order
         }
         BlApi.IBl? bl = BlApi.Factory.Get();       
         public bool IsDisplayMode { get; set; }
-       
+
+        //List for the order products
         public ObservableCollection<BO.OrderItem?>? items { get; set; }
         public OrderWindow(bool isDisplayMode, int orderId)
         {           
@@ -43,7 +44,7 @@ namespace PL.Order
             InitializeComponent();  
            
         }
-
+        //Handles order shipping update request
         private void updateShip_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -55,7 +56,7 @@ namespace PL.Order
                 MessageBox.Show(ex.Message);    
             }
         }
-
+        //Handles order delivery update request
         private void updateDelivery_Click(object sender, RoutedEventArgs e)
         {
             try

@@ -20,18 +20,23 @@
         <Label Content="Price:" HorizontalAlignment="Left" Margin="280,160,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
         <Label Content="InStock:" HorizontalAlignment="Left" Margin="280,190,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.961,0.659"/>
         <TextBox  Name="GetId"  HorizontalAlignment="Left" Margin="350,70,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
-                  Text="{Binding product.Id, Mode=TwoWay}"  IsReadOnly="{Binding IsDisplayMode}" IsEnabled="{Binding IsAddWindow}" Width="140"  Height="25"/>
-        <ComboBox Name="CategorySelector" HorizontalAlignment="Left" Margin="350,100,0,0" VerticalAlignment="Top" Width="140" Height="25"
-                  />
+                  Text="{Binding product.Id, Mode=TwoWay}"  IsReadOnly="{Binding IsDisplayMode}" IsEnabled="{Binding IsAddWindow}" Width="140" 
+                  Height="25" PreviewTextInput="OnlyNumber_PreviewTextInput"/>
+        <ComboBox Name="CategorySelector" HorizontalAlignment="Left" Margin="350,100,0,0" VerticalAlignment="Top" 
+                  Text="{Binding product.Category, Mode=TwoWay}" IsEnabled="{Binding IsEditMode}" Width="140" Height="25"
+                  ItemsSource="{Binding categories}"/>
+                  
         <TextBox  Name="GetName" HorizontalAlignment="Left" Margin="350,130,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
                   Text="{Binding product.Name, Mode=TwoWay}" IsReadOnly="{Binding IsDisplayMode}" Width="140" Height="25"/>
         <TextBox  Name="GetPrice" HorizontalAlignment="Left" Margin="350,160,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
-                  Text="{Binding product.Price, Mode=TwoWay}" IsReadOnly="{Binding IsDisplayMode}" Width="140" Height="25"/>
+                  Text="{Binding product.Price, Mode=TwoWay}" IsReadOnly="{Binding IsDisplayMode}" Width="140" Height="25"
+                  PreviewTextInput="OnlyNumber_PreviewTextInput"/>
         <TextBox  Name="GetInStock" HorizontalAlignment="Left" Margin="350,190,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
-                  Text="{Binding product.InStock, Mode=TwoWay}" IsReadOnly="{Binding IsDisplayMode}" Width="140" Height="25"/>
-        <Button  Name ="AddOrUpdate" Content="{Binding ButtonContent}"  HorizontalAlignment="Left" Margin="280,230,0,0"
-                 VerticalAlignment="Top" RenderTransformOrigin="-0.172,0.363" Click="AddOrUpdate_Click"
-                 Visibility="{Binding IsDisplayMode, Converter={StaticResource booleanToVisibilityConverter}}"/>
+                  Text="{Binding product.InStock, Mode=TwoWay}" IsReadOnly="{Binding IsDisplayMode}" Width="140" Height="25"
+                  PreviewTextInput="OnlyNumber_PreviewTextInput"/>
+        <Button   Name ="AddOrUpdate" Content="{Binding ButtonContent}"  HorizontalAlignment="Left" Margin="280,230,0,0"
+                  VerticalAlignment="Top" RenderTransformOrigin="-0.172,0.363" Click="AddOrUpdate_Click"
+                  Visibility="{Binding IsDisplayMode, Converter={StaticResource booleanToVisibilityConverter}}"/>
 
     </Grid>
 </Window>
