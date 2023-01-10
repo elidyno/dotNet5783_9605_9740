@@ -148,7 +148,7 @@ namespace BlImplementation
             {
                 foreach (BO.OrderItem item in cart.Items)
                 {
-                    if (item.Id == productId)
+                    if (item.ProductId == productId)
                         amount_ = item.Amount;
                 }
             }
@@ -279,5 +279,13 @@ namespace BlImplementation
             return dal?.OrderItem.GetList().Any(x => x?.ProductId == productId) ??  throw new NullableException(); 
                 
         }
+
+        //public void AddAmountInProductItem(BO.ProductItem? productItem)
+        //{
+        //    if(productItem != null)
+        //        productItem!.Amount++;
+        //    else
+        //        throw new NullableException();
+        //}
     }
 }

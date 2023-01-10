@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -80,6 +81,30 @@ namespace PL.Product
                 ProductItems = bl!.Product.GetItemList(cart,
                    (BO.ProductItem productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex));
             }
+        }
+
+        private void AddMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            BO.ProductItem? productItem = new BO.ProductItem();
+            productItem = catalogueListView.SelectedItem as BO.ProductItem;
+            try
+            {
+                cart = bl!.Cart.Add(cart, productItem!.Id);
+                ProductItems = bl!.Product.GetItemList(cart);
+            }
+            catch (Exception  ex)
+            {
+                MessageBox.Show("Can't add product to cart:\n" + ex.Message);
+
+            }
+            
+        }
+
+        private void ViewMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            BO.ProductItem? productItem = new BO.ProductItem();
+            productItem = ProductItems.ToList().Find(x => x == catalogueListView.SelectedItem as BO.ProductItem);
+            new ProductItemWindow(productItem).Show();
         }
     }
 }
