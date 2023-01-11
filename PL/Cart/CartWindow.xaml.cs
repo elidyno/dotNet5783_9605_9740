@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using 
 using BO;
 using PL.Cart;
 
@@ -25,7 +26,7 @@ namespace PL.Cart
         public static readonly DependencyProperty CartProperty = DependencyProperty.Register(
         "Cart", typeof(BO.Cart), typeof(CartWindow), new PropertyMetadata(default(BO.Cart)));
 
-        public BO.Cart Cart
+        public  BO.Cart Cart
         {
             get => (BO.Cart)GetValue(CartProperty);
             set => SetValue(CartProperty, value);
