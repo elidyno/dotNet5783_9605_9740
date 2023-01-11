@@ -33,7 +33,6 @@ namespace PL.Product
             get => (List<BO.ProductForList?>)GetValue(ProductListProperty);
             set => SetValue(ProductListProperty, value);
         }
-       
         public ProductForList()
         {
             InitializeComponent();
