@@ -16,8 +16,9 @@ namespace BO
         public override string ToString()
         {
             string tmp = "";
-            foreach (var item in Items!)
-                tmp += item!.ToString();
+            foreach (var item in Items)
+                tmp += item.ToString();
+            //string toString;
 
             return $"      Name: {CustomerName}\n" +
             $"      Email: {CustomerEmail}\n" +

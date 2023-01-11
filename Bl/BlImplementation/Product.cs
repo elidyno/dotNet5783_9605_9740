@@ -146,11 +146,13 @@ namespace BlImplementation
             int amount_ = 0;
             if(cart.Items != null)
             {
-                foreach (BO.OrderItem item in cart.Items)
-                {
-                    if (item.ProductId == productId)
-                        amount_ = item.Amount;
-                }
+                var item = cart.Items.FirstOrDefault(i => i?.Id == productId);
+                amount_ = item != null ? item.Amount : 0;
+                //foreach (BO.OrderItem item in cart.Items)
+                //{
+                //    if (item.Id == productId)
+                //        amount_ = item.Amount;
+                //}
             }
 
             BO.ProductItem productItem = new BO.ProductItem()
@@ -177,16 +179,27 @@ namespace BlImplementation
                 IEnumerable<DO.Product?> dalProducts = dal.Product.GetList();
                 List<BO.ProductForList> result = new List<BO.ProductForList>();
 
-                foreach (DO.Product product in dalProducts)
+                var resultItems = dalProducts.Select(product => new BO.ProductForList
                 {
-                    result.Add(new BO.ProductForList()
-                    {
-                        Id = product.Id,
-                        Name = product.Name,
-                        Category = (BO.Category)product.Category,
-                        Price = product.Price
-                    });
-                }
+                    Id = product?.Id ?? 0,
+                    Name = product?.Name,
+                    Category = (BO.Category)(product?.Category ?? 0),
+                    Price = product?.Price ?? 0
+                }).Where(p => p.Id != 0).ToList();
+
+                result = resultItems;
+                //-----------
+                //foreach (DO.Product product in dalProducts)
+                //{
+                //    result.Add(new BO.ProductForList()
+                //    {
+                //        Id = product.Id,
+                //        Name = product.Name,
+                //        Category = (BO.Category)product.Category,
+                //        Price = product.Price
+                //    });
+                //}
+                //-------------
                 if (select_ != null)
                     result.RemoveAll(X => !select_(X));
 
@@ -211,11 +224,15 @@ namespace BlImplementation
             {
                 IEnumerable<DO.Product?> dalProducts = dal!.Product.GetList();
                 List<BO.ProductItem?> result = new List<BO.ProductItem?>();
-
-                foreach (DO.Product product in dalProducts)
-                {
-                    result.Add(Get(product.Id, cart));
-                }
+                
+                var resultItems = dalProducts.Select(product => Get(product?.Id ?? 0, cart));
+                // Use ToList() to convert the results to a list and assign it to the result variable
+                result = resultItems.ToList();
+                //-------
+                //foreach (DO.Product product in dalProducts)
+                //{
+                //    result.Add(Get(product.Id, cart));
+                //}-----
                 if (select_ != null)
                     result.RemoveAll(x => !select_(x));
 

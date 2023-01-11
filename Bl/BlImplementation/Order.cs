@@ -38,7 +38,7 @@ internal class Order : IOrder
         //Try requesting a List of orderItems from data layer
         try
         {
-            items = dal.OrderItem.GetList( x => x?.Id == orderId);
+            items = dal.OrderItem.GetList( x => x?.OrderId == orderId);
         }
         catch (Exception e)
         {
@@ -46,24 +46,21 @@ internal class Order : IOrder
         }
 
         //Creating a list of orderItems - logical entities
-        List<BO.OrderItem?> orderItems = new List<BO.OrderItem?>();
-        foreach (DO.OrderItem item in items)
-        {
-            orderItems.Add(new BO.OrderItem
+        List<BO.OrderItem> orderItems = items
+            .Select(item => new BO.OrderItem
             {
-                Id = item.Id,
-                Amount = item.Amount,
-                Price = item.Price,
-                ProductId = item.ProductId,
-                TotalPrice = item.Price * item.Amount,
-                ProductName = dal.Product.Get(x => x?.Id == item.ProductId).Name
-            });
-        }
+                Id = item?.Id ?? 0,
+                Amount = item?.Amount ?? 0,
+                Price = item?.Price ?? 0,
+                ProductId = item?.ProductId ?? 0,
+                TotalPrice = (item?.Price ?? 0) * (item?.Amount ?? 0),
+                ProductName = dal.Product.Get(x => x?.Id == item?.ProductId).Name
+            })
+            .ToList();
 
         //Calculates the total order price
-        double totalOrderPrice = 0;
-        foreach (BO.OrderItem? item in orderItems)
-            totalOrderPrice += item.TotalPrice;
+        double totalOrderPrice = orderItems.Sum(item => item?.TotalPrice ?? 0);
+       
 
         //Calculates the status according to the order data in relation to the current time.
         BO.Status status_ = GetStatus(dataOrder);
@@ -101,35 +98,33 @@ internal class Order : IOrder
         orders = dal?.Order.GetList() ?? throw new NullableException();
 
         //Creating a list of OrderForList -logical entities
-        List<BO.OrderForList?> ordersForList = new List<BO.OrderForList?>();
+        //List<BO.OrderForList?> ordersForList = new List<BO.OrderForList?>();
 
         //Populates the list by creating "OrderForList" type objects based on order data and OrderItem data and additional calculations.
-        foreach (DO.Order order in orders)
-        {
-            //For each order, request the list of orderItems
-            IEnumerable<DO.OrderItem?> items = new List<DO.OrderItem?>();
-            items = dal.OrderItem.GetList(x => x?.OrderId == order.Id);
-
-            int amountOfItems = items.Count();
-
-            //Calculates the Total Price
-            double totalPrice = 0;
-            foreach (DO.OrderItem item in items)
-                totalPrice += item.Price * item.Amount;
-
-            //Calculates the status according to the order data in relation to the current time.
-            BO.Status status_ = GetStatus(order);
-
-            ordersForList.Add(new BO.OrderForList()
+        List<BO.OrderForList> ordersForList = orders
+            .Select(order =>
             {
-                Id = order.Id,
-                CustomerName = order.CustomerName,
-                AmountOfItems = amountOfItems,
-                TotalPrice = totalPrice,
-                status = status_
-            });
+                //For each order, request the list of orderItems
+                IEnumerable<DO.OrderItem?> items = dal.OrderItem.GetList(x => x?.OrderId == order?.Id);
 
-        }
+                int amountOfItems = items.Count();
+
+                //Calculates the Total Price
+                double totalPrice = items.Sum(item => (item?.Price ?? 0) * (item?.Amount ?? 0));
+
+                //Calculates the status according to the order data in relation to the current time.
+                BO.Status status_ = GetStatus(order);
+
+                return new BO.OrderForList()
+                {
+                    Id = order?.Id ?? 0,
+                    CustomerName = order?.CustomerName,
+                    AmountOfItems = amountOfItems,
+                    TotalPrice = totalPrice,
+                    status = status_
+                };
+            })
+            .ToList();
 
         return ordersForList;
     }
@@ -271,14 +266,14 @@ internal class Order : IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <returns></returns>
-    public BO.Status GetStatus(DO.Order order)
+    public BO.Status GetStatus(DO.Order? order)
     {
         BO.Status status;
-        if (order.DeliveryDate != null)
+        if (order?.DeliveryDate != null)
             status = BO.Status.DELIVERED;
         else
         {
-            if (order.ShipDate != null)
+            if (order?.ShipDate != null)
                 status = BO.Status.SHIPPED;
             else status = BO.Status.APPROVED;
         }

@@ -45,7 +45,7 @@ namespace BlImplementation
             }
                 
             //If the product does not exist in the cart, then add a new product
-            if (!cart.Items.Exists(x => x?.ProductId == productId))
+            if (!cart.Items!.Exists(x => x?.ProductId == productId))
             {
                 BO.OrderItem orderItem = new BO.OrderItem()
                 {
@@ -64,11 +64,11 @@ namespace BlImplementation
             {      
                 int i = cart.Items.FindIndex(x => x?.ProductId == productId);
                 //Makes sure that the total of additions to the cart of an item does not exceed the amount of stock
-                if (dataProduct.InStock < cart.Items[i].Amount + 1)
+                if (dataProduct.InStock < cart.Items[i]!.Amount + 1)
                     throw new AmountAndPriceException("Out of stock");
-                cart.Items[i].Amount += 1;
-                cart.Items[i].TotalPrice += cart.Items[i].Price;
-                cart.TotalPrice += cart.Items[i].Price;
+                cart.Items[i]!.Amount += 1;
+                cart.Items[i]!.TotalPrice += cart.Items[i]!.Price;
+                cart.TotalPrice += cart.Items[i]!.Price;
             }
 
             return cart;
@@ -110,26 +110,53 @@ namespace BlImplementation
             DO.Product product_ = new();
 
             //chack validation of each ItemOrder in cart
-            foreach (var item in cart.Items)
+            try
             {
-                try
+                // Use the Select() method to apply the same logic to each item in the cart's items collection
+                var products = cart.Items.Select(item =>
                 {
-                    product_ = dal?.Product.Get(x => x?.Id == item.Id) ?? throw new NullableException(); 
-                }
-                catch (Exception e)
-                {
-                    throw new DataRequestFailedException($"ERROR in {item.ProductName}:", e);
-                }
-                if (item.Amount <= 0)
-                    throw new InvalidValueException(item.ProductName + " must be greater than zero");
-                if (product_.InStock < item.Amount)
-                    throw new AmountAndPriceException($"The product {item.ProductName} (ID:) {item.ProductId} is out of stock");
-                if (item.Price != product_.Price)
-                    throw new AmountAndPriceException($"price in cart of {item.ProductName} not match to price in Data Surce");
-                if (item.TotalPrice != (item.Amount * product_.Price))
-                    throw new AmountAndPriceException($"Total price of {item.ProductId} not match to Price and Amount in Cart");
-                totalPrice_ += item.TotalPrice;
+                    var product = dal.Product.Get(x => x?.Id == item?.Id);
+                    if (item?.Amount <= 0)
+                        throw new InvalidValueException(item.ProductName + " must be greater than zero");
+                    if (product.InStock < item?.Amount)
+                        throw new AmountAndPriceException($"The product {item.ProductName} (ID:) {item.ProductId} is out of stock");
+                    if (item?.Price != product.Price)
+                        throw new AmountAndPriceException($"price in cart of {item?.ProductName} not match to price in Data Surce");
+                    if (item.TotalPrice != (item.Amount * product.Price))
+                        throw new AmountAndPriceException($"Total price of {item.ProductId} not match to Price and Amount in Cart");
+                    return new { item, product };
+                });
+
+                //use method Aggregate for sum all price 
+                totalPrice_ = products.Aggregate(0.0, (acc, x) => acc + x.item.TotalPrice);
+
             }
+            catch (Exception e)
+            {
+                throw new DataRequestFailedException($"ERROR: ", e);
+            }
+            //-----------------
+            //foreach (var item in cart.Items)
+            //{
+            //    try
+            //    {
+            //        product_ = dal!.Product.Get(x => x?.Id == item?.Id); 
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        throw new DataRequestFailedException($"ERROR in {item?.ProductName}:", e);
+            //    }
+            //    if (item?.Amount <= 0)
+            //        throw new InvalidValueException(item.ProductName + " must be greater than zero");
+            //    if (product_.InStock < item?.Amount)
+            //        throw new AmountAndPriceException($"The product {item.ProductName} (ID:) {item.ProductId} is out of stock");
+            //    if (item?.Price != product_.Price)
+            //        throw new AmountAndPriceException($"price in cart of {item?.ProductName} not match to price in Data Surce");
+            //    if (item.TotalPrice != (item.Amount * product_.Price))
+            //        throw new AmountAndPriceException($"Total price of {item.ProductId} not match to Price and Amount in Cart");
+            //    totalPrice_ += item.TotalPrice;
+            //}
+            //------------------------------------------
             if (totalPrice_ != cart.TotalPrice)
                 throw new AmountAndPriceException("Total price in cart not match to prices and Amont of all item in cart");
 
@@ -148,20 +175,40 @@ namespace BlImplementation
                 //try to add order to data sirce in Dal
                 int orderId = dal?.Order.Add(order) ?? throw new NullableException(); 
                 //create orderItem in Dal and update amount of product
-                DO.OrderItem orderItem = new();
-                foreach (var item in cart.Items)
+                //------------
+                //DO.OrderItem orderItem = new();
+                //foreach (var item in cart.Items)
+                //{
+                //    //create an orderItem for dall and add it
+                //    orderItem.OrderId = orderId;
+                //    orderItem.ProductId = item!.ProductId;
+                //    orderItem.Amount = item.Amount;
+                //    orderItem.Price = item.Price;
+                //    int orderItemId = dal.OrderItem.Add(orderItem);
+                //    //update amount of product in Dak
+                //    product_ = dal.Product.Get(x => x?.Id == item.ProductId);
+                //    product_.InStock -= item.Amount;
+                //    dal.Product.Update(product_);
+                //}
+                //----------------
+                var orderItems = cart.Items.Select(item =>
                 {
-                    //create an orderItem for dall and add it
-                    orderItem.OrderId = orderId;
-                    orderItem.ProductId = item.ProductId;
-                    orderItem.Amount = item.Amount;
-                    orderItem.Price = item.Price;
+                    //create an orderItem for dal and add it
+                    DO.OrderItem orderItem = new()
+                    {
+                        OrderId = orderId,
+                        ProductId = item!.ProductId,
+                        Amount = item.Amount,
+                        Price = item.Price
+                    };
                     int orderItemId = dal.OrderItem.Add(orderItem);
-                    //update amount of product in Dak
+                    //update amount of product in DB
                     product_ = dal.Product.Get(x => x?.Id == item.ProductId);
                     product_.InStock -= item.Amount;
                     dal.Product.Update(product_);
-                }
+
+                    return orderItem;
+                });
             }
             catch (Exception e)
             {
@@ -181,15 +228,15 @@ namespace BlImplementation
         /// <exception cref="AmountAndPriceException"></exception>
         public BO.Cart Update(BO.Cart cart, int productId, int newAmount)
         {
-            int i = cart.Items.FindIndex(x => x?.ProductId == productId);
+            int i = cart.Items!.FindIndex(x => x?.ProductId == productId);
             if (i < 0)
             {
                 throw new BO.NotFoundException("product not found"); 
             }
             //Adding items from an existing product
-            else if (cart.Items[i].Amount < newAmount)
+            else if (cart.Items[i]!.Amount < newAmount)
             {
-                int newItems = newAmount - cart.Items[i].Amount;
+                int newItems = newAmount - cart.Items[i]!.Amount;
                 //Try to add a requested amount of items as long as the stock does not run out
                 for (int j = 0; j < newItems; j++)
                 {
@@ -206,16 +253,16 @@ namespace BlImplementation
             //Deleting a product from the cart
             else if (newAmount == 0)
             {
-                cart.TotalPrice -= cart.Items[i].TotalPrice;
+                cart.TotalPrice -= cart.Items[i]!.TotalPrice;
                 cart.Items.RemoveAt(i);
             }
             //Reducing items from an existing product
             else
             {
-                int reducingItems = cart.Items[i].Amount - newAmount;
-                cart.Items[i].Amount = newAmount;
-                cart.Items[i].TotalPrice -= cart.Items[i].Price * reducingItems;
-                cart.TotalPrice -= cart.Items[i].Price * reducingItems;
+                int reducingItems = cart.Items[i]!.Amount - newAmount;
+                cart.Items[i]!.Amount = newAmount;
+                cart.Items[i]!.TotalPrice -= cart.Items[i]!.Price * reducingItems;
+                cart.TotalPrice -= cart.Items[i]!.Price * reducingItems;
             }
             return cart;
         }

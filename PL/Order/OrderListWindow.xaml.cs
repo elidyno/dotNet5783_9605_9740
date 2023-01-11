@@ -29,25 +29,32 @@ namespace PL.Order
             InitializeComponent();
            
         }
-
+        
+        //Opens a window to display order details, in case of selecting an order from the list.
         private void orderSelected(object sender, MouseButtonEventArgs e)
         {
             BO.OrderForList orderForList = (BO.OrderForList)orderListView.SelectedItem;
             OrderWindow orderWindow = new (false, orderForList.Id);
             orderWindow.Show();
         }
-
+        //A window opens to display a list of products
         private void Products_Click(object sender, RoutedEventArgs e)
         {
             ProductForList ProductsWindow = new ProductForList();
             ProductsWindow.Show();
             
         }
-
+        //Displays the order list
         private void Orders_Click(object sender, RoutedEventArgs e)
         {
             
             orderListView.Visibility = Visibility.Visible;
+        }
+        //Return to main window
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Close();
         }
     }
 }

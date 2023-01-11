@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="OrderTrackingWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     
     <Grid ShowGridLines="False">
@@ -15,10 +16,10 @@
                
         </Grid.RowDefinitions>
         <Label Content="Order Tracking" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Center" FontSize="20"/>
-        <TextBlock x:Name="TrackingData" HorizontalAlignment="Center" Grid.Row="1" Text="TextBlock" VerticalAlignment="Center"
+        <TextBlock x:Name="TrackingData" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding orderTracking}" VerticalAlignment="Center"
                    FontSize="15"/>
         <Button Content="order details" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" 
-                Background="Green" Foreground="White"  Width="220" Height="51" FontSize="20" Click="order_details_Click" />
+                Background="Green" Foreground="White"  Width="200" Height="45" FontSize="20" Click="order_details_Click" />
     </Grid>
 
 

@@ -33,14 +33,16 @@ namespace PL.Product
             get => (List<BO.ProductForList?>)GetValue(ProductListProperty);
             set => SetValue(ProductListProperty, value);
         }
+
         public ProductForList()
         {
+
             InitializeComponent();
             ProductList = bl!.Product.GetList();
-            
+            //categories = Enum.GetValues(typeof(BO.Category));
             //The comboBox control accepts the category values
             BO.Category category = 0;
-            for (int i = 0; i < Enum.GetValues(typeof(BO.Category)).Length ; i++)
+            for (int i = 0; i < Enum.GetValues(typeof(BO.Category)).Length; i++)
             {
                 CategorySelector.Items.Add(category++);
             }

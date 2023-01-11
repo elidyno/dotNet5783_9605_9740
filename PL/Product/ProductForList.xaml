@@ -21,11 +21,16 @@
             </Grid.ColumnDefinitions >
             <Label Content="Category" Grid.Column="0"  HorizontalAlignment="Center"  VerticalAlignment="Center" />
             <ComboBox Name="CategorySelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"
-                      SelectionChanged="CategorySelector_SelectionChanged"/>
+                       SelectionChanged="CategorySelector_SelectionChanged"/>
 
         </Grid>
 
         <ListView  x:Name="ProductListview" Grid.Row="1" MouseDoubleClick="product_selected" ItemsSource="{Binding ProductList}" FontSize="14" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     
