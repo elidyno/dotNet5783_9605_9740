@@ -146,13 +146,13 @@ namespace BlImplementation
             int amount_ = 0;
             if(cart.Items != null)
             {
-                var item = cart.Items.FirstOrDefault(i => i?.Id == productId);
-                amount_ = item != null ? item.Amount : 0;
-                //foreach (BO.OrderItem item in cart.Items)
-                //{
-                //    if (item.Id == productId)
-                //        amount_ = item.Amount;
-                //}
+                //var item = cart.Items.FirstOrDefault(i => i?.Id == productId);
+                //amount_ = item != null ? item.Amount : 0;
+                foreach (BO.OrderItem item in cart.Items)
+                {
+                  if (item?.ProductId == productId)
+                        amount_ = item.Amount;
+                }
             }
 
             BO.ProductItem productItem = new BO.ProductItem()
@@ -218,21 +218,20 @@ namespace BlImplementation
         /// <param name="select_"></param>
         /// <returns> IEnumerable<ProductItem> </returns>
         /// <exception cref="DataRequestFailedException"></exception>
-        public IEnumerable<ProductItem> GetItemList(BO.Cart cart, Func<ProductItem, bool>? select_ = null)
+        public IEnumerable<ProductItem?> GetItemList(BO.Cart cart, Func<ProductItem, bool>? select_ = null)
         {
             try
             {
                 IEnumerable<DO.Product?> dalProducts = dal!.Product.GetList();
                 List<BO.ProductItem?> result = new List<BO.ProductItem?>();
                 
-                var resultItems = dalProducts.Select(product => Get(product?.Id ?? 0, cart));
+                //var resultItems = dalProducts.Select(product => Get(product?.Id ?? 0, cart));
                 // Use ToList() to convert the results to a list and assign it to the result variable
-                result = resultItems.ToList();
-                //-------
-                //foreach (DO.Product product in dalProducts)
-                //{
-                //    result.Add(Get(product.Id, cart));
-                //}-----
+                
+                foreach (DO.Product product in dalProducts)
+                {
+                    result.Add(Get(product.Id, cart));
+                }
                 if (select_ != null)
                     result.RemoveAll(x => !select_(x));
 

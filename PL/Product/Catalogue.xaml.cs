@@ -43,7 +43,7 @@ namespace PL.Product
             InitializeComponent();
             try
             {
-                ProductItems = new ObservableCollection<ProductItem?>(bl!.Product.GetItemList(cart));
+                ProductItems = bl!.Product.GetItemList(cart);
             }
             catch (Exception e)
             {
@@ -80,7 +80,7 @@ namespace PL.Product
             else
             {
                 ProductItems = new ObservableCollection<ProductItem?>(bl!.Product.GetItemList(cart,
-                   (BO.ProductItem productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex)));
+                   (productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex)));
             }
         }
 
@@ -91,8 +91,7 @@ namespace PL.Product
             try
             {
                 cart = bl!.Cart.Add(cart, productItem!.Id);
-                ProductItems = bl!.Product.GetItemList(cart,
-                   (BO.ProductItem productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex));
+                ProductItems = bl!.Product.GetItemList(cart,(productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex));
 
 
             }

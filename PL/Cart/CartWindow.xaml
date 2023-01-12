@@ -13,8 +13,7 @@
         <Grid Margin="0,20,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height = "60"/>
-                <RowDefinition Height = "*"/>
-                <RowDefinition Height = "*"/>
+                <RowDefinition Height = "320"/>
             </Grid.RowDefinitions>
             <Grid HorizontalAlignment="Center">
 
@@ -41,51 +40,47 @@
                 <Button x:Name="Clear" Content="Clear" Grid.Column="2" Background="red" Width="80" Height="40" FontSize="18" FontFamily="Tahoma" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Padding="0,0,0,0" Foreground="White"/>
                 <Button x:Name="Approve" Content="Approve" Grid.Column="3" Background="Green" Width="120" Height="40" FontSize="18" FontFamily="Tahoma" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Padding="0,0,0,0" Foreground="White"/>
             </Grid>
-            <Grid x:Name="CartItems" Grid.Row="1" HorizontalAlignment="Center" Width="746" >
-                <ItemsControl ItemsSource="{Binding OrderItems}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Vertical">
-                                <Rectangle Width="100" Height="100" Margin="5" >
-                                </Rectangle>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Id:" Margin="5,5,10,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Bold" Foreground="#FF0D3656"/>
-                                    <TextBlock Text="{Binding Path=Id}" Margin="5,5,5,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Normal" Foreground="#FF0D3656"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Product Id:" Margin="5,5,10,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Bold" Foreground="#FF0D3656"/>
-                                    <TextBlock Text="{Binding Path=ProductId}" Margin="5,5,5,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Normal" Foreground="#FF0D3656"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Product Name:" Margin="5,5,10,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Bold" Foreground="#FF0D3656"/>
-                                    <TextBlock Text="{Binding Path=ProductName}" Margin="5,5,5,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Normal" Foreground="#FF0D3656"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Price:" Margin="5,5,10,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Bold" Foreground="#FF0D3656"/>
-                                    <TextBlock Text="{Binding Path=Price}" Margin="5,5,5,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Normal" Foreground="#FF0D3656"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Amount in Cart:" Margin="5,5,10,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Bold" Foreground="#FF0D3656"/>
-                                    <TextBlock Text="{Binding Path=Amount}" Margin="5,5,5,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Normal" Foreground="#FF0D3656"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Total Price:" Margin="5,5,10,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Bold" Foreground="#FF0D3656"/>
-                                    <TextBlock Text="{Binding Path=TotalPrice}" Margin="5,5,5,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Normal" Foreground="#FF0D3656"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="AddAmount" Content="Add+" Background="Green" HorizontalAlignment="Center" FontFamily="Tahoma" Foreground="White" Margin="5,5,10,5"/>
-                                    <Button x:Name="SubAmount" Content="Sub-" Background="#fbbe16" HorizontalAlignment="Center" FontFamily="Tahoma" Foreground="White" Margin="5,5,5,5"/>
-                                </StackPanel>
-                                <Button x:Name="RemoveItem" Content="Remove Item" Background="Red" HorizontalAlignment="Center" Foreground="White" FontFamily="Tahoma" Margin="5,5,5,5"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+            <Grid x:Name="CartItems" Grid.Row="1" HorizontalAlignment="Center" Width="780" Panel.ZIndex="1" Margin="0,30,0,0" >
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding OrderItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Height="250" Width="240" BorderBrush="#FF0D3656" Grid.Row="1" BorderThickness="2" Margin="7,7,7,7" Padding="5,5,5,5" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Product Id:" Margin="5,5,10,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Bold" Foreground="#FF0D3656"/>
+                                            <TextBlock Text="{Binding Path=ProductId}" Margin="5,5,5,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Normal" Foreground="#FF0D3656"/>
+                                        </StackPanel>
+                                        <TextBlock Text="Product Name:" Margin="5,5,10,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Bold" Foreground="#FF0D3656"/>
+                                        <TextBlock Text="{Binding Path=ProductName}" Margin="5,5,5,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Normal" Foreground="#FF0D3656"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Price:" Margin="5,5,10,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Bold" Foreground="#FF0D3656"/>
+                                            <TextBlock Text="{Binding Path=Price}" Margin="5,5,5,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Normal" Foreground="#FF0D3656"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Amount in Cart:" Margin="5,5,10,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Bold" Foreground="#FF0D3656"/>
+                                            <TextBlock Text="{Binding Path=Amount}" Margin="5,5,5,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Normal" Foreground="#FF0D3656"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Total Price:" Margin="5,5,10,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Bold" Foreground="#FF0D3656"/>
+                                            <TextBlock Text="{Binding Path=TotalPrice}" Margin="5,5,5,5" HorizontalAlignment="Left" FontFamily="Tahoma" FontWeight="Normal" Foreground="#FF0D3656"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="AddAmount" Content="Add +" Background="Green" HorizontalAlignment="Center" FontFamily="Tahoma" Foreground="White" Margin="5,5,10,5" Padding="5,2,5,2" Height="25" Width="50"/>
+                                            <Button x:Name="SubAmount" Content="Sub -" Background="#fbbe16" HorizontalAlignment="Center" FontFamily="Tahoma" Foreground="White" Margin="5,5,5,5" Width="50" Height="25"/>
+                                        </StackPanel>
+                                        <Button x:Name="RemoveItem" Content="Remove Item" Background="Red" Foreground="White" FontFamily="Tahoma" Margin="5,5,5,5" Width="120" Height="25" HorizontalAlignment="Left"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </Grid>
         </Grid>
     </Grid>

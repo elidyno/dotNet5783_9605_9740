@@ -23,9 +23,11 @@ namespace BlImplementation
         public BO.Cart Add(BO.Cart cart, int productId)
         {
             DO.Product dataProduct = new DO.Product();
+            
             try
             {
-                dataProduct = dal?.Product.Get(x => x?.Id == productId) ?? throw new NullableException(); 
+                dataProduct = dal?.Product.Get(x => x?.Id == productId) ?? throw new NullableException();
+                
             }
             catch (Exception e)
             {

@@ -37,7 +37,7 @@ namespace PL.Cart
         public IEnumerable<BO.OrderItem?> OrderItems
         {
             get => (List<BO.OrderItem?>)GetValue(CartProperty);
-            set => SetValue(CartProperty, value);
+            set => SetValue(OrderItemsProperty, value);
         }
         //public  ObservableCollection<BO.OrderItem?> OrderItems;
         public static bool empthyCart;
@@ -49,7 +49,7 @@ namespace PL.Cart
             if (Cart.Items != null)
             {
                 empthyCart = false;
-                OrderItems = new ObservableCollection<BO.OrderItem?>();
+                OrderItems = Cart.Items.ToList();
             }
             else
                 empthyCart = true;
