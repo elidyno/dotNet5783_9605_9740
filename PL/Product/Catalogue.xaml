@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="Catalogue" Height="450" Width="800" WindowStartupLocation="CenterScreen" HorizontalAlignment="Center">
+        Title="Catalogue" Height="450" Width="800" WindowStartupLocation="CenterScreen" HorizontalAlignment="Left">
 
     <Grid>
         <Image x:Name="BeckgroundImage"/>
@@ -23,7 +23,7 @@
                     <ColumnDefinition Width="400"/>
                     <ColumnDefinition Width="173"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <Border BorderBrush="#FF0D3656" BorderThickness="0"  Margin="26,5,0,5" HorizontalAlignment="Left"
                 Width="150" Padding="0,0,0,0" Grid.Column="0">
                     <Label Content="Catalogue:" HorizontalAlignment="Left" Margin="-6,-1,0,-5" Foreground="#FF0D3656" Height="44" FontFamily="Tahoma" FontSize="18" FontWeight="Bold" Width="204" />
@@ -35,15 +35,15 @@
                         <ComboBox x:Name="CategoryComboBox" Width="164" Background="Green" Foreground="Green" SelectionChanged="CategorySelected" />
                     </StackPanel>
                 </Border>
-                <Button x:Name="MyCart" Content="My Cart" Grid.Column="2" Background="Orange" Width="140" Height="40" FontSize="18" FontFamily="Tahoma" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Padding="9,1,1,1" Foreground="#FF0D3656"/>
+                <Button x:Name="MyCart" Content="My Cart" Grid.Column="2" Background="#fbbe16" Width="140" Height="40" FontSize="18" FontFamily="Tahoma" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Padding="9,1,1,1" Foreground="#FF0D3656" Margin="33,10,0,0" VerticalAlignment="Top" Click="MyCart_Click"/>
             </Grid>
-            
-            
+
+
             <ListView x:Name="catalogueListView" Grid.Row="1" Visibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="catalogueListView_MouseDoubleClick" ItemsSource="{Binding ProductItems}" HorizontalAlignment="Center" Width="746" BorderBrush="#FF0D3656" Foreground="#FF0D3656" SelectionChanged="catalogueListView_SelectionChanged" Margin="0,20,0,0" FontFamily="Tahoma" Padding="0,0,0,0" FontWeight="Bold" >
                 <ListView.Background>
                     <SolidColorBrush Color="White" Opacity="0.5"/>
                 </ListView.Background>
-                
+
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>

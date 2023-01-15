@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
+using PL.Cart;
 using PL.Product;
 
 namespace PL.Product
@@ -35,7 +36,7 @@ namespace PL.Product
             set => SetValue(ProductItemProperty, value);
         }
         //public ObservableCollection<BO.ProductItem?> ProductItems { get; set; }
-        static BO.Cart cart  = new BO.Cart();
+        public BO.Cart cart  = new BO.Cart();
 
         public Catalogue()
         {
@@ -75,11 +76,11 @@ namespace PL.Product
         private void CategorySelected(object sender, SelectionChangedEventArgs e)
         {
             if (CategoryComboBox.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length) // the "All" option was selected
-                ProductItems = bl!.Product.GetItemList(cart);
+                ProductItems = new ObservableCollection<ProductItem?>(bl!.Product.GetItemList(cart));
             else
             {
-                ProductItems = bl!.Product.GetItemList(cart,
-                   (BO.ProductItem productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex));
+                ProductItems = new ObservableCollection<ProductItem?>(bl!.Product.GetItemList(cart,
+                   (productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex)));
             }
         }
 
@@ -90,7 +91,9 @@ namespace PL.Product
             try
             {
                 cart = bl!.Cart.Add(cart, productItem!.Id);
-                ProductItems = bl!.Product.GetItemList(cart);
+                ProductItems = bl!.Product.GetItemList(cart,(productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex));
+
+
             }
             catch (Exception  ex)
             {
@@ -105,6 +108,11 @@ namespace PL.Product
             BO.ProductItem? productItem = new BO.ProductItem();
             productItem = ProductItems.ToList().Find(x => x == catalogueListView.SelectedItem as BO.ProductItem);
             new ProductItemWindow(productItem).Show();
+        }
+
+        private void MyCart_Click(object sender, RoutedEventArgs e)
+        {
+            new CartWindow(cart).Show();
         }
     }
 }
