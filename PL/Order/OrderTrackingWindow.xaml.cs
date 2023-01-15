@@ -20,18 +20,26 @@ namespace PL.Order
     /// </summary>
     public partial class OrderTrackingWindow : Window
     {
+        //IBl instance variable used for accessing business logic methods
         BlApi.IBl? bl = BlApi.Factory.Get();
+        //OrderId for the tracking order
         public int OrderId;
+        //Property for the OrderTracking object
         public BO.OrderTracking orderTracking { get; set; }
+        //Constructor that initializes OrderTracking object and OrderId
         public OrderTrackingWindow(int orderId)
         {
             orderTracking = new BO.OrderTracking();
             orderTracking = bl!.Order.GetTracking(orderId);
             OrderId = orderId;
             InitializeComponent();
-            //TrackingData.Text = bl?.Order.GetTracking(orderId).ToString();
+            
         }
-
+        /// <summary>
+        /// Event handler for the "order_details" button click event
+        /// </summary>
+        /// <param name="sender">Object that raised the event</param>
+        /// <param name="e">Event arguments</param>
         private void order_details_Click(object sender, RoutedEventArgs e)
         {
             OrderWindow orderWindow = new(true, OrderId);

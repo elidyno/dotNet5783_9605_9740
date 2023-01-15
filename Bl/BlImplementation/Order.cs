@@ -124,6 +124,7 @@ internal class Order : IOrder
                     status = status_
                 };
             })
+            .OrderBy(x => x.Id)
             .ToList();
 
         return ordersForList;

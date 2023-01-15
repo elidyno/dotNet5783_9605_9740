@@ -240,7 +240,6 @@ namespace BlImplementation
             }
             catch (Exception e)
             {
-
                 throw new DataRequestFailedException(e.Message);
             }
         }

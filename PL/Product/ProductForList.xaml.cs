@@ -22,24 +22,28 @@ namespace PL.Product
     /// </summary>
     public partial class ProductForList : Window
     {
+        //IBl instance variable used for accessing business logic methods
         BlApi.IBl? bl = BlApi.Factory.Get();
 
+        //Dependency property for holding the list of products
         public static readonly DependencyProperty ProductListProperty = DependencyProperty.Register(
         "ProductList", typeof(IEnumerable<BO.ProductForList?>), typeof(ProductForList),
         new PropertyMetadata(default(IEnumerable<BO.ProductForList?>)));
-
-        public  IEnumerable<BO.ProductForList?> ProductList
+        //Property for getting and setting the list of products
+        public IEnumerable<BO.ProductForList?> ProductList
         {
             get => (List<BO.ProductForList?>)GetValue(ProductListProperty);
             set => SetValue(ProductListProperty, value);
         }
 
+        /// <summary>
+        /// Default constructor for ProductForList class
+        /// </summary>
         public ProductForList()
-        {
-
+        {         
             InitializeComponent();
             ProductList = bl!.Product.GetList();
-            //categories = Enum.GetValues(typeof(BO.Category));
+            
             //The comboBox control accepts the category values
             BO.Category category = 0;
             for (int i = 0; i < Enum.GetValues(typeof(BO.Category)).Length; i++)
@@ -75,14 +79,7 @@ namespace PL.Product
         {
             new Product(false,true).ShowDialog();
             ProductList = bl!.Product.GetList();
-            //if (CategorySelector.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length) // the "All" option was selected
-            //    ProductList = bl!.Product.GetList();
-            //else
-            //{
-            //    ProductList = bl!.Product.GetList(
-            //       (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedIndex));
-            //}
-            ///ProductListview.ItemsSource = bl?.Product.GetList();
+            
         }
         /// <summary>
         /// Handling the event of clicking on a product from the list  
@@ -95,13 +92,7 @@ namespace PL.Product
             BO.ProductForList p = (BO.ProductForList)ProductListview.SelectedItem;
             new Product(false, false, p.Id).ShowDialog();
             ProductList = bl!.Product.GetList();
-            //if (CategorySelector.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length) // the "All" option was selected
-            //    ProductList = bl!.Product.GetList();
-            //else
-            //{
-            //    ProductList = bl!.Product.GetList(
-            //       (BO.ProductForList product) => product.Category == (BO.Category)(CategorySelector.SelectedIndex));
-            //}
+           
         }
 
     }

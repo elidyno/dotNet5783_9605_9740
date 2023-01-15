@@ -28,9 +28,7 @@ namespace PL
 
         public MainWindow()
         {
-            
             InitializeComponent();
-
         }
 
         /// <summary>

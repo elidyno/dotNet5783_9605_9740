@@ -23,24 +23,43 @@ namespace PL.Product
     /// </summary>
     public partial class Product : Window
     {
+        //IBl instance variable used for accessing business logic methods
         BlApi.IBl? bl = BlApi.Factory.Get();
+
+        //Property for checking if the window is in display mode
         public bool IsDisplayMode { get; set; }
+
+        //Property for checking if the window is for adding a new product
         public bool IsAddWindow { get; set; }
+
+        //Property for checking if the window is in edit mode
         public bool IsEditMode { get; set; }
+
+        //Property for setting the button text based on the window type
         public string ButtonContent { get; set; }
+
+        //Property for holding the available categories for the product
         public Array categories { get; set; }
 
+        //Dependency property for the Product object
         public static readonly DependencyProperty productProperty = DependencyProperty.Register(
         "product", typeof(BO.Product), typeof(Product), new PropertyMetadata(default(BO.Product)));
-
+        //Property for getting and setting the Product object
         public BO.Product product
         {
             get => (BO.Product)GetValue(productProperty);
             set => SetValue(productProperty, value);
         }
+
         /// <summary>
         /// Constructor for creating a window to add a product
         /// </summary>
+        /// <param name="isDisplayMode">Boolean value indicating if the window is in display mode 
+        /// or edit mode </param>
+        /// <param name="isAddWindow">Boolean value indicating if the window is for adding 
+        /// a new product</param>
+        /// <param name="productId">Id of the product to edit 
+        /// (if window is not for adding a new product)</param>
         public Product(bool isDisplayMode, bool isAddWindow, int productId = 0)
         {
             IsDisplayMode = isDisplayMode;

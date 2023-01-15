@@ -13,13 +13,16 @@ namespace BO
         public List<(DateTime?, string?)>? TrackingList { get; set; }
         public override string ToString()
         {
-            string str = "";
-            foreach(var t in TrackingList)
-                str += t.ToString() + "\n" + "      ";
+           
+            var query = from t in TrackingList
+                        select t.ToString();
+
+            var concatenatedString = string.Join("\n      ", query);
+
 
             return $"      Order Id: {ID}\n" +
             $"      status: {status}\n" +
-            $"      {str}";
+            $"      {concatenatedString}";
         }
     }
 }
