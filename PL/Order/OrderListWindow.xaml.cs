@@ -46,8 +46,7 @@ namespace PL.Order
         }
         //Displays the order list
         private void Orders_Click(object sender, RoutedEventArgs e)
-        {
-            
+        {          
             orderListView.Visibility = Visibility.Visible;
         }
         //Return to main window

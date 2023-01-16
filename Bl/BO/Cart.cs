@@ -15,15 +15,17 @@ namespace BO
         public double? TotalPrice { get; set; }
         public override string ToString()
         {
-            string tmp = "";
-            foreach (var item in Items)
-                tmp += item.ToString();
+            var query = from item in Items
+                        select item.ToString();
+
+            var concatenatedString = string.Join("", query);
+
             //string toString;
 
             return $"      Name: {CustomerName}\n" +
             $"      Email: {CustomerEmail}\n" +
             $"      Adress: {CustomerAdress}\n" +
-            $"      Items: {tmp}\n" +
+            $"      Items: {concatenatedString}\n" +
             $"      TotalPrice: {TotalPrice}";
 
         }

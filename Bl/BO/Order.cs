@@ -17,14 +17,11 @@ namespace BO
         public Status? status { get; set; }
         public override string ToString()
         {
-            string str = "";
-            foreach (var item in Items)
-            {
-                if (item.Id != Items[Items.Count -1].Id)
-                    str += item.ToString() + "\n";
-                else
-                    str += item.ToString();
-            }
+            var query = from item in Items
+                        select item.ToString();
+
+            var concatenatedString = string.Join("\n", query);
+         
                 
             return $"      Order Id: {Id}\n" +
             $"      Name: {CustomerName}\n" +
@@ -34,7 +31,7 @@ namespace BO
             $"      Ship Date: {ShipDate}\n" +
             $"      Delivery Date: {DeliveryDate}\n" +
             $"      Status: {status}\n" +
-            $"      Items: {str}\n" +
+            $"      Items: {concatenatedString}\n" +
             $"      Total Price: {TotalPrice}\n";
         }
     }

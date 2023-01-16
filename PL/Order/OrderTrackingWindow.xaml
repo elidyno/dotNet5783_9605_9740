@@ -11,11 +11,11 @@
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="110" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
                
         </Grid.RowDefinitions>
-        <Label Content="Order Tracking" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Center" FontSize="20"/>
+        <Label Content="Order Tracking" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Bottom" FontSize="20"/>
         <TextBlock x:Name="TrackingData" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding orderTracking}" VerticalAlignment="Center"
                    FontSize="15"/>
         <Button Content="order details" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" 
