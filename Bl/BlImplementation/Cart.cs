@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DalApi;
 using DO;
 using System.ComponentModel.DataAnnotations;
 
@@ -90,8 +91,9 @@ namespace BlImplementation
         /// <exception cref="InvalidEmailFormatException"></exception>
         /// <exception cref="DataRequestFailedException"></exception>
         /// <exception cref="AmountAndPriceException"></exception>
-        public void Approve(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
+        public int Approve(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
         {
+            int orderId;
             //check validation of Customer data parameters
             if (customerName == null)
                 throw new InvalidValueException("Name of customer can't be empthy");
@@ -175,7 +177,7 @@ namespace BlImplementation
             try
             {
                 //try to add order to data sirce in Dal
-                int orderId = dal?.Order.Add(order) ?? throw new NullableException(); 
+                orderId = dal?.Order.Add(order) ?? throw new NullableException(); 
                 //create orderItem in Dal and update amount of product
                 //------------
                 //DO.OrderItem orderItem = new();
@@ -217,6 +219,8 @@ namespace BlImplementation
 
                 throw new DataRequestFailedException(e.Message);
             }
+
+            return orderId;
         }
 
         /// <summary>
@@ -268,5 +272,65 @@ namespace BlImplementation
             }
             return cart;
         }
+
+        public BO.Cart Sub(BO.Cart cart, int productId)
+        {
+            int itemRemovedId = -1;
+            if (cart == null || cart.Items == null)
+                throw new NullableException();
+            
+            foreach (var orderItem in cart.Items)
+            {
+                if(orderItem.ProductId == productId)
+                {
+                    if (orderItem.Amount < 1)
+                        throw new AmountAndPriceException("Can't sub an item with amount 0");
+                    orderItem.Amount--;
+                    orderItem.TotalPrice -= orderItem.Price;
+                    cart.TotalPrice -= orderItem.Price;
+                    if(orderItem.Amount == 0)
+                        itemRemovedId = orderItem.ProductId;
+                }
+            }
+            if (itemRemovedId >= 0)
+                cart.Items.RemoveAll(x => x?.ProductId == itemRemovedId);
+
+            return cart;
+        }
+
+        public BO.Cart Remove(BO.Cart cart, int productId)
+        {
+            int removedId = -1;
+            if (cart == null || cart.Items == null)
+                throw new NullableException();
+
+            foreach (var orderItem in cart.Items)
+            {
+                if (orderItem.ProductId == productId)
+                {
+                    cart.TotalPrice -= orderItem.TotalPrice;
+                    removedId = orderItem.ProductId;
+                }
+            }
+
+            if (removedId >= 0)
+                cart.Items.RemoveAll(x => x?.ProductId == removedId);
+
+            return cart;
+        }
+
+        public BO.Cart RemoveAll(BO.Cart cart)
+        {
+            if (cart == null || cart.Items == null)
+                throw new NullableException();
+
+            cart.Items.Clear();
+            cart.TotalPrice = 0;
+
+            return cart;
+        }
+
     }
+
+
 }
