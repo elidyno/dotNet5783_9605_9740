@@ -22,7 +22,7 @@ namespace PL.Cart
         BlApi.IBl? bl = BlApi.Factory.Get();
 
         public static readonly DependencyProperty CartProperty = DependencyProperty.Register(
-        "Cart", typeof(BO.Cart), typeof(CartWindow), new PropertyMetadata(default(BO.Cart)));
+        "Cart", typeof(BO.Cart), typeof(CartApprove), new PropertyMetadata(default(BO.Cart)));
 
         public BO.Cart Cart
         {
@@ -43,9 +43,11 @@ namespace PL.Cart
             string name = Name.Text;
             string email = Email.Text;
             string adress = Adress.Text;
+           
             try
             {
-                orderId = bl?.Cart.Approve(Cart, name, email, adress);
+                Cart = bl!.Cart.SetCustomerData(Cart, name, email, adress);
+                orderId = bl?.Cart.Approve(Cart);
             }
             catch (Exception ex)
             {
@@ -55,6 +57,7 @@ namespace PL.Cart
             }
 
             MessageBox.Show("The order hs been approval succesfuly\n your Order Id for Tracking: " + orderId);
+            this.Close();
 
         }
     }

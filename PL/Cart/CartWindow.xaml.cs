@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using BO;
 using DO;
 using PL.Cart;
+using PL.Product;
 
 namespace PL.Cart
 {
@@ -163,6 +164,13 @@ namespace PL.Cart
                 MessageBox.Show("Unable to create an order: Cart is empthy");
             new CartApprove(Cart).ShowDialog();
             this.Close();
+            
+        }
+
+        private void BackWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            new Catalogue(Cart).Show();
         }
     }
 }

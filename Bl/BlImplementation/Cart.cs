@@ -91,25 +91,12 @@ namespace BlImplementation
         /// <exception cref="InvalidEmailFormatException"></exception>
         /// <exception cref="DataRequestFailedException"></exception>
         /// <exception cref="AmountAndPriceException"></exception>
-        public int Approve(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
+        public int Approve(BO.Cart cart)
         {
+            if (cart.CustomerName == null || cart.CustomerEmail == null || cart.CustomerAdress == null)
+                throw new NullableException();
             int orderId;
-            //check validation of Customer data parameters
-            if (customerName == null)
-                throw new InvalidValueException("Name of customer can't be empthy");
-            if (customerAdress == null)
-                throw new InvalidValueException("adress of customer can't be empthy");
-            if (customerEmail == null)
-                throw new InvalidValueException("Email of customer can't be empthy");
-            if (!new EmailAddressAttribute().IsValid(customerEmail))
-                throw new InvalidEmailFormatException();
-            //check validation of cart parameter
-            if (cart.CustomerEmail != customerEmail)
-                throw new InvalidValueException("Email adress in cart not equal to EmailAdresss parameter");
-            if (cart.CustomerAdress != customerAdress)
-                throw new InvalidValueException("Adress in cart not equal to Adresss parameter");
-            if (cart.CustomerName != customerName)
-                throw new InvalidValueException("Customer name in cart not equal to Customer name parameter");
+           
             double totalPrice_ = 0;
             DO.Product product_ = new();
 
@@ -119,7 +106,7 @@ namespace BlImplementation
                 // Use the Select() method to apply the same logic to each item in the cart's items collection
                 var products = cart.Items.Select(item =>
                 {
-                    var product = dal.Product.Get(x => x?.Id == item?.Id);
+                    var product = dal.Product.Get(x => x?.Id == item?.ProductId);
                     if (item?.Amount <= 0)
                         throw new InvalidValueException(item.ProductName + " must be greater than zero");
                     if (product.InStock < item?.Amount)
@@ -132,12 +119,13 @@ namespace BlImplementation
                 });
 
                 //use method Aggregate for sum all price 
-                totalPrice_ = products.Aggregate(0.0, (acc, x) => acc + x.item.TotalPrice);
+                //totalPrice_ = products.Aggregate(0.0, (acc, x) => acc + x.item.TotalPrice);
+                totalPrice_ = products.Sum(x => x.item.TotalPrice);
 
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new DataRequestFailedException($"ERROR: ", e);
+                throw new DataRequestFailedException($"ERROR: ", ex);
             }
             //-----------------
             //foreach (var item in cart.Items)
@@ -167,9 +155,9 @@ namespace BlImplementation
             //creat a new  dal order
             DO.Order order = new()
             {
-                CustomerName = customerName,
-                CustomerAdress = customerAdress,
-                CustomerEmail = customerEmail,
+                CustomerName = cart.CustomerName,
+                CustomerAdress = cart.CustomerAdress,
+                CustomerEmail = cart.CustomerEmail,
                 OrderDate = DateTime.Now,
                 ShipDate = null,
                 DeliveryDate = null
@@ -180,39 +168,39 @@ namespace BlImplementation
                 orderId = dal?.Order.Add(order) ?? throw new NullableException(); 
                 //create orderItem in Dal and update amount of product
                 //------------
-                //DO.OrderItem orderItem = new();
-                //foreach (var item in cart.Items)
-                //{
-                //    //create an orderItem for dall and add it
-                //    orderItem.OrderId = orderId;
-                //    orderItem.ProductId = item!.ProductId;
-                //    orderItem.Amount = item.Amount;
-                //    orderItem.Price = item.Price;
-                //    int orderItemId = dal.OrderItem.Add(orderItem);
-                //    //update amount of product in Dak
-                //    product_ = dal.Product.Get(x => x?.Id == item.ProductId);
-                //    product_.InStock -= item.Amount;
-                //    dal.Product.Update(product_);
-                //}
-                //----------------
-                var orderItems = cart.Items.Select(item =>
+                DO.OrderItem orderItem = new();
+                foreach (var item in cart.Items)
                 {
-                    //create an orderItem for dal and add it
-                    DO.OrderItem orderItem = new()
-                    {
-                        OrderId = orderId,
-                        ProductId = item!.ProductId,
-                        Amount = item.Amount,
-                        Price = item.Price
-                    };
+                    //create an orderItem for dall and add it
+                    orderItem.OrderId = orderId;
+                    orderItem.ProductId = item!.ProductId;
+                    orderItem.Amount = item.Amount;
+                    orderItem.Price = item.Price;
                     int orderItemId = dal.OrderItem.Add(orderItem);
-                    //update amount of product in DB
+                    //update amount of product in Dak
                     product_ = dal.Product.Get(x => x?.Id == item.ProductId);
                     product_.InStock -= item.Amount;
                     dal.Product.Update(product_);
+                }
+                ////----------------
+                //var orderItems = cart.Items.Select(item =>
+                //{
+                //    //create an orderItem for dal and add it
+                //    DO.OrderItem orderItem = new()
+                //    {
+                //        OrderId = orderId,
+                //        ProductId = item!.ProductId,
+                //        Amount = item.Amount,
+                //        Price = item.Price
+                //    };
+                //    orderItem.Id = dal.OrderItem.Add(orderItem);
+                //    //update amount of product in DB
+                //    product_ = dal.Product.Get(x => x?.Id == item.ProductId);
+                //    product_.InStock -= item.Amount;
+                //    dal.Product.Update(product_);
 
-                    return orderItem;
-                });
+                //    return orderItem;
+                //});
             }
             catch (Exception e)
             {
@@ -326,6 +314,34 @@ namespace BlImplementation
 
             cart.Items.Clear();
             cart.TotalPrice = 0;
+
+            return cart;
+        }
+
+        /// <summary>
+        /// set customer detailse of a Cart 
+        /// </summary>
+        /// <param name="cart">BO.Cart</param>
+        /// <param name="customerName">string</param>
+        /// <param name="customerEmail">string</param>
+        /// <param name="customerAdress">string</param>
+        /// <returns>BO.cart</returns>
+        /// <exception cref="InvalidValueException"></exception>
+        /// <exception cref="InvalidEmailFormatException"></exception>
+        public BO.Cart SetCustomerData(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
+        {
+            //check validation of Customer data parameters
+            if (customerName == null)
+                throw new InvalidValueException("Name of customer can't be empthy");
+            if (customerAdress == null)
+                throw new InvalidValueException("adress of customer can't be empthy");
+            if (customerEmail == null)
+                throw new InvalidValueException("Email of customer can't be empthy");
+            if (!new EmailAddressAttribute().IsValid(customerEmail))
+                throw new InvalidEmailFormatException();
+            cart.CustomerName = customerName;
+            cart.CustomerEmail = customerEmail;
+            cart.CustomerAdress = customerAdress;
 
             return cart;
         }

@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
-        Title="ProductItemWindow" Height="300" Width="400">
+        Title="ProductItemWindow" Height="400" Width="400">
 
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="200"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -19,14 +19,14 @@
         <Image Source="beckgroundImage.jpg" Stretch="Fill" Panel.ZIndex="-1" Grid.RowSpan="3"/>
 
         <Label Content="Customer Details:" Grid.Row="0" VerticalAlignment="Center" FontSize="18"
-               Background="#FF0D3656" HorizontalContentAlignment="Center" Padding="5,4,5,4" Foreground="White" Margin="50,5,50,0" FontFamily="Tahoma"/>
+               Background="#FF0D3656" HorizontalContentAlignment="Center" Padding="5,4,5,4" Foreground="White" Margin="50,5,50,0" FontFamily="Tahoma" Height="40" VerticalContentAlignment="Center"/>
 
-        <Grid Name="UpGrid" Height="150" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Grid Name="UpGrid" Height="180" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions >
 
-            <Grid Name="InnerGrid" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Stretch" Height="auto" Margin="0,20,0,0" Background="White">
+            <Grid Name="InnerGrid" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="180" Margin="0,0,0,0" Background="White" Width="360">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="140"/>
@@ -42,11 +42,11 @@
 
                 <Grid.Resources>
                     <Style TargetType="TextBlock">
-                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="FontSize" Value="16"/>
                         <Setter Property="FontFamily" Value="Tahoma"/>
                         <Setter Property="Foreground" Value="#FF0D3656"/>
                         <Setter Property="HorizontalAlignment" Value="Left"/>
-                        <Setter Property="VerticalAlignment" Value="Top"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
                         <Setter Property="Background" Value="White"/>
                        
 
@@ -57,7 +57,8 @@
                         <Setter Property="FontFamily" Value="Tahoma"/>
                         <Setter Property="Foreground" Value="#FF0D3656"/>
                         <Setter Property="HorizontalAlignment" Value="Left"/>
-                        <Setter Property="VerticalAlignment" Value="Top"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="16,5,5,5"/>
                     </Style>
                 </Grid.Resources>
 
@@ -65,9 +66,9 @@
                 <Label Content="Email adress:" Grid.Row="1" Grid.Column="0"/>
                 <Label Content="Adress:" Grid.Row="2" Grid.Column="0"/>
 
-                <TextBox x:Name="Name" Grid.Row="0" Grid.Column="1"/>
-                <TextBox x:Name="Email" Grid.Row="1" Grid.Column="1"/>
-                <TextBox x:Name="Adress" Grid.Row="2" Grid.Column="1"/>
+                <TextBox x:Name="Name" Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="14" FontFamily="Tahoma"/>
+                <TextBox x:Name="Email" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="14" FontFamily="Tahoma"/>
+                <TextBox x:Name="Adress" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="14" FontFamily="Tahoma"/>
 
             </Grid>
 

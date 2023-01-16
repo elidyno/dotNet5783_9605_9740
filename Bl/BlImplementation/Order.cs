@@ -75,13 +75,13 @@ internal class Order : IOrder
             OrderDate = dataOrder.OrderDate,
             ShipDate = dataOrder.ShipDate,
             DeliveryDate = dataOrder.DeliveryDate,
-            //Items = new List<BO.OrderItem>(orderItems);
+            Items = new List<BO.OrderItem>(orderItems),
             TotalPrice = totalOrderPrice,
             status = status_
         };
 
-        boOrder.Items = new List<BO.OrderItem?>();
-        boOrder.Items = orderItems;
+        //boOrder.Items = new List<BO.OrderItem?>();
+        //boOrder.Items = orderItems;
         //foreach (BO.OrderItem item in orderItems)
         //    boOrder.Items.Add(item);
         return boOrder;
