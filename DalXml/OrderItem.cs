@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +10,48 @@ namespace Dal
 {
     internal class OrderItem : IOrderItem
     {
+        const string s_orderItems = "OrderItems";
         public int Add(DO.OrderItem item)
         {
-            throw new NotImplementedException();
+            item.Id = 0;//DataSource.Config.OrderRunningId;
+            List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItems);
+
+            if (orderItems.FirstOrDefault(x => x?.Id == item.Id) != null)
+                throw new AlreadyExistsException();
+
+            orderItems.Add(item);
+            XMLTools.SaveListToXMLSerializer(orderItems, s_orderItems);
+
+            return item.Id;
         }
 
-        public void Delete(int item)
+        public void Delete(int orderItemId)
         {
-            throw new NotImplementedException();
+            List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItems);
+
+            if (orderItems.RemoveAll(x => x?.Id == orderItemId) == 0)
+                throw new NotFoundException();
+
+            XMLTools.SaveListToXMLSerializer(orderItems, s_orderItems);
         }
 
         public DO.OrderItem Get(Func<DO.OrderItem?, bool>? select_)
         {
-            throw new NotImplementedException();
+            List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItems);
+            return orderItems.Find(x => select_!(x)) ?? throw new NullException();
+
         }
 
         public IEnumerable<DO.OrderItem?> GetList(Func<DO.OrderItem?, bool>? select_ = null)
         {
-            throw new NotImplementedException();
+            List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItems);
+            return select_ == null ? orderItems : orderItems.FindAll(x => select_(x));
         }
 
         public void Update(DO.OrderItem item)
         {
-            throw new NotImplementedException();
+            Delete(item.Id);
+            Add(item);
         }
     }
 }

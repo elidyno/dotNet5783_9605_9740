@@ -92,7 +92,7 @@ internal class DalOrderItem : IOrderItem
 
     public OrderItem Get(Func<OrderItem?, bool>? select_)
     {
-        return DataSource._orderItemList.Find(x => select_(x)) ??
+        return DataSource._orderItemList.Find(x => select_!(x)) ??
              throw new NullException();
     }
 }
