@@ -284,7 +284,7 @@ class Program
                         Console.WriteLine(@"
         Enter a created Order  time");
 
-                        orderCreate = Convert.ToDateTime(Console.ReadLine());
+                        //orderCreate = Convert.ToDateTime(Console.ReadLine());
                         success = DateTime.TryParse(Console.ReadLine(), out orderCreate);
                         if (!success)
                             throw new DalTest.InvalidInputFormatException("please entry a DateTime format");

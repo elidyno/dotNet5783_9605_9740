@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +10,51 @@ namespace Dal
 {
     internal class Order : IOrder
     {
-        public int Add(DO.Order item)
+        const string s_orders = "orders";
+        public int Add(DO.Order order)
         {
-            throw new NotImplementedException();
+            order.Id = 0;//DataSource.Config.OrderRunningId;
+            List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
+
+            if (orders.FirstOrDefault(O => O?.Id == order.Id) != null)
+                throw new AlreadyExistsException();
+            
+            orders.Add(order);
+            XMLTools.SaveListToXMLSerializer(orders, s_orders);
+
+            return order.Id;
         }
 
-        public void Delete(int item)
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
+            List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
+
+            if (orders.RemoveAll(O => O?.Id == id) == 0)
+                throw new NotFoundException(); 
+
+            XMLTools.SaveListToXMLSerializer(orders, s_orders);
         }
 
         public DO.Order Get(Func<DO.Order?, bool>? select_)
         {
-            throw new NotImplementedException();
+            List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
+
+            return orders.Find(x => select_!(x)) ??
+                throw new NotFoundException("The requested order does not exist");
+           
         }
 
         public IEnumerable<DO.Order?> GetList(Func<DO.Order?, bool>? select_ = null)
         {
-            throw new NotImplementedException();
+            List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
+            return select_ == null ? orders : orders.FindAll(x => select_(x));
+            
         }
 
-        public void Update(DO.Order item)
+        public void Update(DO.Order order)
         {
-            throw new NotImplementedException();
+            Delete(order.Id);
+            Add(order);
         }
     }
 }
