@@ -40,7 +40,7 @@ namespace PL.Product
         /// Default constructor for ProductForList class
         /// </summary>
         public ProductForList()
-        {         
+        {
             InitializeComponent();
             ProductList = bl!.Product.GetList();
             
