@@ -36,14 +36,16 @@ namespace PL.Product
             set => SetValue(ProductItemProperty, value);
         }
         //public ObservableCollection<BO.ProductItem?> ProductItems { get; set; }
-        public BO.Cart cart  = new BO.Cart();
+        public BO.Cart Cart  = new BO.Cart();
 
-        public Catalogue()
+        public Catalogue(BO.Cart? cart_ = null)
         {
+            if(cart_ != null)
+                Cart = cart_;
             InitializeComponent();
             try
             {
-                ProductItems = bl!.Product.GetItemList(cart);
+                ProductItems = bl!.Product.GetItemList(Cart);
             }
             catch (Exception e)
             {
@@ -58,6 +60,8 @@ namespace PL.Product
                 CategoryComboBox.Items.Add(category++);
             }
             CategoryComboBox.Items.Add("All");
+            CategoryComboBox.SelectedIndex = Enum.GetValues(typeof(BO.Category)).Length; // the "All" option was selected
+
 
         }
 
@@ -76,11 +80,11 @@ namespace PL.Product
         private void CategorySelected(object sender, SelectionChangedEventArgs e)
         {
             if (CategoryComboBox.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length) // the "All" option was selected
-                ProductItems = new ObservableCollection<ProductItem?>(bl!.Product.GetItemList(cart));
+                ProductItems = bl!.Product.GetItemList(Cart);
             else
             {
-                ProductItems = new ObservableCollection<ProductItem?>(bl!.Product.GetItemList(cart,
-                   (productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex)));
+                ProductItems = bl!.Product.GetItemList(Cart,
+                   (productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex));
             }
         }
 
@@ -90,9 +94,14 @@ namespace PL.Product
             productItem = catalogueListView.SelectedItem as BO.ProductItem;
             try
             {
-                cart = bl!.Cart.Add(cart, productItem!.Id);
-                ProductItems = bl!.Product.GetItemList(cart,(productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex));
-
+                Cart = bl!.Cart.Add(Cart, productItem!.Id);
+                if (CategoryComboBox.SelectedIndex == Enum.GetValues(typeof(BO.Category)).Length) // the "All" option was selected
+                    ProductItems = bl!.Product.GetItemList(Cart);
+                else
+                {
+                    ProductItems = bl!.Product.GetItemList(Cart,
+                       (productItem) => productItem.Category == (BO.Category)(CategoryComboBox.SelectedIndex));
+                }
 
             }
             catch (Exception  ex)
@@ -112,7 +121,9 @@ namespace PL.Product
 
         private void MyCart_Click(object sender, RoutedEventArgs e)
         {
-            new CartWindow(cart).Show();
+            new CartWindow(Cart).ShowDialog();
+            this.Close();
+
         }
     }
 }

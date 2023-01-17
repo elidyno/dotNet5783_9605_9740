@@ -34,13 +34,20 @@ namespace PL.Order
         public bool IsDisplayMode { get; set; }
 
         //List for the order products
-        public ObservableCollection<BO.OrderItem?>? items { get; set; }
+        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register(
+        "Items", typeof(IEnumerable<BO.OrderItem?>), typeof(OrderWindow), new PropertyMetadata(default(IEnumerable<BO.OrderItem?>)));
+        //Dependency Property "Order" for holding order data
+        public IEnumerable<BO.OrderItem?> Items
+        {
+            get => (IEnumerable<BO.OrderItem?>)GetValue(ItemsProperty);
+            set => SetValue(ItemsProperty, value);
+        }
         public OrderWindow(bool isDisplayMode, int orderId)
         {           
             Order = new BO.Order();
             Order = bl!.Order.Get(orderId);
             IsDisplayMode = isDisplayMode;
-            items = new ObservableCollection<BO.OrderItem?>(Order.Items);
+            Items = Order.Items!.ToList();
             InitializeComponent();  
            
         }
