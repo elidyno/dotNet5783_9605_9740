@@ -14,9 +14,10 @@ namespace DataSurceInitialize
     /// 2. You initialize them with the add method and use additional data
     /// 3. Links between all the DalProduct... and the entities created in it
     /// </summary>
-    internal class Initialize
+    public class Initialize
     {
-       
+        const string s_orders = "orders";
+
         #region Data surce arrays
         internal static List<Product?> _productList = new List<Product?>();
         internal static List<Order?> _orderList = new List<Order?>();
@@ -25,9 +26,10 @@ namespace DataSurceInitialize
         #region constractor
         
 
-        static Initialize()
+        Initialize()
         {
-            DataSource.addFirstProducts();
+            _orderList = InitializeOrders.GetInitializeOrders;
+            XMLTools.SaveListToXMLSerializer(_orderList, s_orders);
             initializeOrders();
             DataSource.addFirstItemOrders();
         }
