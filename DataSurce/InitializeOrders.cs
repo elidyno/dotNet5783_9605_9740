@@ -2,31 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using static Dal.Initialize;
+using Dal;
 
-namespace Dal
+
+namespace DataSurceInitialize
 {
     internal class InitializeOrders
     {
-        const string s_orders = "orders";
         internal static readonly Random rand = new Random(DateTime.Now.Millisecond);
-        internal static List<DO.Order?> products = new List<DO.Order?>();
-        public static IEnumerable<DO.Order?> GetInitializeOrders = initializeOrders();
+        internal static List<DO.Order?> orders = new List<DO.Order?>();
+        public static List<DO.Order?> GetInitializeOrders = initializeOrders();
+        public static RunninId runninId = new RunninId();
 
-        private static IEnumerable<DO.Order> initializeOrders()
+        private static List<DO.Order?> initializeOrders()
         {
             int _rand = rand.Next(20, 30);
             for (int i = 0; i < _rand; i++)
             {
-                
-                int tmpId = Config.OrderRunningId;
+
+                int tmpId = (int)runninId.OrderId;
                 int firstNameIndex = rand.Next(0, 10);
                 int lastNameIndex = rand.Next(0, 10);
 
-                string tmpName = CustomersData.firstNames[firstNameIndex] + " " + CustomersData.lastNames[lastNameIndex];
-                string tmpEmail = CustomersData.firstNames[firstNameIndex] + CustomersData.lastNames[lastNameIndex] + "@gmail.com";
-                string tmpAdress = CustomersData.Adress[lastNameIndex];
+                string tmpName = Initialize.CustomersData.firstNames[firstNameIndex] + " " + Initialize.CustomersData.lastNames[lastNameIndex];
+                string tmpEmail = Initialize.CustomersData.firstNames[firstNameIndex] + Initialize.CustomersData.lastNames[lastNameIndex] + "@gmail.com";
+                string tmpAdress = Initialize.CustomersData.Adress[lastNameIndex];
 
                 DateTime? tmpOrderDate = null;
                 DateTime? tmpShipDate = null;
@@ -50,7 +52,7 @@ namespace Dal
                 else
                     tmpOrderDate = DateTime.Now.AddDays(-((rand.NextDouble() + 0.1) * 5));
 
-                Order newOrder = new Order()
+                DO.Order newOrder = new DO.Order()
                 {
                     Id = tmpId,
                     CustomerName = tmpName,
@@ -60,8 +62,10 @@ namespace Dal
                     ShipDate = tmpShipDate,
                     DeliveryDate = tmpDelivertDate
                 };
-                _orderList.Add(newOrder);
+                orders.Add(newOrder);
             }
+
+            return orders;
 
         }
     }

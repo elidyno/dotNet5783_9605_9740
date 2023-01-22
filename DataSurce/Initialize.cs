@@ -4,18 +4,20 @@ using Microsoft.VisualBasic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Linq;
+using Dal;
 
 
-namespace Dal
+namespace DataSurceInitialize
 {
     /// <summary>
     /// 1. A class that creates objects of the entity type (in the DalFasade folder) in Data source arrays
     /// 2. You initialize them with the add method and use additional data
     /// 3. Links between all the DalProduct... and the entities created in it
     /// </summary>
-    internal static class Initialize
+    public class Initialize
     {
-       
+        const string s_orders = "orders";
+
         #region Data surce arrays
         internal static List<Product?> _productList = new List<Product?>();
         internal static List<Order?> _orderList = new List<Order?>();
@@ -24,9 +26,10 @@ namespace Dal
         #region constractor
         
 
-        static Initialize()
+        Initialize()
         {
-            DataSource.addFirstProducts();
+            _orderList = InitializeOrders.GetInitializeOrders;
+            XMLTools.SaveListToXMLSerializer(_orderList, s_orders);
             initializeOrders();
             DataSource.addFirstItemOrders();
         }
