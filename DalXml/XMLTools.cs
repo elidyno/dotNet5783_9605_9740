@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace Dal
 {
-    static class XMLTools
+    public static class XMLTools
     {
         
         const string s_dir = @"..\xml\";
