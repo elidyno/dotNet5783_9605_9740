@@ -1,18 +1,20 @@
 ﻿using Dal;
+using DataSurceInitialize;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Dal
 {
     internal class InitializeProducts
     {
-        const string s_products = "products";
         internal static readonly Random rand = new Random(DateTime.Now.Millisecond);
         internal static List<DO.Product?> products = new List<DO.Product?>();
-        internal static void initializeProducts()
+        public static List<DO.Product?> GetInitializeProducts = initializeProducts();
+        internal static List<DO.Product?> initializeProducts()
         {
             int _rand = rand.Next(10, 20);
             for (int i = 0; i < _rand; i++)
@@ -41,10 +43,11 @@ namespace Dal
                 };
 
                 products.Add(newProduct);
-                XMLTools.SaveListToXMLSerializer(products, s_products);
             }
 
-
+            return products;
         }
+
+       
     }
 }

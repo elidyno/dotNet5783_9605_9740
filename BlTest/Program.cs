@@ -282,7 +282,7 @@ namespace BlTest
                                 email = Console.ReadLine();
                                 Console.WriteLine("Please enter the customer's adress");
                                 adress = Console.ReadLine();
-                                bl?.Cart.Approve(cart, name, email, adress);
+                                bl?.Cart.Approve(cart);
                                 Console.WriteLine("The ordr has been orderd succsesufy");
                                 break;
                             case SubMenu_Cart.AddItemToCart:
