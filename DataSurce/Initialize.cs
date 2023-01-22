@@ -4,16 +4,17 @@ using Microsoft.VisualBasic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Linq;
+using Dal;
 
 
-namespace Dal
+namespace DataSurceInitialize
 {
     /// <summary>
     /// 1. A class that creates objects of the entity type (in the DalFasade folder) in Data source arrays
     /// 2. You initialize them with the add method and use additional data
     /// 3. Links between all the DalProduct... and the entities created in it
     /// </summary>
-    internal static class Initialize
+    internal class Initialize
     {
        
         #region Data surce arrays

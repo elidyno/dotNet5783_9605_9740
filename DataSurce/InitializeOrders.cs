@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using static Dal.Initialize;
+using Dal;
 
-namespace Dal
+
+namespace DataSurceInitialize
 {
     internal class InitializeOrders
     {
@@ -13,14 +15,15 @@ namespace Dal
         internal static readonly Random rand = new Random(DateTime.Now.Millisecond);
         internal static List<DO.Order?> products = new List<DO.Order?>();
         public static IEnumerable<DO.Order?> GetInitializeOrders = initializeOrders();
+        public static RunninId runninId = new RunninId();
 
         private static IEnumerable<DO.Order> initializeOrders()
         {
             int _rand = rand.Next(20, 30);
             for (int i = 0; i < _rand; i++)
             {
-                
-                int tmpId = Config.OrderRunningId;
+
+                int? tmpId = runninId.OrderId;
                 int firstNameIndex = rand.Next(0, 10);
                 int lastNameIndex = rand.Next(0, 10);
 
