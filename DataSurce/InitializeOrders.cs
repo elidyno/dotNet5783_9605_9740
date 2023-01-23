@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Dal;
 
 
@@ -11,10 +12,10 @@ namespace DataSurceInitialize
 {
     internal class InitializeOrders
     {
+        public static RunninId runninId = new RunninId();
         internal static readonly Random rand = new Random(DateTime.Now.Millisecond);
         internal static List<DO.Order?> orders = new List<DO.Order?>();
         public static List<DO.Order?> GetInitializeOrders = initializeOrders();
-        public static RunninId runninId = new RunninId();
 
         private static List<DO.Order?> initializeOrders()
         {
@@ -22,7 +23,7 @@ namespace DataSurceInitialize
             for (int i = 0; i < _rand; i++)
             {
 
-                int tmpId = (int)runninId.OrderId;
+                int tmpId = runninId.OrderId;
                 int firstNameIndex = rand.Next(0, 10);
                 int lastNameIndex = rand.Next(0, 10);
 

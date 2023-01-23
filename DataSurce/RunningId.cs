@@ -7,12 +7,12 @@ using System.Xml.Linq;
 
 namespace DataSurceInitialize
 {
-    public  class RunninId
+    public class RunninId
     {
         private int orderId;
         private int orderItemId;
 
-        const string configIdPath = @"config.xml";
+        const string configIdPath = @"..\xml\config.xml";
         XElement ConfigRoot = null;
 
         public int OrderId
@@ -34,6 +34,8 @@ namespace DataSurceInitialize
                 }
 
             }
+
+            set { orderId = value; }
         }
 
         public int OrderItemId
