@@ -7,15 +7,15 @@ using System.Xml.Linq;
 
 namespace DataSurceInitialize
 {
-    internal class RunninId
+    public  class RunninId
     {
-        private int? orderId;
-        private int? orderItemId;
+        private int orderId;
+        private int orderItemId;
 
         const string configIdPath = @"config.xml";
         XElement ConfigRoot = null;
 
-        public int? OrderId
+        public int OrderId
         {
             get
             {
@@ -36,7 +36,7 @@ namespace DataSurceInitialize
             }
         }
 
-        public int? OrderItemId
+        public int OrderItemId
         {
             get
             {
