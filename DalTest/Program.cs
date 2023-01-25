@@ -157,7 +157,7 @@ class Program
                     case SubMenu_CRAUD.ViewAll:
                         //<Returns all products in the store>
                         IEnumerable<Product?> productsList = dal?.Product.GetList() ?? throw new NullException(); ;
-                        foreach (Product item in productsList)
+                        foreach (Product? item in productsList)
                         {
                             Console.WriteLine(item);
                         }

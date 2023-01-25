@@ -1,37 +1,107 @@
 ﻿using DalApi;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Dal
 {
     internal class Product : IProduct
     {
-        public int Add(DO.Product item)
+        const string s_products = "products";
+        public int Add(DO.Product product)
         {
-            throw new NotImplementedException();
+            XElement productRootElement = XMLTools.LoadListFromXMLElement(s_products);
+
+            XElement? product_ = (from p in productRootElement.Elements()
+                                where Convert.ToInt32(p.Element("Id").Value) == product.Id
+                                select p).FirstOrDefault();
+            if (product_ != null)
+                throw new DO.AlreadyExistsException();
+            XElement EXProduct = new XElement("Product",
+                                     new XElement("Id", product.Id),
+                                     new XElement("Name", product.Name),
+                                     new XElement("Category", product.Category),
+                                     new XElement("Price", product.Price),
+                                     new XElement("InStock", product.InStock)
+
+                                );
+            productRootElement.Add(EXProduct);
+            XMLTools.SaveListToXMLElement(productRootElement, s_products);
+
+            return product.Id;
         }
 
-        public void Delete(int item)
+        public void Delete(int productId)
         {
-            throw new NotImplementedException();
+            XElement productRootElement = XMLTools.LoadListFromXMLElement(s_products);
+
+            XElement? product_ = (from p in productRootElement.Elements()
+                                  where Convert.ToInt32(p.Element("Id").Value) == productId
+                                  select p).FirstOrDefault() ?? throw new DO.NotFoundException();
+            product_.Remove();
+            XMLTools.SaveListToXMLElement(productRootElement, s_products);
         }
 
         public DO.Product Get(Func<DO.Product?, bool>? select_)
         {
-            throw new NotImplementedException();
+            XElement productRootElement = XMLTools.LoadListFromXMLElement(s_products);
+            return (DO.Product)(from p in productRootElement.Elements()
+                    let doProduct = CreateProductFromXElement(p)
+                    where select_(doProduct)
+                    select doProduct).FirstOrDefault();
         }
 
         public IEnumerable<DO.Product?> GetList(Func<DO.Product?, bool>? select_ = null)
         {
-            throw new NotImplementedException();
+            XElement productRootElement = XMLTools.LoadListFromXMLElement(s_products);
+
+            if (select_ != null)
+            {
+                return from p in productRootElement.Elements()
+                       let doProduct = CreateProductFromXElement(p)
+                       where select_(doProduct)
+                       select (DO.Product?)doProduct;
+            }
+
+            else
+            {
+                return (IEnumerable<DO.Product?>)(from p in productRootElement.Elements()
+                       select CreateProductFromXElement(p));
+            }
         }
 
-        public void Update(DO.Product item)
+        public void Update(DO.Product product)
         {
-            throw new NotImplementedException();
+            XElement productRootElement = XMLTools.LoadListFromXMLElement(s_products);
+
+            Delete(product.Id);
+            Add(product);
+
+        }
+
+        static DO.Product? CreateProductFromXElement(XElement p)
+        {
+            return new DO.Product()
+            {
+                Id = Convert.ToInt32(p.Element("Id").Value),
+                Name = (string?)p.Element("Name"),
+                Category = ConcvetXElementTOCategory(p.Element("Category")),
+                InStock = Convert.ToInt32(p.Element("InStock").Value),
+                Price = Convert.ToDouble(p.Element("Price").Value)
+            };
+        }
+
+        static DO.Category? ConcvetXElementTOCategory(XElement XE_Category)
+        {
+            string? s_category = XE_Category.Value.ToString();
+            bool success = Enum.TryParse<DO.Category>(s_category, out var category);
+            if (!success)
+                throw new DO.NullException();
+            return category;
         }
     }
 }
