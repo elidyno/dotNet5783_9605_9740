@@ -11,9 +11,10 @@ namespace Dal
     internal class OrderItem : IOrderItem
     {
         const string s_orderItems = "OrderItems";
+        DataSurceInitialize.RunninId RunninId = new();
         public int Add(DO.OrderItem item)
         {
-            item.Id = 0;//DataSource.Config.OrderRunningId;
+            item.Id = RunninId.OrderItemId;
             List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItems);
 
             if (orderItems.FirstOrDefault(x => x?.Id == item.Id) != null)
