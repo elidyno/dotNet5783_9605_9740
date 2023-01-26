@@ -14,6 +14,7 @@ namespace BlApi
         public Order Get(int orderId);
         public IEnumerable<OrderForList?> GetList();
         public OrderTracking GetTracking(int orderId);
+        public int? OldestOrder();
     }
 }
 

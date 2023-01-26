@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bl\Bl.csproj" />
+    <ProjectReference Include="..\Simulator\Simulator.csproj" />
   </ItemGroup>
 
 </Project>

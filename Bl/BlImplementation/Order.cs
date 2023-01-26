@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DO;
 using System.Collections.Generic;
 
 namespace BlImplementation;
@@ -279,5 +280,40 @@ internal class Order : IOrder
             else status = BO.Status.APPROVED;
         }
         return status;
+    }
+
+    public int? OldestOrder()
+    {
+        List<DO.Order?> orders = dal!.Order.GetList(order => order?.DeliveryDate == null).ToList();
+        //DateTime? earliest = orders[0]?.ShipDate ?? orders[0]?.OrderDate;
+        //int? oldest = orders[0]?.Id;
+        //foreach (DO.Order? order in orders) 
+        //{ 
+        //    if(order?.ShipDate != null)
+        //    {
+        //        if(order?.ShipDate < earliest)
+        //        {
+        //            earliest = order?.ShipDate;
+        //            oldest = order?.Id;
+        //        }
+        //    }              
+        //    else
+        //    {
+        //        if (order?.OrderDate < earliest)
+        //        {
+        //            earliest = order?.OrderDate;
+        //            oldest = order?.Id;
+        //        }
+        //    }
+
+        //}
+
+        var oldestOrder = orders
+            .Where(o => o != null)
+            .OrderBy(o => o?.ShipDate ?? o?.OrderDate) //OrderByDescending?
+            .FirstOrDefault();
+        int? oldestId = oldestOrder?.Id;
+
+        return oldestId;
     }
 }
