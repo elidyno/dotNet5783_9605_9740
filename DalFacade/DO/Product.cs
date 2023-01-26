@@ -12,7 +12,7 @@ public struct Product
     
     public override string ToString() => $@"
     Product Id: {Id},
-    Name1:       {Name},
+    Name:       {Name},
     Category:    {Category},
     Price:       {Price},
     Amount in stock: {InStock}

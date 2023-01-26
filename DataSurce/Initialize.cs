@@ -22,7 +22,7 @@ namespace DataSurceInitialize
         const string s_orderItems = "orderItems";
 
 
-        #region Data surce arrays
+        #region Data list
         public static List<Product?> _productList = new List<Product?>();
         public static List<Order?> _orderList = new List<Order?>();
         public static List<OrderItem?> _orderItemList = new List<OrderItem?>();
