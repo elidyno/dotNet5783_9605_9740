@@ -5,52 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="550" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <Image x:Name="BeckgroundImage"/>
         <Image Source="beckgroundImage.jpg" Stretch="Fill" Panel.ZIndex="-1"/>
-        <Grid x:Name="Buttonse" Grid.Column="3"/>
+
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height = "auto"/>
-                <RowDefinition Height = "80"/>
-                <RowDefinition Height = "200"/>
-                <RowDefinition Height = "*" />
+                <RowDefinition Height = "120"/>
+                <RowDefinition Height = "170"/>
+                <RowDefinition Height = "250"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="760"/>
+                <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
             <Label x:Name="Title" Content="Welcome to 'online shoe store'" HorizontalAlignment="Center"
-                   Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
-                   Margin="0,41,0,0" VerticalAlignment="Top" Height="104" Width="760" IsEnabled="False"
+                   Grid.Row="0" Grid.Column="1"
+                   Margin="0,40,0,0" VerticalAlignment="Top" Height="104" Width="760" IsEnabled="False"
                    FontSize="36" FontWeight="Bold" FontFamily="Tahoma" 
-               Foreground= "#FF0D3656" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+               Foreground= "#FF0D3656" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2"/>
             <Label x:Name="SubTitle" Content="Choose your option to start..." HorizontalAlignment="Center"
-                   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5"
-                   Margin="0,0,0,0" VerticalAlignment="Top" IsEnabled="False"
+                   Grid.Row="1" Grid.Column="1"
+                   Margin="0,10,0,0" VerticalAlignment="Top" IsEnabled="False"
                    FontSize="24" FontWeight="Medium" FontFamily="Verdana" 
                Foreground= "#FF0D3656" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Button x:Name="Admin" Content="Admin" Grid.Row="2" Grid.Column="1"
+            <Button x:Name="NewOrder" Content="New Order >>" Grid.Row="1" Grid.Column="1"
+                    HorizontalAlignment="Center" VerticalAlignment="Top" Click="NewOrder_Click" Background="#FF0D3656" Foreground="White"
+                    Width="250" Height="51" FontSize="24" Margin="0,75,0,0"/>
+            <Grid Grid.Row="2" Grid.Column="1" Width="700" HorizontalAlignment="Center" Height="200" Grid.RowSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="50"/>
+
+                </Grid.ColumnDefinitions>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="1" Height="150" Margin="0,0,0,0">
+                    <Button x:Name="Admin" Content="Admin" Grid.Row="2" Grid.Column="1"
                     HorizontalAlignment="Center"  VerticalAlignment="Center" Click="Admin_Click" Background="green"
                     Height="51" Width="140" FontFamily="Verdana" FontSize="20" Foreground="White"/>
-            <Button x:Name="NewOrder" Content="New Order >>" Grid.Row="2" Grid.Column="2"
-                    HorizontalAlignment="Center" VerticalAlignment="Center" Click="NewOrder_Click" Background="#FF0D3656" Foreground="White"
-                    Width="200" Height="51" FontSize="20"/>
-            <Border Grid.Row="2" Grid.Column="3" BorderThickness="3" BorderBrush="Green" Width="270" HorizontalAlignment="Center" Height="160">
-                <StackPanel>
-                    <TextBox x:Name="OrderNumber" TextWrapping="Wrap" Text="Order Number:" VerticalAlignment="Top" TextChanged="OrderNumber_TextChanged"
+                    <Button Content="Simulator" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" Width="140" FontFamily="Verdana" FontSize="20" Height="51" Background="#FFF3F3F3" Margin="0,20,0,10"/>
+                </StackPanel>
+                <Border BorderThickness="3" Grid.Column="3" BorderBrush="Green" Width="270" HorizontalAlignment="Center" Height="160">
+                    <StackPanel>
+                        <TextBox x:Name="OrderNumber" TextWrapping="Wrap" Text="Order Number:" VerticalAlignment="Top" TextChanged="OrderNumber_TextChanged"
                          HorizontalAlignment="Center" Height="40" Width="210" FontSize="18" FontFamily="Verdana" BorderBrush="DarkBlue"
                          HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="1,20,0,0" FontStyle="Italic" Padding="4,0,0,0"/>
-                    <Button x:Name="Track" Content="Track" Click="Track_Click" IsDefault="True" Background="Green" Foreground="White" Width="208" Height="48" FontSize="20" Margin="0,20,0,0"/>
-                </StackPanel>
-            </Border>
+                        <Button x:Name="Track" Content="Track" Click="Track_Click" IsDefault="True" Background="Green" Foreground="White" Width="208" Height="48" FontSize="20" Margin="0,20,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+
 
         </Grid>
-        <Button Content="Simulator" HorizontalAlignment="Left" Margin="31,364,0,0" VerticalAlignment="Top" Click="Button_Click" Width="140" FontFamily="Tahoma" FontSize="20" Height="40" Background="#FFF3F3F3"/>
 
 
 

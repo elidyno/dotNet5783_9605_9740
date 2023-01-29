@@ -1,1 +1,80 @@
-﻿<?xml version="1.0" encoding="utf-8"?><ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Product><Id>100063</Id><Name>Women's boots (black, size:39, women)</Name><Price>499</Price><Category>WOMEN</Category><InStock>12</InStock></Product><Product><Id>100079</Id><Name>Elegant shoes (black, size:27, boys)</Name><Price>199</Price><Category>BOYS</Category><InStock>10</InStock></Product><Product><Id>100199</Id><Name>Flip flops (white, size:38 men)</Name><Price>299</Price><Category>WOMEN</Category><InStock>6</InStock></Product><Product><Id>100210</Id><Name>Shoe polish (brown, mat)</Name><Price>40</Price><Category>ACCESSORIES</Category><InStock>8</InStock></Product><Product><Id>100219</Id><Name>Moccasins (brown, size:28, boys)</Name><Price>199</Price><Category>BOYS</Category><InStock>12</InStock></Product><Product><Id>100252</Id><Name>Moccasins (brown, size:28, boys)</Name><Price>199</Price><Category>BOYS</Category><InStock>6</InStock></Product><Product><Id>100005</Id><Name>Moccasins (brown, size:28, boys)</Name><Price>199</Price><Category>BOYS</Category><InStock>8</InStock></Product><Product><Id>100013</Id><Name>Women's boots (black, size:39, women)</Name><Price>499</Price><Category>WOMEN</Category><InStock>10</InStock></Product><Product><Id>100022</Id><Name>Sport shoes (blue, size:30, boys)</Name><Price>149</Price><Category>BOYS</Category><InStock>10</InStock></Product><Product><Id>100031</Id><Name>Shoe polish (black, mat)</Name><Price>40</Price><Category>ACCESSORIES</Category><InStock>9</InStock></Product><Product><Id>100040</Id><Name>sport socks (white, size:43)</Name><Price>30</Price><Category>ACCESSORIES</Category><InStock>3</InStock></Product><Product><Id>100048</Id><Name>Sport shoes (pink, size:29, girl)</Name><Price>99</Price><Category>GIRLS</Category><InStock>11</InStock></Product><Product><Id>100057</Id><Name>Girl's boots (pink, size:25, girl)</Name><Price>199</Price><Category>GIRLS</Category><InStock>0</InStock></Product></ArrayOfProduct>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Product>
+    <Id>100175</Id>
+    <Name>sport socks (white, size:43)</Name>
+    <Price>30</Price>
+    <Category>ACCESSORIES</Category>
+    <InStock>7</InStock>
+  </Product>
+  <Product>
+    <Id>100254</Id>
+    <Name>futball shoes (blue, size:22, boys)</Name>
+    <Price>99</Price>
+    <Category>BOYS</Category>
+    <InStock>7</InStock>
+  </Product>
+  <Product>
+    <Id>100013</Id>
+    <Name>Elegant shoes (black, size:27, boys)</Name>
+    <Price>199</Price>
+    <Category>BOYS</Category>
+    <InStock>10</InStock>
+  </Product>
+  <Product>
+    <Id>100027</Id>
+    <Name>Work shoes (gray, size:41, men)</Name>
+    <Price>499</Price>
+    <Category>MEN</Category>
+    <InStock>11</InStock>
+  </Product>
+  <Product>
+    <Id>100065</Id>
+    <Name>shoe pad (size:40, ortoped)</Name>
+    <Price>120</Price>
+    <Category>ACCESSORIES</Category>
+    <InStock>14</InStock>
+  </Product>
+  <Product>
+    <Id>100076</Id>
+    <Name>Sport shoes (blue, size:43, men)</Name>
+    <Price>299</Price>
+    <Category>MEN</Category>
+    <InStock>3</InStock>
+  </Product>
+  <Product>
+    <Id>100090</Id>
+    <Name>shoe pad (size:40, ortoped)</Name>
+    <Price>120</Price>
+    <Category>ACCESSORIES</Category>
+    <InStock>12</InStock>
+  </Product>
+  <Product>
+    <Id>100103</Id>
+    <Name>sport socks (white, size:43)</Name>
+    <Price>30</Price>
+    <Category>ACCESSORIES</Category>
+    <InStock>13</InStock>
+  </Product>
+  <Product>
+    <Id>100118</Id>
+    <Name>Women's boots (black, size:39, women)</Name>
+    <Price>499</Price>
+    <Category>WOMEN</Category>
+    <InStock>8</InStock>
+  </Product>
+  <Product>
+    <Id>100132</Id>
+    <Name>Flip flops (white, size:38 men)</Name>
+    <Price>299</Price>
+    <Category>WOMEN</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <Id>100128</Id>
+    <Name>shoe pad (size:40, ortoped)</Name>
+    <Category>ACCESSORIES</Category>
+    <Price>140</Price>
+    <InStock>2</InStock>
+  </Product>
+</ArrayOfProduct>

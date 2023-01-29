@@ -7,20 +7,24 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="OrderTrackingWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    
-    <Grid ShowGridLines="False">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="110" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-               
-        </Grid.RowDefinitions>
-        <Label Content="Order Tracking" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Bottom" FontSize="20"/>
-        <TextBlock x:Name="TrackingData" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding orderTracking}" VerticalAlignment="Center"
-                   FontSize="15"/>
-        <Button Content="order details" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" 
-                Background="Green" Foreground="White"  Width="200" Height="45" FontSize="20" Click="order_details_Click" />
-    </Grid>
 
+    <Grid>
+        <Image x:Name="BeckgroundImage"/>
+        <Image Source="beckgroundImage.jpg" Stretch="Fill" Panel.ZIndex="-1"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="110" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Label Content="Order Tracking" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Bottom" FontSize="36" FontFamily="Tahoma" Foreground="#FF0D3656"/>
+            <TextBlock x:Name="TrackingData" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding orderTracking}" VerticalAlignment="Center"
+                   FontSize="16" Foreground="#FF0D3656" FontFamily="Tahoma" Padding="3,3,3,3"/>
+            <Button Content="order details" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" 
+                Background="Green" Foreground="White"  Width="250" Height="50" FontSize="24" Click="order_details_Click" FontFamily="Verdana" />
+        </Grid>
+
+    </Grid>
 
 </Window>

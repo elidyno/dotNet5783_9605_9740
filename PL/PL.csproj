@@ -15,12 +15,14 @@
   <ItemGroup>
     <None Remove="beckgroundImage.jpg" />
     <None Remove="Cart\beckgroundImage.jpg" />
+    <None Remove="Order\beckgroundImage.jpg" />
     <None Remove="Product\beckgroundImage.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="beckgroundImage.jpg" />
     <Resource Include="Cart\beckgroundImage.jpg" />
+    <Resource Include="Order\beckgroundImage.jpg" />
     <Resource Include="Product\beckgroundImage.jpg" />
   </ItemGroup>
 
