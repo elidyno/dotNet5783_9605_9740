@@ -3,6 +3,7 @@ using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,8 @@ namespace Dal
         const string s_orders = "orders";
 
         DataSurceInitialize.RunninId RunninId = new();
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.Order order)
         {
             order.Id = RunninId.OrderId;
@@ -27,6 +30,7 @@ namespace Dal
             return order.Id;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
         {
             List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
@@ -37,6 +41,7 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(orders, s_orders);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Order Get(Func<DO.Order?, bool>? select_)
         {
             List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
@@ -46,6 +51,7 @@ namespace Dal
            
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.Order?> GetList(Func<DO.Order?, bool>? select_ = null)
         {
             List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
@@ -53,6 +59,7 @@ namespace Dal
             
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(DO.Order order)
         {
             Delete(order.Id);

@@ -2,6 +2,7 @@
 using DO;
 using System.Data;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 //A class that links between the order-item class (DO file) and the Data class (which is linked to collections in Data) through methods
@@ -13,6 +14,7 @@ internal class DalOrderItem : IOrderItem
     /// as Dan Zilbershtain suggested
     ///i found a solution: asaiment an tem int with the lenth of the arries 
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DalOrderItem()
     {
         //only for initilize the DataSurce
@@ -24,6 +26,7 @@ internal class DalOrderItem : IOrderItem
     /// <param name="item"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(OrderItem item)
     {
         item.Id = DataSource.Config.OrderItemRunningId;
@@ -46,6 +49,7 @@ internal class DalOrderItem : IOrderItem
     /// Returns all items in the order
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> GetList()
     {
         List<OrderItem?> orderItems = new List<OrderItem?>();
@@ -57,6 +61,7 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="orderId"></param>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int orderItemId)
     {
         int delIndex = DataSource._orderItemList.FindIndex(x => x?.Id == orderItemId);
@@ -69,7 +74,8 @@ internal class DalOrderItem : IOrderItem
     /// Receives an item in the order with updated details and updates it
     /// </summary>
     /// <param name="item"></param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="Exception"></exception>  
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem item)
     {
         int updateIndex = DataSource._orderItemList.FindIndex(x => x?.Id == item.Id);
@@ -78,7 +84,8 @@ internal class DalOrderItem : IOrderItem
         else
             throw new NotFoundException("OrderItem Id not exist");
     }
-
+   
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> GetList(Func<OrderItem?, bool>? select_ = null)
     {
         List<OrderItem?> orderItems = new List<OrderItem?>();
@@ -89,7 +96,8 @@ internal class DalOrderItem : IOrderItem
 
         return orderItems;
     }
-
+    
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem Get(Func<OrderItem?, bool>? select_)
     {
         return DataSource._orderItemList.Find(x => select_!(x)) ??

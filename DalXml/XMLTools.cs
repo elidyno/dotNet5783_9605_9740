@@ -21,6 +21,7 @@ namespace Dal
         }
 
         //static readonly bool s_writing = false;
+       
         public static void SaveListToXMLSerializer<T>(List<T?> list, string entity) where T : struct
         {
             string filePath = $"{s_dir + entity}.xml";
@@ -72,6 +73,7 @@ namespace Dal
                 throw new Exception($"fail to create xml file: {filePath}", ex);
             }
         }
+
 
         public static XElement LoadListFromXMLElement(string entity)
         {

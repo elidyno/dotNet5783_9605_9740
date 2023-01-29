@@ -3,6 +3,7 @@ using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ namespace Dal
     {
         const string s_orderItems = "OrderItems";
         DataSurceInitialize.RunninId RunninId = new();
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.OrderItem item)
         {
             item.Id = RunninId.OrderItemId;
@@ -26,6 +29,7 @@ namespace Dal
             return item.Id;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int orderItemId)
         {
             List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItems);
@@ -36,6 +40,7 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(orderItems, s_orderItems);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.OrderItem Get(Func<DO.OrderItem?, bool>? select_)
         {
             List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItems);
@@ -43,12 +48,14 @@ namespace Dal
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.OrderItem?> GetList(Func<DO.OrderItem?, bool>? select_ = null)
         {
             List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItems);
             return select_ == null ? orderItems : orderItems.FindAll(x => select_(x));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(DO.OrderItem item)
         {
             Delete(item.Id);

@@ -1,6 +1,7 @@
 ﻿
 using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Dal;
@@ -13,6 +14,7 @@ internal class DalProduct : IProduct
     /// as Dan Zilbershtain suggested
     //i found a solution: asaiment an tem int with the lenth of the arries 
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DalProduct()
     {
         //only for initilize the DataSurce
@@ -24,6 +26,7 @@ internal class DalProduct : IProduct
     /// <param name="p"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Product p)
     {
         //if (DataSource._productList.Length == DataSource.Config._productIndexer)      Unnecessary ??
@@ -43,6 +46,7 @@ internal class DalProduct : IProduct
     /// <param name="select_"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product Get(Func<Product?, bool>? select_)
     {
         return DataSource._productList.Find(x => select_(x)) ??
@@ -64,6 +68,8 @@ internal class DalProduct : IProduct
     /// Returns all products in the store
     /// </summary>
     /// <returns></returns>
+   
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Product?> GetList(Func<Product?, bool>? select_ = null)
     {
         List<Product?> products = new List<Product?>();
@@ -79,6 +85,7 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="productId"></param>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int productId)
     {
         int delIndex = DataSource._productList.FindIndex(x => x?.Id == productId);
@@ -92,6 +99,8 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="p"></param>
     /// <exception cref="Exception"></exception>
+   
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Product p)
     {
         int updateIndex = DataSource._productList.FindIndex(x => x?.Id == p.Id);

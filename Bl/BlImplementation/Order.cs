@@ -2,6 +2,7 @@
 using BO;
 using DO;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -18,6 +19,7 @@ internal class Order : IOrder
     /// <returns></returns>
     /// <exception cref="BO.InvalidValueException"></exception>
     /// <exception cref="BO.DataRequestFailedException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order Get(int orderId)
     {
         DO.Order dataOrder = new DO.Order();
@@ -92,6 +94,7 @@ internal class Order : IOrder
     /// Returns a list of orders
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderForList?> GetList()
     {
         IEnumerable<DO.Order?> orders = new List<DO.Order?>();
@@ -136,6 +139,7 @@ internal class Order : IOrder
     /// <param name="orderId"></param>
     /// <returns></returns>
     /// <exception cref="BO.DataRequestFailedException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderTracking GetTracking(int orderId)
     {
         DO.Order dataOrder = new DO.Order();
@@ -173,6 +177,7 @@ internal class Order : IOrder
     /// <exception cref="BO.DataRequestFailedException"></exception>
     /// <exception cref="BO.InvalidValueException"></exception>
     /// <exception cref="BO.UpdateFailedException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateOrderDelivery(int orderId)
     {
         BO.Order boOrder = new BO.Order();
@@ -221,6 +226,7 @@ internal class Order : IOrder
     /// <exception cref="BO.DataRequestFailedException"></exception>
     /// <exception cref="BO.InvalidValueException"></exception>
     /// <exception cref="BO.UpdateFailedException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateOrderSheep(int orderId)
     {
         BO.Order boOrder = new BO.Order();
@@ -268,6 +274,7 @@ internal class Order : IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Status GetStatus(DO.Order? order)
     {
         BO.Status status;
@@ -282,6 +289,7 @@ internal class Order : IOrder
         return status;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int? OldestOrder()
     {
         List<DO.Order?> orders = dal!.Order.GetList(order => order?.DeliveryDate == null).ToList();

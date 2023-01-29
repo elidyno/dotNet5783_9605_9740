@@ -4,6 +4,7 @@ namespace Dal;
 using DO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 //A class that links between the order class (DO file) and the Data class (which is linked to collections in Data) through methods
 internal class DalOrder : IOrder
@@ -14,6 +15,7 @@ internal class DalOrder : IOrder
     /// as Dan Zilbershtain suggested
     //i found a solution: asaiment an tem int with the lenth of the arries 
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]  // needless?
     public DalOrder()
     {
         //only for initilize the DataSurce
@@ -26,6 +28,7 @@ internal class DalOrder : IOrder
     /// <param name="o"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order o)
     {
         o.Id = DataSource.Config.OrderRunningId;
@@ -49,6 +52,7 @@ internal class DalOrder : IOrder
     /// Returns the list of all orders or requested orders according to a condition
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order?> GetList(Func<Order?, bool>? select_ = null) //?
     {
         List<Order?> orders = new List<Order?>();
@@ -63,6 +67,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="orderId"></param>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int orderId)
     {
         int delIndex = DataSource._orderList.FindIndex(x => x?.Id == orderId);
@@ -76,6 +81,8 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="p"></param>
     /// <exception cref="Exception"></exception>
+    
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order p)
     {
         int updateIndex = DataSource._orderList.FindIndex(x => x?.Id == p.Id);
@@ -90,6 +97,7 @@ internal class DalOrder : IOrder
     /// <param name="select_"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(Func<Order?, bool>? select_)
     {
         return DataSource._orderList.Find(x => select_(x)) ??

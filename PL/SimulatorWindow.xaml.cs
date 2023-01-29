@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Order;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
 
 namespace PL
 {
@@ -25,12 +28,23 @@ namespace PL
     {
         BackgroundWorker worker;
         Stopwatch stopWatch;
-       
+        int length;
+
+        public static readonly DependencyProperty ArrayListProperty = DependencyProperty.Register(
+        "data", typeof(ArrayList), typeof(SimulatorWindow), new PropertyMetadata(default(ArrayList?)));
+        //Dependency Property "Order" for holding order data
+        public ArrayList? data
+        {
+            get => (ArrayList)GetValue(ArrayListProperty);
+            set => SetValue(ArrayListProperty, value);
+        }
+
         public SimulatorWindow()
         {
             InitializeComponent();
             worker = new BackgroundWorker();
             stopWatch = new Stopwatch();
+            data= new ArrayList();
             worker.DoWork += Worker_DoWork!;
             worker.ProgressChanged += Worker_ProgressChanged!;
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted!;  
@@ -43,6 +57,11 @@ namespace PL
         {
             worker.CancelAsync();
         }
+
+        //void SimulatorCompletedObserver()
+        //{
+        //    return;
+        //}
 
         void SimulatorUpdatedObserver(int id, BO.Status orderStatus, BO.Status nextStatus, DateTime startTime, DateTime finishTime)
         {
@@ -62,8 +81,9 @@ namespace PL
 
             Simulator.Simulator.Activate(); // הפעלת הסימולטור
 
-            while(worker.CancellationPending == true)
+            while(worker.CancellationPending == false)
             {
+                
                 worker.ReportProgress(1);  // עדכן שעון
                 Thread.Sleep(1000);
             }
@@ -82,18 +102,11 @@ namespace PL
             }
             else // בקשת עדכון הזמנה 
             {
-                ArrayList? data = e.UserState as ArrayList;
-                if (data != null)
-                {
-                    OrderIdText.Text = data[0] as string;
-                    CurrentStatusText.Text = data[1] as string;
-                    NextStatusText.Text = data[2] as string;
-                    StartTimeText.Text = data[3] as string;
-                    FinishTimeText.Text = data[4] as string;               
-                   
-                }
+                data = e.UserState as ArrayList;
+                //DateTime time1 = (DateTime)StartTimeText.Text;
+                //DateTime time2 = time1.AddSeconds(30);
+                //length = (int)data[0];
             }
-
         }
 
         

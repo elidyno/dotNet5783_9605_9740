@@ -3,6 +3,7 @@ using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -12,6 +13,8 @@ namespace Dal
     internal class Product : IProduct
     {
         const string s_products = "products";
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.Product product)
         {
             XElement productRootElement = XMLTools.LoadListFromXMLElement(s_products);
@@ -35,6 +38,7 @@ namespace Dal
             return product.Id;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int productId)
         {
             XElement productRootElement = XMLTools.LoadListFromXMLElement(s_products);
@@ -46,6 +50,7 @@ namespace Dal
             XMLTools.SaveListToXMLElement(productRootElement, s_products);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Product Get(Func<DO.Product?, bool>? select_)
         {
             XElement productRootElement = XMLTools.LoadListFromXMLElement(s_products);
@@ -55,6 +60,7 @@ namespace Dal
                     select doProduct).FirstOrDefault();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.Product?> GetList(Func<DO.Product?, bool>? select_ = null)
         {
             XElement productRootElement = XMLTools.LoadListFromXMLElement(s_products);
@@ -74,6 +80,7 @@ namespace Dal
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(DO.Product product)
         {
             XElement productRootElement = XMLTools.LoadListFromXMLElement(s_products);
@@ -83,6 +90,7 @@ namespace Dal
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]      //needless?
         static DO.Product? CreateProductFromXElement(XElement p)
         {
             return new DO.Product()
@@ -95,6 +103,7 @@ namespace Dal
             };
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]          //neddless?
         static DO.Category? ConcvetXElementTOCategory(XElement XE_Category)
         {
             string? s_category = XE_Category.Value.ToString();

@@ -3,6 +3,7 @@ using BO;
 using DalApi;
 using DO;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation
 {
@@ -21,6 +22,7 @@ namespace BlImplementation
         /// <returns></returns>
         /// <exception cref="BO.DataRequestFailedException"></exception>
         /// <exception cref="AmountAndPriceException"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Cart Add(BO.Cart cart, int productId)
         {
             DO.Product dataProduct = new DO.Product();
@@ -91,6 +93,7 @@ namespace BlImplementation
         /// <exception cref="InvalidEmailFormatException"></exception>
         /// <exception cref="DataRequestFailedException"></exception>
         /// <exception cref="AmountAndPriceException"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Approve(BO.Cart cart)
         {
             if (cart.CustomerName == null || cart.CustomerEmail == null || cart.CustomerAdress == null)
@@ -220,6 +223,7 @@ namespace BlImplementation
         /// <returns></returns>
         /// <exception cref="BO.NotFoundException"></exception>
         /// <exception cref="AmountAndPriceException"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Cart Update(BO.Cart cart, int productId, int newAmount)
         {
             int i = cart.Items!.FindIndex(x => x?.ProductId == productId);
@@ -261,6 +265,7 @@ namespace BlImplementation
             return cart;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Cart Sub(BO.Cart cart, int productId)
         {
             int itemRemovedId = -1;
@@ -286,6 +291,7 @@ namespace BlImplementation
             return cart;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Cart Remove(BO.Cart cart, int productId)
         {
             int removedId = -1;
@@ -307,6 +313,7 @@ namespace BlImplementation
             return cart;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Cart RemoveAll(BO.Cart cart)
         {
             if (cart == null || cart.Items == null)
@@ -328,6 +335,7 @@ namespace BlImplementation
         /// <returns>BO.cart</returns>
         /// <exception cref="InvalidValueException"></exception>
         /// <exception cref="InvalidEmailFormatException"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Cart SetCustomerData(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
         {
             //check validation of Customer data parameters

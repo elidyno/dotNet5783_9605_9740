@@ -3,6 +3,7 @@ using BO;
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation
 {
@@ -12,7 +13,7 @@ namespace BlImplementation
     internal class Product : BlApi.IProduct
     {
         DalApi.IDal? dal = DalApi.Factory.Get();
-       
+
 
 
         /// <summary>
@@ -21,6 +22,7 @@ namespace BlImplementation
         /// <param name="product"></param>
         /// <exception cref="BO.InvalidValueException"></exception>
         /// <exception cref="DataRequestFailedException"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Add(BO.Product product)
         {
             //Validity checks of input format
@@ -60,6 +62,7 @@ namespace BlImplementation
         /// </summary>
         /// <param name="productI"></param>
         /// <exception cref="ArgumentException"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int productId)
         {
             //Validity checks of input format
@@ -88,6 +91,7 @@ namespace BlImplementation
         /// <returns>BO.Product</returns>
         /// <exception cref="InvalidValueException"></exception>
         /// <exception cref="DataRequestFailedException"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Product Get(int productId)
         {
             //Validity checks of input format
@@ -124,6 +128,7 @@ namespace BlImplementation
         /// <returns>BO.ProductItem</returns>
         /// <exception cref="InvalidValueException"></exception>
         /// <exception cref="DataRequestFailedException"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.ProductItem Get(int productId, BO.Cart cart)
         {
             //Validity checks of input format
@@ -172,6 +177,7 @@ namespace BlImplementation
         /// </summary>
         /// <returns> IEnumerable<BO.ProductForList> </returns>
         /// <exception cref="DataRequestFailedException"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BO.ProductForList> GetList(Func<ProductForList, bool>? select_ = null)
         {
             try
@@ -218,6 +224,7 @@ namespace BlImplementation
         /// <param name="select_"></param>
         /// <returns> IEnumerable<ProductItem> </returns>
         /// <exception cref="DataRequestFailedException"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ProductItem?> GetItemList(BO.Cart cart, Func<ProductItem, bool>? select_ = null)
         {
             try
@@ -250,6 +257,7 @@ namespace BlImplementation
         /// <param name="product"></param>
         /// <exception cref="BO.InvalidValueException"></exception>
         /// <exception cref="DataRequestFailedException"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(BO.Product product)
         {
             //Validity checks of input format
@@ -289,6 +297,7 @@ namespace BlImplementation
         /// </summary>
         /// <param name="productId"></param>
         /// <returns>false or true</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool IsHasBeenOrderd(int productId)
         {
             return dal?.OrderItem.GetList().Any(x => x?.ProductId == productId) ??  throw new NullableException(); 

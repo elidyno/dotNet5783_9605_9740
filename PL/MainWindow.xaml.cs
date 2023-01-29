@@ -79,5 +79,10 @@ namespace PL
 
             new Order.OrderTrackingWindow(orderId).Show();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new SimulatorWindow().Show();
+        }
     }
 }
