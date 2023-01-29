@@ -39,7 +39,7 @@
                     Height="51" Width="140" FontFamily="Verdana" FontSize="20" Foreground="White"/>
             <Button x:Name="NewOrder" Content="New Order >>" Grid.Row="2" Grid.Column="2"
                     HorizontalAlignment="Center" VerticalAlignment="Center" Click="NewOrder_Click" Background="#FF0D3656" Foreground="White"
-                    Width="220" Height="51" FontSize="20"/>
+                    Width="200" Height="51" FontSize="20"/>
             <Border Grid.Row="2" Grid.Column="3" BorderThickness="3" BorderBrush="Green" Width="270" HorizontalAlignment="Center" Height="160">
                 <StackPanel>
                     <TextBox x:Name="OrderNumber" TextWrapping="Wrap" Text="Order Number:" VerticalAlignment="Top" TextChanged="OrderNumber_TextChanged"
@@ -50,7 +50,7 @@
             </Border>
 
         </Grid>
-        <Button Content="Simulator" HorizontalAlignment="Left" Margin="115,217,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Content="Simulator" HorizontalAlignment="Left" Margin="31,364,0,0" VerticalAlignment="Top" Click="Button_Click" Width="140" FontFamily="Tahoma" FontSize="20" Height="40" Background="#FFF3F3F3"/>
 
 
 
