@@ -20,7 +20,7 @@ namespace DataSurceInitialize
         {
             //all items belonging to a specific order 
             // to be sure that we have at lest 40 item ordered
-            int[] itemsForOneOrder = new int[Initialize._orderList.Count];
+            int[] itemsForOneOrder = new int[Initialize._orderList.Count]; 
 
             int _rand;              // will be commented soon
                                     //int _randProduct;
@@ -29,6 +29,13 @@ namespace DataSurceInitialize
             int tmpProductId;
             double tmpPrice;
             int tmpOmunt;
+
+            //initialize arry that kepp the amount of itemf for heach order
+            for (int i = 0; i < itemsForOneOrder.Length; i++)
+            {
+                itemsForOneOrder[i] = 0;
+            }
+
             #region old code
             //for (int i = 0; i < _orderList.Count; i++)
             //{
@@ -57,11 +64,13 @@ namespace DataSurceInitialize
             //}
             //----------------------
             #endregion
+            //for heach order create 1-4 order items
             var query = from order in Initialize._orderList
-                        where rand.Next(1, 5) != 4
                         from i in Enumerable.Range(0, rand.Next(1, 5))
                         let _randProduct = rand.Next(1, Initialize._productList.Count) - 1
                         let product = (Product?)Initialize._productList[_randProduct]
+                        let orderIndex = Initialize._orderList.IndexOf(order)//make a sgine how many items for heach order
+                        let temp = ++itemsForOneOrder[orderIndex]
                         select new OrderItem()
                         {
                             Id = runninId.OrderItemId,
@@ -73,7 +82,7 @@ namespace DataSurceInitialize
 
             query.ToList().ForEach(oi => orderItems.Add(oi));
 
-            #region capseled
+            #region old code
             //--------------------------------
             //if sum of item order lass from 40, we add items to order that have only one order
 
@@ -105,19 +114,20 @@ namespace DataSurceInitialize
             //}
             //------------------------------------------------
             #endregion
+            //if have lass from 40 items, add items to order that have only 1 items
             if (orderItems.Count < 40)
             {
                 Initialize._orderList
-                .Where((o, i) => itemsForOneOrder[i] < int.MaxValue)
-                .TakeWhile(o => Initialize._orderItemList.Count < 40)
-                .Select(o =>
+                .Where((order) => itemsForOneOrder[Initialize._orderList.IndexOf(order)] < 2)
+                .TakeWhile(order => Initialize._orderItemList.Count < 40)
+                .Select(order =>
                 {
                     int _randProduct = rand.Next(1, Initialize._productList.Count) - 1;
                     var product = (Product?)Initialize._productList[_randProduct];
                     return new OrderItem()
                     {
                         Id = runninId.OrderItemId,
-                        OrderId = o?.Id ?? 0,
+                        OrderId = order?.Id ?? 0,
                         ProductId = product?.Id ?? 0,
                         Price = product?.Price ?? 0,
                         Amount = rand.Next(1, 3)
