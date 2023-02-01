@@ -1,1 +1,219 @@
-<?xml version="1.0" encoding="utf-8"?><ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Order><Id>101</Id><CustomerName>Yossi Adas</CustomerName><CustomerEmail>YossiAdas@gmail.com</CustomerEmail><CustomerAdress>Hatzvi 15, Jerusalem</CustomerAdress><OrderDate>2023-01-27T17:54:25.8756192+02:00</OrderDate><ShipDate>2023-01-29T06:54:27.1046192+02:00</ShipDate><DeliveryDate>2023-01-29T18:49:22.2406192+02:00</DeliveryDate></Order><Order><Id>102</Id><CustomerName>Beni Tamari</CustomerName><CustomerEmail>BeniTamari@gmail.com</CustomerEmail><CustomerAdress>Etrog 20, Jerusalem</CustomerAdress><OrderDate>2023-01-25T07:07:49.5118233+02:00</OrderDate><ShipDate>2023-01-27T05:37:23.4488233+02:00</ShipDate><DeliveryDate>2023-01-28T02:56:18.2208233+02:00</DeliveryDate></Order><Order><Id>103</Id><CustomerName>Ei Adas</CustomerName><CustomerEmail>EiAdas@gmail.com</CustomerEmail><CustomerAdress>Hatzvi 15, Jerusalem</CustomerAdress><OrderDate>2023-01-24T18:15:40.0047171+02:00</OrderDate><ShipDate>2023-01-24T22:35:17.5287171+02:00</ShipDate><DeliveryDate>2023-01-29T09:06:58.6907171+02:00</DeliveryDate></Order><Order><Id>104</Id><CustomerName>Yossi Nahon</CustomerName><CustomerEmail>YossiNahon@gmail.com</CustomerEmail><CustomerAdress>Lulav 5, Jerusalem</CustomerAdress><OrderDate>2023-01-23T12:54:15.2938459+02:00</OrderDate><ShipDate>2023-01-24T21:54:29.5338459+02:00</ShipDate><DeliveryDate>2023-01-25T11:47:57.1328459+02:00</DeliveryDate></Order><Order><Id>105</Id><CustomerName>Dani Adas</CustomerName><CustomerEmail>DaniAdas@gmail.com</CustomerEmail><CustomerAdress>Hatzvi 15, Jerusalem</CustomerAdress><OrderDate>2023-01-24T05:05:10.1205627+02:00</OrderDate><ShipDate>2023-01-25T05:51:17.8215627+02:00</ShipDate><DeliveryDate>2023-01-25T17:28:32.2695627+02:00</DeliveryDate></Order><Order><Id>106</Id><CustomerName>Kobi Galon</CustomerName><CustomerEmail>KobiGalon@gmail.com</CustomerEmail><CustomerAdress>Malchey Israel  14, Jerusalem</CustomerAdress><OrderDate>2023-01-22T14:06:10.8033331+02:00</OrderDate><ShipDate>2023-01-22T21:41:18.3893331+02:00</ShipDate><DeliveryDate>2023-01-25T13:35:46.7683331+02:00</DeliveryDate></Order><Order><Id>107</Id><CustomerName>Yossi Netanyahu</CustomerName><CustomerEmail>YossiNetanyahu@gmail.com</CustomerEmail><CustomerAdress>Tapuach 7, Jerusalem</CustomerAdress><OrderDate>2023-01-21T23:33:52.9603256+02:00</OrderDate><ShipDate>2023-01-23T03:15:44.1243256+02:00</ShipDate><DeliveryDate>2023-01-25T12:06:40.3973256+02:00</DeliveryDate></Order><Order><Id>108</Id><CustomerName>Ei Nahon</CustomerName><CustomerEmail>EiNahon@gmail.com</CustomerEmail><CustomerAdress>Lulav 5, Jerusalem</CustomerAdress><OrderDate>2023-01-28T07:54:59.6429139+02:00</OrderDate><ShipDate>2023-01-28T09:59:57.8959139+02:00</ShipDate><DeliveryDate>2023-01-28T23:30:14.5299139+02:00</DeliveryDate></Order><Order><Id>109</Id><CustomerName>Dani Galon</CustomerName><CustomerEmail>DaniGalon@gmail.com</CustomerEmail><CustomerAdress>Malchey Israel  14, Jerusalem</CustomerAdress><OrderDate>2023-01-26T07:56:03.0875384+02:00</OrderDate><ShipDate>2023-01-26T11:03:55.7965384+02:00</ShipDate><DeliveryDate>2023-01-29T22:14:35.0555384+02:00</DeliveryDate></Order><Order><Id>110</Id><CustomerName>Moshe Galon</CustomerName><CustomerEmail>MosheGalon@gmail.com</CustomerEmail><CustomerAdress>Malchey Israel  14, Jerusalem</CustomerAdress><OrderDate>2023-01-21T11:22:42.9310496+02:00</OrderDate><ShipDate>2023-01-22T19:04:11.3390496+02:00</ShipDate><DeliveryDate>2023-01-27T16:53:54.7300496+02:00</DeliveryDate></Order><Order><Id>111</Id><CustomerName>Shlomi Fridman</CustomerName><CustomerEmail>ShlomiFridman@gmail.com</CustomerEmail><CustomerAdress>Etrog 2, Jerusalem</CustomerAdress><OrderDate>2023-01-23T18:36:22.9128044+02:00</OrderDate><ShipDate>2023-01-24T13:22:45.7358044+02:00</ShipDate><DeliveryDate>2023-01-27T18:17:45.0058044+02:00</DeliveryDate></Order><Order><Id>112</Id><CustomerName>Dani Lipsker</CustomerName><CustomerEmail>DaniLipsker@gmail.com</CustomerEmail><CustomerAdress>Yaffo 15, Jerusalem</CustomerAdress><OrderDate>2023-01-20T13:04:17.6575859+02:00</OrderDate><ShipDate>2023-01-22T06:03:00.9005859+02:00</ShipDate><DeliveryDate>2023-01-25T05:14:36.7855859+02:00</DeliveryDate></Order><Order><Id>113</Id><CustomerName>Beni Tamari</CustomerName><CustomerEmail>BeniTamari@gmail.com</CustomerEmail><CustomerAdress>Etrog 20, Jerusalem</CustomerAdress><OrderDate>2023-01-25T06:23:43.6093482+02:00</OrderDate><ShipDate>2023-01-25T14:05:40.8873482+02:00</ShipDate><DeliveryDate>2023-01-25T17:38:46.6943482+02:00</DeliveryDate></Order><Order><Id>114</Id><CustomerName>Israel Lipsker</CustomerName><CustomerEmail>IsraelLipsker@gmail.com</CustomerEmail><CustomerAdress>Yaffo 15, Jerusalem</CustomerAdress><OrderDate>2023-01-23T01:51:11.7544461+02:00</OrderDate><ShipDate>2023-01-25T02:16:51.8084461+02:00</ShipDate><DeliveryDate>2023-01-26T16:45:55.0604461+02:00</DeliveryDate></Order><Order><Id>115</Id><CustomerName>Shlomi Kohen</CustomerName><CustomerEmail>ShlomiKohen@gmail.com</CustomerEmail><CustomerAdress>Yaffo 205, Jerusalem</CustomerAdress><OrderDate>2023-01-24T21:15:47.2340718+02:00</OrderDate><ShipDate>2023-01-25T14:13:11.8400718+02:00</ShipDate><DeliveryDate>2023-01-26T00:06:13.8060718+02:00</DeliveryDate></Order><Order><Id>116</Id><CustomerName>Shlomi Netanyahu</CustomerName><CustomerEmail>ShlomiNetanyahu@gmail.com</CustomerEmail><CustomerAdress>Tapuach 7, Jerusalem</CustomerAdress><OrderDate>2023-01-27T09:47:01.2207048+02:00</OrderDate><ShipDate>2023-01-28T22:27:38.9007048+02:00</ShipDate><DeliveryDate>2023-01-29T03:27:11.5757048+02:00</DeliveryDate></Order><Order><Id>117</Id><CustomerName>Ei Netanyahu</CustomerName><CustomerEmail>EiNetanyahu@gmail.com</CustomerEmail><CustomerAdress>Tapuach 7, Jerusalem</CustomerAdress><OrderDate>2023-01-23T15:52:23.2624336+02:00</OrderDate><ShipDate>2023-01-25T10:13:30.2054336+02:00</ShipDate><DeliveryDate xsi:nil="true" /></Order><Order><Id>118</Id><CustomerName>Israel Levi</CustomerName><CustomerEmail>IsraelLevi@gmail.com</CustomerEmail><CustomerAdress>Tehena 13, Jerusalem</CustomerAdress><OrderDate>2023-01-24T17:35:10.8202805+02:00</OrderDate><ShipDate>2023-01-25T08:09:43.4652805+02:00</ShipDate><DeliveryDate xsi:nil="true" /></Order><Order><Id>119</Id><CustomerName>Ei Tamari</CustomerName><CustomerEmail>EiTamari@gmail.com</CustomerEmail><CustomerAdress>Etrog 20, Jerusalem</CustomerAdress><OrderDate>2023-01-27T01:24:35.8147143+02:00</OrderDate><ShipDate>2023-01-27T20:49:25.9207143+02:00</ShipDate><DeliveryDate xsi:nil="true" /></Order><Order><Id>120</Id><CustomerName>Israel Tamari</CustomerName><CustomerEmail>IsraelTamari@gmail.com</CustomerEmail><CustomerAdress>Etrog 20, Jerusalem</CustomerAdress><OrderDate>2023-01-26T06:50:44.7041922+02:00</OrderDate><ShipDate>2023-01-26T09:14:34.6311922+02:00</ShipDate><DeliveryDate xsi:nil="true" /></Order><Order><Id>121</Id><CustomerName>Ei Levi</CustomerName><CustomerEmail>EiLevi@gmail.com</CustomerEmail><CustomerAdress>Tehena 13, Jerusalem</CustomerAdress><OrderDate>2023-01-26T13:13:51.4974819+02:00</OrderDate><ShipDate>2023-01-27T11:08:15.2724819+02:00</ShipDate><DeliveryDate xsi:nil="true" /></Order><Order><Id>122</Id><CustomerName>Levi Tamari</CustomerName><CustomerEmail>LeviTamari@gmail.com</CustomerEmail><CustomerAdress>Etrog 20, Jerusalem</CustomerAdress><OrderDate>2023-01-29T06:10:58.0454104+02:00</OrderDate><ShipDate xsi:nil="true" /><DeliveryDate xsi:nil="true" /></Order><Order><Id>123</Id><CustomerName>Kobi Kohen</CustomerName><CustomerEmail>KobiKohen@gmail.com</CustomerEmail><CustomerAdress>Yaffo 205, Jerusalem</CustomerAdress><OrderDate>2023-01-28T06:17:21.2999787+02:00</OrderDate><ShipDate xsi:nil="true" /><DeliveryDate xsi:nil="true" /></Order><Order><Id>124</Id><CustomerName>Yossi Netanyahu</CustomerName><CustomerEmail>YossiNetanyahu@gmail.com</CustomerEmail><CustomerAdress>Tapuach 7, Jerusalem</CustomerAdress><OrderDate>2023-01-28T16:32:33.6001694+02:00</OrderDate><ShipDate xsi:nil="true" /><DeliveryDate xsi:nil="true" /></Order><Order><Id>125</Id><CustomerName>Kobi Lapid</CustomerName><CustomerEmail>KobiLapid@gmail.com</CustomerEmail><CustomerAdress>Lulav 30, Jerusalem</CustomerAdress><OrderDate>2023-01-27T23:10:32.840846+02:00</OrderDate><ShipDate xsi:nil="true" /><DeliveryDate xsi:nil="true" /></Order><Order><Id>126</Id><CustomerName>Kobi Lapid</CustomerName><CustomerEmail>KobiLapid@gmail.com</CustomerEmail><CustomerAdress>Lulav 30, Jerusalem</CustomerAdress><OrderDate>2023-01-25T21:51:50.3689316+02:00</OrderDate><ShipDate xsi:nil="true" /><DeliveryDate xsi:nil="true" /></Order><Order><Id>127</Id><CustomerName>Yossi Nahon</CustomerName><CustomerEmail>YossiNahon@gmail.com</CustomerEmail><CustomerAdress>Lulav 5, Jerusalem</CustomerAdress><OrderDate>2023-01-30T02:19:34.1158269+02:00</OrderDate><ShipDate xsi:nil="true" /><DeliveryDate xsi:nil="true" /></Order></ArrayOfOrder>
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Order>
+    <Id>145</Id>
+    <CustomerName>Dani Kohen</CustomerName>
+    <CustomerEmail>DaniKohen@gmail.com</CustomerEmail>
+    <CustomerAdress>Yaffo 205, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-23T22:38:16.5675775+02:00</OrderDate>
+    <ShipDate>2023-01-24T12:16:23.3045775+02:00</ShipDate>
+    <DeliveryDate>2023-01-27T22:02:56.3655775+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>146</Id>
+    <CustomerName>Yossi Kohen</CustomerName>
+    <CustomerEmail>YossiKohen@gmail.com</CustomerEmail>
+    <CustomerAdress>Yaffo 205, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-21T20:30:32.9818586+02:00</OrderDate>
+    <ShipDate>2023-01-22T02:38:42.4958586+02:00</ShipDate>
+    <DeliveryDate>2023-01-25T20:57:31.5778586+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>147</Id>
+    <CustomerName>Israel Nahon</CustomerName>
+    <CustomerEmail>IsraelNahon@gmail.com</CustomerEmail>
+    <CustomerAdress>Lulav 5, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-22T06:58:49.9899453+02:00</OrderDate>
+    <ShipDate>2023-01-23T11:35:00.9839453+02:00</ShipDate>
+    <DeliveryDate>2023-01-25T22:09:07.9939453+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>148</Id>
+    <CustomerName>Yossi Lapid</CustomerName>
+    <CustomerEmail>YossiLapid@gmail.com</CustomerEmail>
+    <CustomerAdress>Lulav 30, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-24T21:51:44.5665368+02:00</OrderDate>
+    <ShipDate>2023-01-25T02:19:58.4585368+02:00</ShipDate>
+    <DeliveryDate>2023-01-27T10:38:55.9465368+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>149</Id>
+    <CustomerName>Shlomi Netanyahu</CustomerName>
+    <CustomerEmail>ShlomiNetanyahu@gmail.com</CustomerEmail>
+    <CustomerAdress>Tapuach 7, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-20T19:36:51.0085374+02:00</OrderDate>
+    <ShipDate>2023-01-22T09:54:34.4185374+02:00</ShipDate>
+    <DeliveryDate>2023-01-27T00:24:07.2475374+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>150</Id>
+    <CustomerName>Meni Adas</CustomerName>
+    <CustomerEmail>MeniAdas@gmail.com</CustomerEmail>
+    <CustomerAdress>Hatzvi 15, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-21T16:04:56.0103221+02:00</OrderDate>
+    <ShipDate>2023-01-23T03:01:16.6313221+02:00</ShipDate>
+    <DeliveryDate>2023-01-27T11:12:40.8913221+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>151</Id>
+    <CustomerName>Israel Lipsker</CustomerName>
+    <CustomerEmail>IsraelLipsker@gmail.com</CustomerEmail>
+    <CustomerAdress>Yaffo 15, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-25T19:18:52.7408819+02:00</OrderDate>
+    <ShipDate>2023-01-25T22:02:58.1938819+02:00</ShipDate>
+    <DeliveryDate>2023-01-27T08:04:52.4828819+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>152</Id>
+    <CustomerName>Levi Kohen</CustomerName>
+    <CustomerEmail>LeviKohen@gmail.com</CustomerEmail>
+    <CustomerAdress>Yaffo 205, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-26T10:13:00.9924785+02:00</OrderDate>
+    <ShipDate>2023-01-28T02:06:24.9324785+02:00</ShipDate>
+    <DeliveryDate>2023-01-29T13:58:30.4074785+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>153</Id>
+    <CustomerName>Ei Levi</CustomerName>
+    <CustomerEmail>EiLevi@gmail.com</CustomerEmail>
+    <CustomerAdress>Tehena 13, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-24T05:13:37.5367249+02:00</OrderDate>
+    <ShipDate>2023-01-25T05:06:35.2737249+02:00</ShipDate>
+    <DeliveryDate>2023-01-27T01:04:03.2247249+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>154</Id>
+    <CustomerName>Israel Fridman</CustomerName>
+    <CustomerEmail>IsraelFridman@gmail.com</CustomerEmail>
+    <CustomerAdress>Etrog 2, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-26T09:10:08.6737244+02:00</OrderDate>
+    <ShipDate>2023-01-26T21:56:27.5467244+02:00</ShipDate>
+    <DeliveryDate>2023-01-28T21:26:44.9177244+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>155</Id>
+    <CustomerName>Ei Galon</CustomerName>
+    <CustomerEmail>EiGalon@gmail.com</CustomerEmail>
+    <CustomerAdress>Malchey Israel  14, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-28T23:46:30.7615833+02:00</OrderDate>
+    <ShipDate>2023-01-29T02:56:42.6285833+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T07:31:51.3255833+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>156</Id>
+    <CustomerName>Yossi Netanyahu</CustomerName>
+    <CustomerEmail>YossiNetanyahu@gmail.com</CustomerEmail>
+    <CustomerAdress>Tapuach 7, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-21T15:15:57.4108767+02:00</OrderDate>
+    <ShipDate>2023-01-23T00:06:14.7908767+02:00</ShipDate>
+    <DeliveryDate>2023-01-27T11:20:29.3268767+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>157</Id>
+    <CustomerName>Dani Adas</CustomerName>
+    <CustomerEmail>DaniAdas@gmail.com</CustomerEmail>
+    <CustomerAdress>Hatzvi 15, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-29T00:43:05.1982401+02:00</OrderDate>
+    <ShipDate>2023-01-29T23:46:58.4402401+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T03:56:55.9702401+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>158</Id>
+    <CustomerName>Ei Lipsker</CustomerName>
+    <CustomerEmail>EiLipsker@gmail.com</CustomerEmail>
+    <CustomerAdress>Yaffo 15, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-24T04:13:10.3981296+02:00</OrderDate>
+    <ShipDate>2023-01-25T02:03:09.0421296+02:00</ShipDate>
+    <DeliveryDate>2023-01-27T06:59:02.4211296+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>170</Id>
+    <CustomerName>Shlomi Kohen</CustomerName>
+    <CustomerEmail>ShlomiKohen@gmail.com</CustomerEmail>
+    <CustomerAdress>Yaffo 205, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-25T15:25:58.948276+02:00</OrderDate>
+    <ShipDate>2023-01-26T02:23:39.825276+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T22:57:46.532993+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>171</Id>
+    <CustomerName>Ei Nahon</CustomerName>
+    <CustomerEmail>EiNahon@gmail.com</CustomerEmail>
+    <CustomerAdress>Lulav 5, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-25T16:41:51.0092938+02:00</OrderDate>
+    <ShipDate>2023-01-26T09:05:15.8152938+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T22:57:49.5767421+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>172</Id>
+    <CustomerName>Beni Lipsker</CustomerName>
+    <CustomerEmail>BeniLipsker@gmail.com</CustomerEmail>
+    <CustomerAdress>Yaffo 15, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-25T21:39:21.3051918+02:00</OrderDate>
+    <ShipDate>2023-01-27T05:13:22.2681918+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T22:57:55.6067081+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>175</Id>
+    <CustomerName>Israel Fridman</CustomerName>
+    <CustomerEmail>IsraelFridman@gmail.com</CustomerEmail>
+    <CustomerAdress>Etrog 2, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-27T14:12:02.5045123+02:00</OrderDate>
+    <ShipDate>2023-01-28T21:19:01.5595123+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T23:28:14.5481805+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>177</Id>
+    <CustomerName>Meni Nahon</CustomerName>
+    <CustomerEmail>MeniNahon@gmail.com</CustomerEmail>
+    <CustomerAdress>Lulav 5, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-28T23:37:57.7885934+02:00</OrderDate>
+    <ShipDate>2023-01-29T08:49:42.7725934+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T23:38:37.7490266+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>179</Id>
+    <CustomerName>Ei Lipsker</CustomerName>
+    <CustomerEmail>EiLipsker@gmail.com</CustomerEmail>
+    <CustomerAdress>Yaffo 15, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-26T00:38:22.5784979+02:00</OrderDate>
+    <ShipDate>2023-01-30T22:57:40.483447+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T23:38:55.7136951+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>180</Id>
+    <CustomerName>Yossi Galon</CustomerName>
+    <CustomerEmail>YossiGalon@gmail.com</CustomerEmail>
+    <CustomerAdress>Malchey Israel  14, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-27T06:08:16.4201358+02:00</OrderDate>
+    <ShipDate>2023-01-30T23:04:35.0080025+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T23:38:59.7824589+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>181</Id>
+    <CustomerName>Israel Netanyahu</CustomerName>
+    <CustomerEmail>IsraelNetanyahu@gmail.com</CustomerEmail>
+    <CustomerAdress>Tapuach 7, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-28T09:31:47.5987451+02:00</OrderDate>
+    <ShipDate>2023-01-30T23:28:05.4959493+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T23:39:04.8197505+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>182</Id>
+    <CustomerName>Moshe Lipsker</CustomerName>
+    <CustomerEmail>MosheLipsker@gmail.com</CustomerEmail>
+    <CustomerAdress>Yaffo 15, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-29T00:00:45.0843317+02:00</OrderDate>
+    <ShipDate>2023-01-30T23:28:25.5992737+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T23:39:14.4789471+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>183</Id>
+    <CustomerName>Shlomi Galon</CustomerName>
+    <CustomerEmail>ShlomiGalon@gmail.com</CustomerEmail>
+    <CustomerAdress>Malchey Israel  14, Jerusalem</CustomerAdress>
+    <OrderDate>2023-01-29T23:26:06.4970695+02:00</OrderDate>
+    <ShipDate>2023-01-30T23:38:48.7977211+02:00</ShipDate>
+    <DeliveryDate>2023-01-30T23:39:19.543348+02:00</DeliveryDate>
+  </Order>
+</ArrayOfOrder>

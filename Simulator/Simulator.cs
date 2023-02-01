@@ -15,7 +15,7 @@ namespace Simulator
         // Declare the event using the delegate.
         private static event Action? StopSimulator;            //??
         private static event Action<int, BO.Status, BO.Status, DateTime, DateTime>? UpdateReport;
-        //private static event Action? SimulatorCompleted;
+        
         public static void Activate()  // הפעלה 
         {        
             new Thread(() =>
@@ -46,6 +46,7 @@ namespace Simulator
 
                     }
                     Thread.Sleep(1000);
+                    
                 }
                 //report finish 
                 StopSimulator?.Invoke();
@@ -60,10 +61,7 @@ namespace Simulator
             StopSimulator += observer;
         }
 
-        //public static void SimulatorCompletedRegister(Action observer)  // מקבל מתודה מתצוגה ורושם לאירוע המתאים
-        //{
-        //    SimulatorCompleted += observer;
-        //}
+        
 
         public static void UpdateReportRegister(Action<int, BO.Status, BO.Status, DateTime, DateTime> observer)  // מקבל מתודה מתצוגה ורושם לאירוע המתאים
         {
@@ -71,7 +69,7 @@ namespace Simulator
         }
         public static void Unregister(Action observer1, Action<int, BO.Status, BO.Status, DateTime, DateTime> observer2) 
         {
-            
+           
             StopSimulator -= observer1;
             UpdateReport -= observer2;
         }
