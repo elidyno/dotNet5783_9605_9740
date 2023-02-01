@@ -28,6 +28,7 @@ namespace PL
     {
         BackgroundWorker worker;
         Stopwatch stopWatch;
+        bool _preventClosing = true;
        
 
         public static readonly DependencyProperty ArrayListProperty = DependencyProperty.Register(
@@ -117,6 +118,7 @@ namespace PL
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Simulator.Simulator.Unregister(StopSimulatorObserver, SimulatorUpdatedObserver);
+            _preventClosing = false;
             this.Close();
         }
 
@@ -124,6 +126,14 @@ namespace PL
         {
             // עצירת הסימולטור ע"י זימון מתודה מסימולטור ואז אוטומטית המשקיף על עצירה יבצע סיום תהליכון הזה.
             Simulator.Simulator.Deactivate();
+        }
+
+        // prevent close the windoe.
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(_preventClosing)
+                e.Cancel = true;
+            
         }
     }
 }
