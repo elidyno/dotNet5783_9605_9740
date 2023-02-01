@@ -28,12 +28,12 @@ namespace PL
     {
         BackgroundWorker worker;
         Stopwatch stopWatch;
-        int length;
+       
 
         public static readonly DependencyProperty ArrayListProperty = DependencyProperty.Register(
-        "data", typeof(ArrayList), typeof(SimulatorWindow), new PropertyMetadata(default(ArrayList?)));
+        "data", typeof(ArrayList), typeof(SimulatorWindow), new PropertyMetadata(default(ArrayList)));
         //Dependency Property "Order" for holding order data
-        public ArrayList? data
+        public ArrayList data
         {
             get => (ArrayList)GetValue(ArrayListProperty);
             set => SetValue(ArrayListProperty, value);
@@ -58,15 +58,11 @@ namespace PL
             worker.CancelAsync();
         }
 
-        //void SimulatorCompletedObserver()
-        //{
-        //    return;
-        //}
-
+       
         void SimulatorUpdatedObserver(int id, BO.Status orderStatus, BO.Status nextStatus, DateTime startTime, DateTime finishTime)
         {
             ArrayList data = new ArrayList() { id, orderStatus, nextStatus, startTime, finishTime };
-            worker.ReportProgress(2, data); //ושולח לו נתונים , והאירוע הזה יפעיל את הפונקציה שנרשמה אליו ProgressChanged מפעיל את האירוע   
+            worker.ReportProgress(1, data); //ושולח לו נתונים , והאירוע הזה יפעיל את הפונקציה שנרשמה אליו ProgressChanged מפעיל את האירוע   
         }
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
@@ -83,8 +79,8 @@ namespace PL
 
             while(worker.CancellationPending == false)
             {
-                
-                worker.ReportProgress(1);  // עדכן שעון
+               
+                worker.ReportProgress(2);  // עדכן שעון
                 Thread.Sleep(1000);
             }
 
@@ -93,20 +89,28 @@ namespace PL
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
 
-            int type = e.ProgressPercentage; //?
-            if (type == 1) //בקשת עדכון שעון 
+            double type = e.ProgressPercentage; //?
+            if (type == 1) // בקשת עדכון הזמנה
+            {
+                
+                data = (ArrayList)e.UserState!;
+                DateTime startTime = (DateTime)data[3]!;
+                DateTime finishTime = (DateTime)data[4]!;
+
+                OrderIdText.Text = data[0]!.ToString();
+                CurrentStatusText.Text = data[1]!.ToString();
+                NextStatusText.Text = data[2]!.ToString();
+                StartTimeText.Text = startTime.ToString();
+                FinishTimeText.Text = finishTime.ToString();
+
+            }
+            else if(type == 2) // בקשת עדכון שעון 
             {
                 string timerText = stopWatch.Elapsed.ToString(); // עדכון פקד שמציג שעון
                 timerText = timerText.Substring(0, 8);
                 this.WatchText.Text = timerText;
             }
-            else // בקשת עדכון הזמנה 
-            {
-                data = e.UserState as ArrayList;
-                //DateTime time1 = (DateTime)StartTimeText.Text;
-                //DateTime time2 = time1.AddSeconds(30);
-                //length = (int)data[0];
-            }
+           
         }
 
         
