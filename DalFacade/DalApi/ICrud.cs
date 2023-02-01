@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
+    /// <summary>
+    ///  Croud method for Dal object
+    /// </summary>
     public interface ICrud <T> where T : struct
     {
         public int Add(T item);

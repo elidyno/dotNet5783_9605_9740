@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Dal
 {
+    /// <summary>
+    /// statment of implementation of insance of craud method in dal xml configration
+    /// </summary>
     internal sealed class DalXml : IDal
     {
         private DalXml() { }

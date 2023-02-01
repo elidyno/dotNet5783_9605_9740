@@ -13,13 +13,16 @@
         <Grid Background="#9FFFFFFF">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="120"/>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -36,27 +39,37 @@
 
                 </Style>
             </Grid.Resources>
-            <TextBlock Name="WatchText" Grid.Column="1" HorizontalAlignment="Center" Text="clock" VerticalAlignment="Center"
-                       FontSize="30" FontFamily="Viner Hand ITC"/>
-            <Label Content="Order Id:  " Grid.Column="0" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
-            <TextBlock x:Name="OrderIdText" Grid.Column="1" HorizontalAlignment="Left"  Text="id" VerticalAlignment="Center" />
-            <Label Grid.Column="0" Grid.Row="1" Content="Current status:"
-                   Margin="30,0,0,0" VerticalAlignment="Center"/>
-            <TextBlock Name="CurrentStatusText" Grid.Column="0" Grid.Row="1" Text="current"   
-                   Margin="170,0,0,0" VerticalAlignment="Center"/>
-            <Label Grid.Column="1" Grid.Row="1" Content="next status:" 
-                     Margin="30,0,0,0" VerticalAlignment="Center"/>
-            <TextBlock Name="NextStatusText" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="next" 
-                        VerticalAlignment="Center"  Margin="145,0,0,0"/>
-            <Label Content="Start Time:" Margin="30,0,0,0" Grid.Row="2" Grid.Column="0"  VerticalAlignment="Center"/>
-            <TextBlock x:Name="StartTimeText" Margin="140,0,0,0" Grid.Row="2" Grid.Column="0"    Text="start" VerticalAlignment="Center"/>
+            <TextBlock Name="WatchText" Grid.Column="3" HorizontalAlignment="Left" Margin="30,0,0,0" Text="clock" VerticalAlignment="Bottom"
+                       FontSize="30" FontFamily="Viner Hand ITC" Padding="0,0,0,20"/>
+            <WrapPanel Grid.Column="1" VerticalAlignment="Bottom" Margin="30,0,0,20">
+                <Label Content="Order Id:  " FontSize="24"/>
+                <TextBlock x:Name="OrderIdText"  Text="id" VerticalAlignment="Center" FontSize="24"/>
+            </WrapPanel>
+            <WrapPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="30,0,0,0">
+                <Label Content="Current status:  "
+                    VerticalAlignment="Center"/>
+                <TextBlock Name="CurrentStatusText" Text="current"   
+                  VerticalAlignment="Center"/>
+            </WrapPanel>
+            <WrapPanel Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Margin="30,0,0,0">
+                <Label Content="next status:  " 
+                      VerticalAlignment="Center"/>
+                <TextBlock Name="NextStatusText" TextWrapping="Wrap" Text="next" 
+                        VerticalAlignment="Center" />
+            </WrapPanel>
+            <WrapPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="30,0,0,0">
+                <Label Content="Start Time:  " VerticalAlignment="Center"/>
+                <TextBlock x:Name="StartTimeText" Text="start" VerticalAlignment="Center"/>
 
-            <Label Grid.Column="1" Content="Finish time:" Margin="30,0,0,0" Grid.Row="2"   VerticalAlignment="Center"/>
-            <TextBlock  x:Name="FinishTimeText" Margin="145,0,0,0" Grid.Column="1" Grid.Row="2"  Text="finish" VerticalAlignment="Center"/>
+            </WrapPanel>
+            <WrapPanel Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Margin="30,0,0,0">
+                <Label Content="Finish time:  "  VerticalAlignment="Center"/>
+                <TextBlock  x:Name="FinishTimeText" Text="finish" VerticalAlignment="Center"/>
 
+            </WrapPanel>
 
-            <Button Content="stop" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" 
-                Click="Stop_Click" Width="130" FontSize="25" Background="green" Foreground="White" Padding="7,7,7,7"/>
+            <Button Content="stop" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="3"
+                Click="Stop_Click" Width="200" FontSize="27" Background="green" Foreground="White" Padding="7,7,7,7" FontFamily="Verdana"/>
 
 
         </Grid>

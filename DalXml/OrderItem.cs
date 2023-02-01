@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Dal
 {
+    /// <summary>
+    /// implementation of craut method in dal list configration for orderItem
+    /// </summary>
     internal class OrderItem : IOrderItem
     {
         const string s_orderItems = "OrderItems";

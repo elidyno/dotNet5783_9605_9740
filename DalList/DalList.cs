@@ -7,6 +7,9 @@ using DalApi;
 using DO;
 namespace Dal;
 
+/// <summary>
+/// statment of implementation of insance of craud method in dal list configration
+/// </summary>
 internal sealed class DalList : IDal
 {
     

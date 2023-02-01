@@ -9,6 +9,9 @@ using System.Xml.Linq;
 
 namespace Dal
 {
+    /// <summary>
+    /// initialize the data for product
+    /// </summary>
     internal class InitializeProducts
     {
         internal static readonly Random rand = new Random(DateTime.Now.Millisecond);

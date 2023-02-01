@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,10 +33,35 @@ namespace PL.Product
         }
         //public ObservableCollection<BO.ProductItem?> ProductItems { get; set; }
         static BO.Cart cart = new BO.Cart();
-        public ProductItemWindow(BO.ProductItem item)
+
+        /// <summary>
+        /// A `Cart` object used to store items
+        /// </summary>
+        public BO.Cart Cart = new BO.Cart();
+
+        public ProductItemWindow(BO.ProductItem item, BO.Cart cart)
         {
             ProductItem = item;
+            Cart = cart;
             InitializeComponent();
         }
+
+        private void AddProduct_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Add the product item to the cart
+                Cart = bl!.Cart.Add(Cart, ProductItem!.Id);
+            }
+            catch (Exception ex)
+            {
+                // Show an error message if the product item could not be added to the cart
+                MessageBox.Show("Can't add product to cart:\n" + ex.Message);
+            }
+            this.Close();
+            new Catalogue(Cart).Show();
+        }
+
     }
+    
 }

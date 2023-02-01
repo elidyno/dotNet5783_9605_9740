@@ -7,6 +7,9 @@ using System.Xml.Linq;
 
 namespace DataSurceInitialize
 {
+    /// <summary>
+    /// menage the runnig ID number using the Xml file
+    /// </summary>
     public class RunninId
     {
         private int orderId;

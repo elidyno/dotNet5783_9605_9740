@@ -23,77 +23,110 @@ namespace PL
 {
     /// <summary>
     /// Interaction logic for SimulatorWindow.xaml
+    /// The SimulatorWindow class represents the main window for the simulation.
     /// </summary>
     public partial class SimulatorWindow : Window
     {
+        // A background worker instance to run the simulation process.
         BackgroundWorker worker;
+        // A stopwatch instance to keep track of the elapsed time of the simulation.
         Stopwatch stopWatch;
+        // A boolean variable to prevent the window from closing.
         bool _preventClosing = true;
-       
 
+        // A Dependency Property to store the data of the simulation.
         public static readonly DependencyProperty ArrayListProperty = DependencyProperty.Register(
         "data", typeof(ArrayList), typeof(SimulatorWindow), new PropertyMetadata(default(ArrayList)));
-        //Dependency Property "Order" for holding order data
+
+        // Property for the Dependency Property "Order"
         public ArrayList data
         {
             get => (ArrayList)GetValue(ArrayListProperty);
             set => SetValue(ArrayListProperty, value);
         }
 
+        /// <summary>
+        /// Constructor for the SimulatorWindow class.
+        /// Initializes the window and starts the background worker for the simulation.
+        /// </summary>
         public SimulatorWindow()
         {
             InitializeComponent();
+            // Initialize the background worker instance.
             worker = new BackgroundWorker();
+            // Initialize the stopwatch instance.
             stopWatch = new Stopwatch();
-            data= new ArrayList();
-            worker.DoWork += Worker_DoWork!;
-            worker.ProgressChanged += Worker_ProgressChanged!;
-            worker.RunWorkerCompleted += Worker_RunWorkerCompleted!;  
+            // Initialize the data for the simulation.
+            data = new ArrayList();
+            // Register the DoWork event handler for the background worker.
+            worker.DoWork += Worker_DoWork;
+            // Register the ProgressChanged event handler for the background worker.
+            worker.ProgressChanged += Worker_ProgressChanged;
+            // Register the RunWorkerCompleted event handler for the background worker.
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            // Set the workerReportsProgress property to true to enable progress updates.
             worker.WorkerReportsProgress = true;
+            // Set the workerSupportsCancellation property to true to enable cancellation of the worker.
             worker.WorkerSupportsCancellation = true;
-            worker.RunWorkerAsync();     //הפעלת התהליך 
+            // Start the background worker.
+            worker.RunWorkerAsync();
         }
 
+        /// <summary>
+        /// The StopSimulatorObserver method is used to stop the simulation process.
+        /// </summary>
         void StopSimulatorObserver()
         {
             worker.CancelAsync();
         }
 
-       
+
+        /// <summary>
+        /// Observer method that is registered to the Simulator's update event. 
+        /// When the Simulator updates its order status, this method is called to report the updated information to the worker. 
+        /// </summary>
+        /// <param name="id">The ID of the updated order.</param>
+        /// <param name="orderStatus">The current status of the order.</param>
+        /// <param name="nextStatus">The next status of the order.</param>
+        /// <param name="startTime">The start time of the order's current status.</param>
+        /// <param name="finishTime">The finish time of the order's current status.</param>
         void SimulatorUpdatedObserver(int id, BO.Status orderStatus, BO.Status nextStatus, DateTime startTime, DateTime finishTime)
         {
             ArrayList data = new ArrayList() { id, orderStatus, nextStatus, startTime, finishTime };
-            worker.ReportProgress(1, data); //ושולח לו נתונים , והאירוע הזה יפעיל את הפונקציה שנרשמה אליו ProgressChanged מפעיל את האירוע   
+            worker.ReportProgress(1, data);
         }
 
+        /// <summary>
+        /// The event handler for the worker's DoWork event.
+        /// This method starts the Simulator and updates the stopwatch and order status as the Simulator runs.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-
-            //BackgroundWorker worker = sender as BackgroundWorker;
-
-            Simulator.Simulator.StopSimulatorRegister(StopSimulatorObserver); // רישום משקיף לאירוע עצירה
+            Simulator.Simulator.StopSimulatorRegister(StopSimulatorObserver);
             Simulator.Simulator.UpdateReportRegister(SimulatorUpdatedObserver);
+            Simulator.Simulator.Activate();
 
-            Simulator.Simulator.Activate(); // הפעלת הסימולטור
-
-            while(worker.CancellationPending == false)
+            while (worker.CancellationPending == false)
             {
-               
-                worker.ReportProgress(2);  // עדכן שעון
+                worker.ReportProgress(2);
                 Thread.Sleep(1000);
             }
-
         }
 
+        /// <summary>
+        /// The event handler for the worker's ProgressChanged event.
+        /// This method updates the UI to display the updated order status and stopwatch.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
-            double type = e.ProgressPercentage; //?
-            if (type == 1) // בקשת עדכון הזמנה
+            double type = e.ProgressPercentage;
+            if (type == 1)
             {
-                
                 data = (ArrayList)e.UserState!;
                 DateTime startTime = (DateTime)data[3]!;
                 DateTime finishTime = (DateTime)data[4]!;
@@ -103,37 +136,51 @@ namespace PL
                 NextStatusText.Text = data[2]!.ToString();
                 StartTimeText.Text = startTime.ToString();
                 FinishTimeText.Text = finishTime.ToString();
-
             }
-            else if(type == 2) // בקשת עדכון שעון 
+            else if (type == 2)
             {
-                string timerText = stopWatch.Elapsed.ToString(); // עדכון פקד שמציג שעון
+                string timerText = stopWatch.Elapsed.ToString();
                 timerText = timerText.Substring(0, 8);
                 this.WatchText.Text = timerText;
             }
-           
         }
 
-        
+
+        /// <summary>
+        /// This method is the event handler for the RunWorkerCompleted event of the BackgroundWorker object.
+        /// It unregisters the observers for the SimulatorUpdated and StopSimulator events and closes the window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The RunWorkerCompletedEventArgs that contains the event data.</param>
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Simulator.Simulator.Unregister(StopSimulatorObserver, SimulatorUpdatedObserver);
-            _preventClosing = false;
+            _preventClosing = false;//enable the cabcel close window
             this.Close();
         }
 
+        /// <summary>
+        /// This method is the event handler for the click event of the Stop button.
+        /// It deactivates the Simulator by calling the Deactivate method of the Simulator class.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The RoutedEventArgs that contains the event data.</param>
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
-            // עצירת הסימולטור ע"י זימון מתודה מסימולטור ואז אוטומטית המשקיף על עצירה יבצע סיום תהליכון הזה.
+            // Stop the simulator by calling the Deactivate method from the Simulator class and the stop observer will automatically perform the end of this process.
             Simulator.Simulator.Deactivate();
         }
 
-        // prevent close the windoe.
+        /// <summary>
+        /// This method is the event handler for the Closing event of the Window.
+        /// It prevents the window from closing if the _preventClosing flag is set to true.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The CancelEventArgs that contains the event data.</param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(_preventClosing)
+            if (_preventClosing)
                 e.Cancel = true;
-            
         }
     }
 }

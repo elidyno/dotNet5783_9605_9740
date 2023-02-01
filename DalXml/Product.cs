@@ -10,6 +10,9 @@ using System.Xml.Linq;
 
 namespace Dal
 {
+    /// <summary>
+    /// implementation of craut method in dal list configration for product
+    /// </summary>
     internal class Product : IProduct
     {
         const string s_products = "products";

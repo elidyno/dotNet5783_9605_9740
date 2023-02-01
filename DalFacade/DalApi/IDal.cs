@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using DO;
 namespace DalApi;
 
+/// <summary>
+///  Instances of Croud method for Dal object
+/// </summary>
 public interface IDal
 {
     public IOrder Order { get;}

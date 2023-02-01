@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
+    /// <summary>
+    /// Instance of Croud method
+    /// </summary>
     public interface IOrderItem : ICrud<OrderItem>
     {
    

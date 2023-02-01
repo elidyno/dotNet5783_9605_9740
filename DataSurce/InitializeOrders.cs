@@ -10,6 +10,9 @@ using Dal;
 
 namespace DataSurceInitialize
 {
+    /// <summary>
+    /// initialize the data for order
+    /// </summary>
     internal class InitializeOrders
     {
         public static RunninId runninId = new RunninId();

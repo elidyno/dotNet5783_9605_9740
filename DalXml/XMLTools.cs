@@ -10,6 +10,9 @@ using System.Xml;
 
 namespace Dal
 {
+    /// <summary>
+    /// tools for enable the xml files operation
+    /// </summary>
     public static class XMLTools
     {
         

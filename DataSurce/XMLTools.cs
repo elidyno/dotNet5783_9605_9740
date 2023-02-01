@@ -10,6 +10,9 @@ using System.Xml;
 
 namespace DataSurceInitialize
 {
+    /// <summary>
+    /// tools for enable the xml files operation
+    /// </summary>
     public static class XMLTools
     {
 

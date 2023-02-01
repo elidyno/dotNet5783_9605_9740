@@ -1,1 +1,129 @@
-﻿<?xml version="1.0" encoding="utf-8"?><ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Product><Id>100143</Id><Name>Sport shoes (pink, size:29, girl)</Name><Price>99</Price><Category>GIRLS</Category><InStock>11</InStock></Product><Product><Id>100049</Id><Name>Elegant shoes (black, size:45, men)</Name><Price>399</Price><Category>MEN</Category><InStock>6</InStock></Product><Product><Id>100134</Id><Name>Sport shoes (blue, size:30, boys)</Name><Price>149</Price><Category>BOYS</Category><InStock>4</InStock></Product><Product><Id>100145</Id><Name>Shoe polish (black, mat)</Name><Price>40</Price><Category>ACCESSORIES</Category><InStock>5</InStock></Product><Product><Id>100155</Id><Name>Girl's boots (pink, size:25, girl)</Name><Price>199</Price><Category>GIRLS</Category><InStock>7</InStock></Product><Product><Id>100188</Id><Name>Flip flops (white, size:24, girl)</Name><Price>149</Price><Category>GIRLS</Category><InStock>2</InStock></Product><Product><Id>100196</Id><Name>Sport shoes (pink, size:37, women)</Name><Price>299</Price><Category>WOMEN</Category><InStock>5</InStock></Product><Product><Id>100205</Id><Name>Sport shoes (blue, size:43, men)</Name><Price>299</Price><Category>MEN</Category><InStock>7</InStock></Product><Product><Id>100212</Id><Name>Work shoes (gray, size:41, men)</Name><Price>499</Price><Category>MEN</Category><InStock>4</InStock></Product><Product><Id>100221</Id><Name>Shoe polish (black, mat)</Name><Price>40</Price><Category>ACCESSORIES</Category><InStock>5</InStock></Product><Product><Id>100230</Id><Name>Shoe polish (black, mat)</Name><Price>40</Price><Category>ACCESSORIES</Category><InStock>9</InStock></Product><Product><Id>100239</Id><Name>Elegant shoes (brown, size:42, men)</Name><Price>399</Price><Category>MEN</Category><InStock>14</InStock></Product><Product><Id>100247</Id><Name>Girl's boots (pink, size:25, girl)</Name><Price>199</Price><Category>GIRLS</Category><InStock>8</InStock></Product><Product><Id>100255</Id><Name>Sport shoes (blue, size:43, men)</Name><Price>299</Price><Category>MEN</Category><InStock>6</InStock></Product><Product><Id>100008</Id><Name>sport socks (white, size:43)</Name><Price>30</Price><Category>ACCESSORIES</Category><InStock>12</InStock></Product><Product><Id>100015</Id><Name>Women's boots (black, size:39, women)</Name><Price>499</Price><Category>WOMEN</Category><InStock>11</InStock></Product><Product><Id>100023</Id><Name>Elegant shoes (black, size:45, men)</Name><Price>399</Price><Category>MEN</Category><InStock>4</InStock></Product><Product><Id>100032</Id><Name>futball shoes (blue, size:22, boys)</Name><Price>99</Price><Category>BOYS</Category><InStock>0</InStock></Product></ArrayOfProduct>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Product>
+    <Id>100199</Id>
+    <Name>Sport shoes (blue, size:43, men)</Name>
+    <Price>299</Price>
+    <Category>MEN</Category>
+    <InStock>6</InStock>
+  </Product>
+  <Product>
+    <Id>100052</Id>
+    <Name>sport socks (white, size:43)</Name>
+    <Price>30</Price>
+    <Category>ACCESSORIES</Category>
+    <InStock>7</InStock>
+  </Product>
+  <Product>
+    <Id>100134</Id>
+    <Name>Shoe polish (brown, mat)</Name>
+    <Price>40</Price>
+    <Category>ACCESSORIES</Category>
+    <InStock>14</InStock>
+  </Product>
+  <Product>
+    <Id>100150</Id>
+    <Name>shoe pad (size:40, ortoped)</Name>
+    <Price>120</Price>
+    <Category>ACCESSORIES</Category>
+    <InStock>3</InStock>
+  </Product>
+  <Product>
+    <Id>100165</Id>
+    <Name>futball shoes (blue, size:22, boys)</Name>
+    <Price>99</Price>
+    <Category>BOYS</Category>
+    <InStock>5</InStock>
+  </Product>
+  <Product>
+    <Id>100205</Id>
+    <Name>Girl's boots (pink, size:25, girl)</Name>
+    <Price>199</Price>
+    <Category>GIRLS</Category>
+    <InStock>13</InStock>
+  </Product>
+  <Product>
+    <Id>100220</Id>
+    <Name>Sport shoes (blue, size:30, boys)</Name>
+    <Price>149</Price>
+    <Category>BOYS</Category>
+    <InStock>3</InStock>
+  </Product>
+  <Product>
+    <Id>100236</Id>
+    <Name>Elegant shoes (brown, size:42, men)</Name>
+    <Price>399</Price>
+    <Category>MEN</Category>
+    <InStock>5</InStock>
+  </Product>
+  <Product>
+    <Id>100252</Id>
+    <Name>Sport shoes (blue, size:30, boys)</Name>
+    <Price>149</Price>
+    <Category>BOYS</Category>
+    <InStock>9</InStock>
+  </Product>
+  <Product>
+    <Id>100012</Id>
+    <Name>Elegant shoes (black, size:27, boys)</Name>
+    <Price>199</Price>
+    <Category>BOYS</Category>
+    <InStock>4</InStock>
+  </Product>
+  <Product>
+    <Id>100025</Id>
+    <Name>sport socks (white, size:43)</Name>
+    <Price>30</Price>
+    <Category>ACCESSORIES</Category>
+    <InStock>6</InStock>
+  </Product>
+  <Product>
+    <Id>100037</Id>
+    <Name>Shoe polish (brown, mat)</Name>
+    <Price>40</Price>
+    <Category>ACCESSORIES</Category>
+    <InStock>9</InStock>
+  </Product>
+  <Product>
+    <Id>100048</Id>
+    <Name>Girl's boots (pink, size:25, girl)</Name>
+    <Price>199</Price>
+    <Category>GIRLS</Category>
+    <InStock>9</InStock>
+  </Product>
+  <Product>
+    <Id>100059</Id>
+    <Name>Shoe polish (black, mat)</Name>
+    <Price>40</Price>
+    <Category>ACCESSORIES</Category>
+    <InStock>9</InStock>
+  </Product>
+  <Product>
+    <Id>100069</Id>
+    <Name>Moccasins (brown, size:28, boys)</Name>
+    <Price>199</Price>
+    <Category>BOYS</Category>
+    <InStock>2</InStock>
+  </Product>
+  <Product>
+    <Id>100080</Id>
+    <Name>Moccasins (brown, size:28, boys)</Name>
+    <Price>199</Price>
+    <Category>BOYS</Category>
+    <InStock>7</InStock>
+  </Product>
+  <Product>
+    <Id>100091</Id>
+    <Name>Women's boots (black, size:39, women)</Name>
+    <Price>499</Price>
+    <Category>WOMEN</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <Id>100038</Id>
+    <Name>new </Name>
+    <Category>MEN</Category>
+    <Price>20</Price>
+    <InStock>3</InStock>
+  </Product>
+</ArrayOfProduct>

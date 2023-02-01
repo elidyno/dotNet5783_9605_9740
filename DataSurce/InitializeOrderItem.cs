@@ -8,6 +8,9 @@ using System.Xml.Linq;
 
 namespace DataSurceInitialize
 {
+    /// <summary>
+    /// initialize the data for orderItem
+    /// </summary>
     internal class InitializeOrderItem
     {
         public static RunninId runninId = new RunninId();
