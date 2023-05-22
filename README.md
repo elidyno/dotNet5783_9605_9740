@@ -9,7 +9,12 @@ This repository contains a Store Management System, a Microsoft Windows Presenta
 - Familiarity with essential Design Patterns such as Observer, Design by Contract, Factory Method, and Singleton
 - Knowledge of data collection practices using LINQ and implementing queries with deferred execution
 - Ability to build a graphical user interface (GUI) using the WPF library
-- Skill in utilizing data binding methods for seamless integration of data
+- Knowledge of data binding methods (Binding Data)
 - Understanding the basic architecture of a distributed application and applying the three-tier architecture template
 - Proficiency in working with DOM XML and manipulating XML files
 - Experience in working within a multi-process environment, utilizing different methods for efficient execution
+
+## Authors
+This Store Management System was created by:
+- Abraham Meiri
+- Eliyahu Dinowitz
